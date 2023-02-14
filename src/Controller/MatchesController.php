@@ -42,6 +42,15 @@ public function afficheC(ManagerRegistry $doctrine): Response {
     return $this->render('matches/afficheC.html.twig', ['matches' => $matches]);
 }
 
+#[Route('/matches/afficheCC', name: 'matches_afficheCC')]
+public function afficheCC(ManagerRegistry $doctrine): Response {
+    $em = $doctrine->getManager();
+    $matches = $em->getRepository(Matches::class)->findAll();
+
+    return $this->render('matches/afficheCC.html.twig', ['matches' => $matches]);
+}
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
