@@ -7,6 +7,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 class EquipeType extends AbstractType
 {
@@ -17,7 +22,32 @@ class EquipeType extends AbstractType
             ->add('joueurs')
             ->add('classement')
             ->add('entraineur')
-            ->add('categorie')
+            ->add('categorie', ChoiceType::class, [
+                'choices' => [
+                    'Football' => 'Footbaall',
+                    'Basketball' => 'Basketball',
+                    'Handball' => 'Handball',
+                    // add more options here
+                ],
+                'choice_attr' => function($choice, $key, $value) {
+                    return ['data-toggle' => 'modal', 'data-target' => '#exampleModal'];
+                }
+            ])
+            ->add('picture', FileType::class, [
+                'label' => 'Image',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1000024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid JPEG or PNG image',
+                    ])
+                ],
+            ])
             ->add('save',SubmitType::class)
         ;
     }

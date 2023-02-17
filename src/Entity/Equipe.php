@@ -1,10 +1,13 @@
 <?php
-
+namespace App\Utils;
 namespace App\Entity;
 
 use App\Repository\EquipeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 #[ORM\Entity(repositoryClass: EquipeRepository::class)]
@@ -34,6 +37,10 @@ class Equipe
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"categorie is required")]
     private ?string $categorie = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+   
+    private ?string $picture = null;
 
     public function getId(): ?int
     {
@@ -104,5 +111,20 @@ class Equipe
     {
         return $this->getNom();
     }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture=null): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+    
+
+    
 
 }

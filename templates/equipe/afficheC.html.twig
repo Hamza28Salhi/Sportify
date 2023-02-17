@@ -356,6 +356,7 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                
 
                     <!-- Page Heading -->
                                   <h1 class="h3 mb-2 text-gray-800">Tables                  <button class="btn btn-primary">
@@ -365,6 +366,7 @@
   <a href="{{ path('matches_afficheC' ) }}" style="color: white;">Matches</a>
 </button>
 </h1>
+
 
 
                     <!-- DataTales Example -->
@@ -383,12 +385,95 @@
                                     
                                         <tr>
     <th>Id</th>
-    <th>Nom</th>
-    <th>Joueurs</th>
-    <th>Classement</th>
-    <th>Entraineur</th>
-    <th>Categorie</th>
-      <th>Action</th>
+        <th>
+  <a href="{{ path('equipe_afficheC', {'sortBy': 'nom', 'sortOrder': (app.request.get('sortBy') == 'nom' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+    {% if app.request.get('sortBy') == 'nom' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        <i class="fas fa-sort-alpha-down"></i>
+      {% else %}
+        <i class="fas fa-sort-alpha-up"></i>
+      {% endif %}
+    {% else %}
+      <i class="fas fa-sort"></i>
+    {% endif %}
+  </a>Nom
+</th>
+
+
+   <th>
+  <a href="{{ path('equipe_afficheC', {'sortBy': 'joueurs', 'sortOrder': (app.request.get('sortBy') == 'joueurs' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+    {% if app.request.get('sortBy') == 'joueurs' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        <i class="fas fa-sort-alpha-down"></i>
+      {% else %}
+        <i class="fas fa-sort-alpha-up"></i>
+      {% endif %}
+    {% else %}
+      <i class="fas fa-sort"></i>
+    {% endif %}
+  </a>joueurs
+</th>
+
+
+    <th>
+  <a href="{{ path('equipe_afficheC', {'sortBy': 'classement', 'sortOrder': (app.request.get('sortBy') == 'classement' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+    {% if app.request.get('sortBy') == 'classement' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        <i class="fas fa-sort-alpha-down"></i>
+      {% else %}
+        <i class="fas fa-sort-alpha-up"></i>
+      {% endif %}
+    {% else %}
+      <i class="fas fa-sort"></i>
+    {% endif %}
+  </a>Classement
+</th>
+
+    <th>
+  <a href="{{ path('equipe_afficheC', {'sortBy': 'entraineur', 'sortOrder': (app.request.get('sortBy') == 'entraineur' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+    {% if app.request.get('sortBy') == 'entraineur' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        <i class="fas fa-sort-alpha-down"></i>
+      {% else %}
+        <i class="fas fa-sort-alpha-up"></i>
+      {% endif %}
+    {% else %}
+      <i class="fas fa-sort"></i>
+    {% endif %}
+  </a>Entraineur
+</th>
+
+    <th>
+  <a href="{{ path('equipe_afficheC', {'sortBy': 'categorie', 'sortOrder': (app.request.get('sortBy') == 'categorie' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+    {% if app.request.get('sortBy') == 'categorie' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        <i class="fas fa-sort-alpha-down"></i>
+      {% else %}
+        <i class="fas fa-sort-alpha-up"></i>
+      {% endif %}
+    {% else %}
+      <i class="fas fa-sort"></i>
+    {% endif %}
+  </a>Categorie
+</th>
+
+   <th>
+  <a href="{{ path('equipe_afficheC', {'sortBy': 'picture', 'sortOrder': (app.request.get('sortBy') == 'picture' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+    {% if app.request.get('sortBy') == 'picture' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        <i class="fas fa-sort-alpha-down"></i>
+      {% else %}
+        <i class="fas fa-sort-alpha-up"></i>
+      {% endif %}
+    {% else %}
+      <i class="fas fa-sort"></i>
+    {% endif %}
+  </a>Logo
+</th>
+
+    <th>Action</th>
+    
+      
   </tr>
   {% for i in equipe %}
     <tr>
@@ -398,6 +483,13 @@
       <td>{{i.classement}}</td>
       <td>{{i.entraineur}}</td>
       <td>{{i.categorie}}</td>
+      <td>
+    {% if i.picture %}
+      <img src="{{ asset('uploads/' ~ i.picture) }}" alt="{{ i.nom }}" style="max-height: 100px">
+    {% else %}
+      No picture
+    {% endif %}
+  </td>
        <td>
         <button class="btn btn-primary">
         <a href="{{ path('equipe_delete', {'id': i.id}) }}"style="color: white;">Delete</a>
