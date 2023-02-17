@@ -19,7 +19,7 @@ class MatchesType extends AbstractType
             ->add('stade')
             ->add('date')
             ->add('score')
-            ->add('list_joueurs')
+            
             ->add('nom_equipe')
             ->add('save',SubmitType::class)
         ;

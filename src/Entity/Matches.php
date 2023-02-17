@@ -39,11 +39,7 @@ class Matches
     #[Assert\NotBlank(message:"score is required")]
     private ?string $score = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"list joueur is required")]
-
-    private ?string $list_joueurs = null;
-
+    
     #[ORM\ManyToOne]
     private ?Equipe $nom_equipe = null;
 
@@ -112,17 +108,6 @@ class Matches
         return $this;
     }
 
-    public function getListJoueurs(): ?string
-    {
-        return $this->list_joueurs;
-    }
-
-    public function setListJoueurs(string $list_joueurs=null): self
-    {
-        $this->list_joueurs = $list_joueurs;
-
-        return $this;
-    }
 
     public function getNomEquipe(): ?Equipe
     {

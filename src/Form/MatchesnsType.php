@@ -16,9 +16,8 @@ class MatchesnsType extends AbstractType
             ->add('adversaire')
             ->add('stade')
             ->add('date')
-            ->add('list_joueurs')
             ->add('nom_equipe')
-          ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class)
           ;
           $builder->remove('score');
     }
