@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-   <title>Update Match</title>
+   <title>Add Match</title>
 
 <!-- Custom font for this template-->
 <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -31,44 +31,62 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                      <img src="{{asset('img/add.png')}}" class="col-lg-5 d-none d-lg-block "> </img>
+                    <img src="{{asset('img/add.png')}}" class="col-lg-5 d-none d-lg-block "> </img>
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Update Match!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Add Match!</h1>
                             </div>
 {{form_start(form,{'attr': {'novalidate': 'novalidate'}} )}}
 <table>
-  <tr>
-    <td>{{ form_label(form.nom, "Nom") }}</td>
-    <td>{{ form_widget(form.nom) }}</td>
-    <td>{{ form_errors(form.nom) }}</td>
-  </tr>
-  <tr>
-    <td>{{ form_label(form.adversaire, "Adversaire") }}</td>
-    <td>{{ form_widget(form.adversaire) }}</td>
-    <td>{{ form_errors(form.adversaire) }}</td>
-  </tr>
-  <tr>
-    <td>{{ form_label(form.stade, "Stade") }}</td>
-    <td>{{ form_widget(form.stade) }}</td>
-    <td>{{ form_errors(form.stade) }}</td>
-  </tr>
-  <tr>
-    <td>{{ form_label(form.date, "Date") }}</td>
-    <td>{{ form_widget(form.date) }}</td>
-    <td>{{ form_errors(form.date) }}</td>
-  </tr>
-  <tr>
-    <td>{{ form_label(form.score, "Score") }}</td>
-    <td>{{ form_widget(form.score) }}</td>
-    <td>{{ form_errors(form.score) }}</td>
-  </tr>
-  <tr>
-    <td>{{ form_label(form.list_joueurs, "Liste des joueurs") }}</td>
-    <td>{{ form_widget(form.list_joueurs) }}</td>
-    <td>{{ form_errors(form.list_joueurs) }}</td>
-  </tr>
+
+<tr>
+
+<td> {{ form_label(form.nom,"nom")  }} 
+ </td>
+<td>  {{ form_widget(form.nom) }} 
+</td>  
+<td> {{ form_errors(form.nom) }} 
+</td>
+</tr>
+
+<td> {{ form_label(form.adversaire,"adversaire")  }} 
+ </td>
+<td>  {{ form_widget(form.adversaire) }} 
+</td>  
+<td> {{ form_errors(form.adversaire) }} 
+</td>
+</tr>
+
+<td> {{ form_label(form.stade,"stade")  }} 
+ </td>
+<td>  {{ form_widget(form.stade) }} 
+</td>  
+<td> {{ form_errors(form.stade) }} 
+</td>
+</tr>
+
+<tr>
+<td> {{ form_label(form.date,"date")  }} 
+ </td>
+<td>  {{ form_widget(form.date) }} 
+</td>  
+<td> {{ form_errors(form.date) }} 
+</td>
+</tr>
+
+
+
+<tr>
+<td>  {{ form_label(form.list_joueurs,"list_joueurs") }} 
+</td> 
+<td> {{ form_widget(form.list_joueurs)}} 
+ </td> 
+<td>  {{ form_errors(form.list_joueurs) }} 
+</td> 
+</tr>
+
+
 </table>
 
  {{ form_widget(form.save)}} 

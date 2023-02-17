@@ -3,6 +3,7 @@
 namespace App\Controller;
 use App\Entity\Matches;
 use App\Form\MatchesType;
+use App\Form\MatchesnsType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,6 +34,24 @@ class MatchesController extends AbstractController
 
         return $this->renderForm('matches/add.html.twig',['form'=>$form]);
     }
+
+
+    #[Route('/matches/addns', name: 'matches_addns')]
+    public function addMatches1(ManagerRegistry $doctrine,Request $req): Response {
+        $em = $doctrine->getManager();
+        $Matches = new Matches();
+       $form = $this->createForm(MatchesnsType::class, $Matches);
+        $form->handleRequest($req);
+        if($form->isSubmitted() && $form->isValid()){
+            $em->persist($Matches);
+            $em->flush();
+            return $this->redirectToRoute('matches_afficheC');
+        }
+
+        return $this->renderForm('matches/addns.html.twig',['form'=>$form]);
+    }
+
+
     
     #[Route('/matches/afficheC', name: 'matches_afficheC')]
 public function afficheC(ManagerRegistry $doctrine): Response {
@@ -49,6 +68,16 @@ public function afficheCC(ManagerRegistry $doctrine): Response {
 
     return $this->render('matches/afficheCC.html.twig', ['matches' => $matches]);
 }
+
+
+#[Route('/matches/afficheCadd', name: 'matches_afficheCadd')]
+public function afficheCadd(ManagerRegistry $doctrine): Response {
+    $em = $doctrine->getManager();
+    $matches = $em->getRepository(Matches::class)->findAll();
+
+    return $this->render('matches/afficheCadd.html.twig', ['matches' => $matches]);
+}
+
 
 
 

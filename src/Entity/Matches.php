@@ -6,6 +6,8 @@ use App\Repository\MatchesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 
 #[ORM\Entity(repositoryClass: MatchesRepository::class)]
 class Matches
@@ -15,28 +17,26 @@ class Matches
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, )]
     #[Assert\NotBlank(message:"nom is required")]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, )]
     #[Assert\NotBlank(message:"adversaire is required")]
 
     private ?string $adversaire = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,)]
     #[Assert\NotBlank(message:"stade is required")]
     private ?string $stade = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE,)]
     #[Assert\NotBlank(message:"date is required")]
 
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type:"string", length:255, nullable:true)]
     #[Assert\NotBlank(message:"score is required")]
-
-    
     private ?string $score = null;
 
     #[ORM\Column(length: 255)]
@@ -57,7 +57,7 @@ class Matches
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(string $nom=null): self
     {
         $this->nom = $nom;
 
@@ -69,7 +69,7 @@ class Matches
         return $this->adversaire;
     }
 
-    public function setAdversaire(string $adversaire): self
+    public function setAdversaire(string $adversaire=null): self
     {
         $this->adversaire = $adversaire;
 
@@ -81,7 +81,7 @@ class Matches
         return $this->stade;
     }
 
-    public function setStade(string $stade): self
+    public function setStade(string $stade=null): self
     {
         $this->stade = $stade;
 
@@ -93,7 +93,7 @@ class Matches
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(\DateTimeInterface $date=null): self
     {
         $this->date = $date;
 
@@ -105,7 +105,7 @@ class Matches
         return $this->score;
     }
 
-    public function setScore(string $score): self
+    public function setScore(string $score=null): self
     {
         $this->score = $score;
 
@@ -117,7 +117,7 @@ class Matches
         return $this->list_joueurs;
     }
 
-    public function setListJoueurs(string $list_joueurs): self
+    public function setListJoueurs(string $list_joueurs=null): self
     {
         $this->list_joueurs = $list_joueurs;
 
@@ -129,7 +129,7 @@ class Matches
         return $this->nom_equipe;
     }
 
-    public function setNomEquipe(?Equipe $nom_equipe): self
+    public function setNomEquipe(?Equipe $nom_equipe=null): self
     {
         $this->nom_equipe = $nom_equipe;
 

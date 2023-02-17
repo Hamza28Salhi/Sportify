@@ -45,7 +45,7 @@ class Equipe
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(string $nom=null): self
     {
         $this->nom = $nom;
 
@@ -57,7 +57,7 @@ class Equipe
         return $this->joueurs;
     }
 
-    public function setJoueurs(?string $joueurs): self
+    public function setJoueurs(?string $joueurs=null): self
     {
         $this->joueurs = $joueurs;
 
@@ -69,7 +69,7 @@ class Equipe
         return $this->classement;
     }
 
-    public function setClassement(int $classement): self
+    public function setClassement(int $classement=null): self
     {
         $this->classement = $classement;
 
@@ -81,7 +81,7 @@ class Equipe
         return $this->entraineur;
     }
 
-    public function setEntraineur(string $entraineur): self
+    public function setEntraineur(string $entraineur=null): self
     {
         $this->entraineur = $entraineur;
 
@@ -93,7 +93,7 @@ class Equipe
         return $this->categorie;
     }
 
-    public function setCategorie(string $categorie): self
+    public function setCategorie(string $categorie=null): self
     {
         $this->categorie = $categorie;
 

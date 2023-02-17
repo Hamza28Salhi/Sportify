@@ -7,24 +7,21 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-class MatchesType extends AbstractType
+class MatchesnsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        
             ->add('nom')
             ->add('adversaire')
             ->add('stade')
             ->add('date')
-            ->add('score')
             ->add('list_joueurs')
             ->add('nom_equipe')
-            ->add('save',SubmitType::class)
-        ;
+          ->add('save', SubmitType::class)
+          ;
+          $builder->remove('score');
     }
-    
 
     public function configureOptions(OptionsResolver $resolver): void
     {
