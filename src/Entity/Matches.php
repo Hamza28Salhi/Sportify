@@ -36,11 +36,13 @@ class Matches
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(type:"string", length:255, nullable:true)]
-    #[Assert\NotBlank(message:"score is required")]
+    
+    
     private ?string $score = null;
 
     
     #[ORM\ManyToOne]
+    #[Assert\NotBlank(message:"adversaire is required")]
     private ?Equipe $nom_equipe = null;
 
     public function getId(): ?int
