@@ -97,11 +97,14 @@
 
 </table>
 
- {{ form_widget(form.save)}} 
-{{form_end(form)}}
+
 
                            
                         </div>
+                                             <button class="btn btn-primary">
+  <a href="{{ path('equipe_afficheC' ) }}" style="color: white;">Cancel</a>
+</button>    {{ form_widget(form.save)}} 
+{{form_end(form)}}
                     </div>
                 </div>
             </div>
