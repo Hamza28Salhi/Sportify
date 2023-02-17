@@ -85,15 +85,27 @@
 <td>  {{ form_errors(form.list_joueurs) }} 
 </td> 
 </tr>
+<tr>
+<td>  {{ form_label(form.nom_equipe,"nom_equipe") }} 
+</td> 
+<td> {{ form_widget(form.nom_equipe)}} 
+ </td> 
+<td>  {{ form_errors(form.nom_equipe) }} 
+</td> 
+</tr>
 
 
 </table>
 
- {{ form_widget(form.save)}} 
-{{form_end(form)}}
+ 
 
                            
                         </div>
+                           <button class="btn btn-primary">
+  <a href="{{ path('matches_afficheC' ) }}" style="color: white;">Cancel</a>
+</button>   {{ form_widget(form.save)}} 
+{{form_end(form)}}
+
                     </div>
                 </div>
             </div>

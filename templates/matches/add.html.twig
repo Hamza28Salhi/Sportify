@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    
 
    <title>Add Match</title>
 
@@ -37,6 +38,7 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Add Match!</h1>
                             </div>
+                            
 {{form_start(form,{'attr': {'novalidate': 'novalidate'}} )}}
 <table>
 
@@ -92,18 +94,29 @@
 <td>  {{ form_errors(form.list_joueurs) }} 
 </td> 
 </tr>
+<tr>
+<td>  {{ form_label(form.nom_equipe,"nom_equipe") }} 
+</td> 
+<td> {{ form_widget(form.nom_equipe)}} 
+ </td> 
+<td>  {{ form_errors(form.nom_equipe) }} 
+</td> 
+</tr>
 
 
 </table>
 
- {{ form_widget(form.save)}} 
-{{form_end(form)}}
-
-                           
+  
                         </div>
+                                <button class="btn btn-primary">
+  <a href="{{ path('matches_afficheC' ) }}" style="color: white;">Cancel</a>
+</button>   {{ form_widget(form.save)}} 
+{{form_end(form)}}
                     </div>
+                    
                 </div>
             </div>
+            
         </div>
 
     </div>

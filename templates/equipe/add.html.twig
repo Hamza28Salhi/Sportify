@@ -24,6 +24,21 @@
 {% endblock %}
   {% block body %}
 <body class="bg-gradient-primary">
+<script>
+button[type=submit] {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+</script>
 
     <div class="container">
 
@@ -95,11 +110,13 @@
 
 </table>
 
- {{ form_widget(form.save)}} 
-{{form_end(form)}}
-
+ 
                            
                         </div>
+                                <button class="btn btn-primary">
+  <a href="{{ path('equipe_afficheC' ) }}" style="color: white;">Cancel</a>
+</button>   {{ form_widget(form.save)}} 
+{{form_end(form)}}
                     </div>
                 </div>
             </div>
