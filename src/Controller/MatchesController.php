@@ -28,7 +28,7 @@ class MatchesController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $em->persist($Matches);
             $em->flush();
-            return $this->redirectToRoute('matches_add');
+            return $this->redirectToRoute('matches_afficheC');
         }
 
         return $this->renderForm('matches/add.html.twig',['form'=>$form]);
