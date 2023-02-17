@@ -76,34 +76,36 @@ public function delete(ManagerRegistry $doctrine, int $id): Response
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #[Route('/equipe/update/{id}', name: 'equipe_update')]
+
 public function update(ManagerRegistry $doctrine, Request $request, $id, FileUploader $fileUploader): Response
 {
     $em = $doctrine->getManager();
-    $match = $em->getRepository(Equipe::class)->find($id);
+    $equipe = $em->getRepository(Equipe::class)->find($id);
 
-    if (!$match) {
-        throw new NotFoundHttpException('Match not found');
+    if (!$equipe) {
+        throw $this->createNotFoundException('Equipe not found');
     }
 
-    $form = $this->createForm(EquipeType::class, $match);
+    $form = $this->createForm(EquipeType::class, $equipe);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-        $newFileName = $fileUploader->upload($form['picture']->getData());
+        $file = $form['picture']->getData();
+        if ($file) {
+            $newFileName = $fileUploader->upload($file);
+            $equipe->setPicture($newFileName);
+        }
         
-        $match->setPicture($newFileName);
         $em->flush();
 
         return $this->redirectToRoute('equipe_afficheC');
     }
 
     return $this->render('equipe/update.html.twig', [
-        'match' => $match,
+        'equipe' => $equipe,
         'form' => $form->createView(),
     ]);
 }
-
-
 
 
 

@@ -37,6 +37,7 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Update Equipe!</h1>
                             </div>
+                            
 {{form_start(form,{'attr': {'novalidate': 'novalidate'}} )}}
 <table>
 <tr>
@@ -83,10 +84,11 @@
 </td>
 </tr>
 
+
 <tr>
 <td> {{ form_label(form.picture,"picture")  }} 
  </td>
-<td>  {{ form_widget(form.picture) }} 
+<td>  {{ form_widget(form.picture, { 'attr': { 'class': 'form-control' }, 'data': equipe.picture|default('') }) }}
 </td>  
 <td> {{ form_errors(form.picture) }} 
 </td>

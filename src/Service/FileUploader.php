@@ -23,6 +23,13 @@ class FileUploader
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
         $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+        if (strpos($file->getMimeType(), 'image/') !== 0) {
+            throw new \Exception('The file must be an image.');
+            
+        }
+        if (strpos($file->getMimeType(), 'image/') !== 0) {
+            throw new \Exception('The file must be an image.');
+        }
 
         try {
             $file->move($this->getTargetDirectory(), $fileName);

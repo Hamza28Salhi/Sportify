@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 
 class EquipeType extends AbstractType
@@ -48,8 +50,11 @@ class EquipeType extends AbstractType
                     ])
                 ],
             ])
+            
             ->add('save',SubmitType::class)
         ;
+        $builder->setAttributes([
+            'enctype' => 'multipart/form-data',    ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
