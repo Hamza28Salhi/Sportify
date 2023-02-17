@@ -21,7 +21,9 @@ class EquipeType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('joueurs')
+            ->add('joueurs', TextareaType::class, [
+                'attr' => ['rows' => '4']
+            ])
             ->add('classement')
             ->add('entraineur')
             ->add('categorie', ChoiceType::class, [
