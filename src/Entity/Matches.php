@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use App\Entity\Equipe;
 
 use App\Repository\MatchesRepository;
 use Doctrine\DBAL\Types\Types;
@@ -44,6 +45,7 @@ class Matches
     #[ORM\ManyToOne]
     #[Assert\NotBlank(message:"adversaire is required")]
     private ?Equipe $nom_equipe = null;
+ 
 
     public function getId(): ?int
     {
@@ -122,10 +124,12 @@ class Matches
 
         return $this;
     }
+   
     public function __toString()
-{
-    return $this->nom_equipe;
-}
+    {
+         $this->nom_equipe;
+    }
+
 
    
 }
