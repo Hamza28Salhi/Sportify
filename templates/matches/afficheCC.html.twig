@@ -26,6 +26,27 @@
   <link rel="stylesheet" href="{{ asset('css/aos.css') }}">
 
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<style>
+  .button {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background-color: #ee1e46;
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 15px 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .button:hover {
+    background-color: #808080;
+  }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
 
 
 
@@ -34,6 +55,14 @@
  {% block body %}
 
 <body>
+
+
+
+
+<a href="{{ path('equipe_afficheCC') }}" class="button">
+  <i class="fas fa-arrow-right"></i>
+</a>
+
 
   <div class="site-wrap">
 
