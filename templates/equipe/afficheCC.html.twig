@@ -34,7 +34,28 @@
  {% block body %}
 
 <body>
-
+<style>
+  .modal-xl {
+    max-width: 90%;
+  }
+  .modal-dialog {
+     max-width: 40%;
+  height: 100vh;
+  }
+  .modal-body {
+    position: relative;
+    overflow-y: auto;
+    max-height: 100vh;
+    padding: 3px;
+  }
+  .modal-backdrop.show {
+    opacity: 0.5;
+  }
+  img:hover {
+    transform: scale(1.4);
+    transition: transform 0.2s ease-in-out;
+  }
+</style>
   <div class="site-wrap">
 
     <div class="site-mobile-menu site-navbar-target">
@@ -112,11 +133,57 @@
     transition: transform 0.2s ease-in-out;
   }
 </style>                 
-<a href="{{ path('matches_afficheCC') }}">
+ <a data-toggle="modal" data-target="#myModal-{{i.nom}}">
              <img src="{{ asset('uploads/' ~ i.picture ) }}" alt="Image">
              </a>
 
                 </div>
+                 <div id="myModal-{{i.nom}}" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        <div class="site-section bg-dark">
+          <div class="container">
+            
+            <div class="row mb-5">
+              <div class="col-lg-12">
+                <div class="widget-next-match">
+                  <div class="widget-title">
+                     <h3>{{i.nom}}</h3>
+                  </div>
+                  <div class="widget-body mb-3">
+                    <div class="widget-vs">
+                      <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                       
+                           <h3>Categorie: {{i.categorie}}</h3>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-center widget-vs-contents mb-4">
+                   <h3>Classement:</h3>
+                   <h4 style="font-size: 30px;">{{i.Classement}}</h4>
+
+                    <p class="mb-5">
+                     <h3>Entraineur: </h3>
+                      <h4 class="d-block"> {{i.entraineur}}</h4>
+                       <h3> Liste Joueurs :</h3>
+<h4 class="d-block"> {{ i.joueurs|replace({' ': ''})|nl2br }}</h4>
+                      <strong class="text-primary"></strong>
+                    </p>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
 
                     </div>
                   </div>
@@ -137,7 +204,9 @@
          
             </div>
           </div>
+
            {% endfor %}
+           
           
           
         </div>
