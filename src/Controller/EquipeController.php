@@ -107,6 +107,14 @@ public function update(ManagerRegistry $doctrine, Request $request, $id, FileUpl
     ]);
 }
 
+#[Route('/equipe/afficheCC', name: 'equipe_afficheCC')]
+public function afficheCC(ManagerRegistry $doctrine): Response {
+    $em = $doctrine->getManager();
+    $equipe = $em->getRepository(Equipe::class)->findAll();
+
+    return $this->render('equipe/afficheCC.html.twig', ['equipe' => $equipe]);
+}
+
 
 
 
