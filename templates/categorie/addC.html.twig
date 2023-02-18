@@ -31,7 +31,7 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <img src="{{asset('img/add.png')}}" class="col-lg-5 d-none d-lg-block "> </img>
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
@@ -39,11 +39,7 @@
                             </div>
 {{form_start(form,{'attr': {'novalidate': 'novalidate'}} )}}
 <table>
-<tr>
-<td>{{ form_label(form.id_categorie,"ID de categorie")  }}</td>
-<td>{{ form_widget(form.id_categorie) }}</td>  
-<td> {{ form_errors(form.id_categorie) }} </td>
-</tr>
+
 
 <tr>
 <td> {{ form_label(form.nom_categorie,"nom de categorie")  }} </td>

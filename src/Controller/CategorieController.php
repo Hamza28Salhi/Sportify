@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\CategorieType;
 use App\Repository\CategorieRepository;
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 

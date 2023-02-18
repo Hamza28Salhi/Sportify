@@ -383,23 +383,32 @@
                                     <tbody>
                                     
                                         <tr>
-    <th>Id_produit</th>
+    <th>Id</th>
     <th>Nom</th>
      <th>prix_produit</th>
     
     <th>marque_produit</th>
     <th>categorie</th>
-   
+   <th>image</th>
       <th>Action</th>
   </tr>
   {% for i in produit %}
     <tr>
-       <td>{{i.IdProduit}}</td>
+       <td>{{i.Id}}</td>
       <td>{{i.NomProduit}}</td>
       <td>{{i.PrixProduit}}</td>
      
       <td>{{i.MarqueProduit}}</td>
       <td>{{i.Categorie}}</td>
+       <td>
+    {% if i.Image %}
+      <img src="{{ asset('uploads/' ~ i.Image) }}" alt="{{ i.NomProduit }}" style="max-height: 100px">
+    {% else %}
+      No picture
+    {% endif %}
+  </td>
+ 
+  </td>
 
        <td>
         <button class="btn btn-primary">

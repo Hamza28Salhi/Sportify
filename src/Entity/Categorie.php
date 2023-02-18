@@ -8,6 +8,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
+
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
@@ -17,9 +20,7 @@ class Categorie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    #[Assert\NotBlank(message:"ID is required")]
-    private ?int $id_categorie = null;
+   
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message:"nomCategorie is required")]
@@ -38,17 +39,7 @@ class Categorie
         return $this->id;
     }
 
-    public function getIdCategorie(): ?int
-    {
-        return $this->id_categorie;
-    }
-
-    public function setIdCategorie(int $id_categorie): self
-    {
-        $this->id_categorie = $id_categorie;
-
-        return $this;
-    }
+   
 
     public function getNomCategorie(): ?string
     {
