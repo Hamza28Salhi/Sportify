@@ -55,12 +55,51 @@ class MatchesController extends AbstractController
 
     
     #[Route('/matches/afficheC', name: 'matches_afficheC')]
-public function afficheC(ManagerRegistry $doctrine): Response {
-    $em = $doctrine->getManager();
-    $matches = $em->getRepository(Matches::class)->findAll();
-
-    return $this->render('matches/afficheC.html.twig', ['matches' => $matches]);
-}
+    public function afficheC(Request $request, ManagerRegistry $doctrine): Response {
+        $em = $doctrine->getManager();
+        $matchesRepository = $em->getRepository(Matches::class);
+    
+        // Get the search query and the selected field from the form
+        $searchQuery = $request->query->get('search');
+        $searchField = $request->query->get('search_field');
+    
+        // Build the query based on the selected field and search query
+        $queryBuilder = $matchesRepository->createQueryBuilder('m');
+        if ($searchQuery && $searchField) {
+            if ($searchField == 'nom') {
+                $queryBuilder->where('m.nom LIKE :searchQuery')
+                    ->setParameter('searchQuery', '%'.$searchQuery.'%');
+            } elseif ($searchField == 'id') {
+                $queryBuilder->where('m.id LIKE :searchQuery')
+                    ->setParameter('searchQuery', '%'.$searchQuery.'%');
+            }elseif ($searchField == 'adversaire') {
+                $queryBuilder->where('m.adversaire LIKE :searchQuery')
+                    ->setParameter('searchQuery', '%'.$searchQuery.'%');
+            } elseif ($searchField == 'score') {
+                $queryBuilder->where('m.score LIKE :searchQuery')
+                    ->setParameter('searchQuery', '%'.$searchQuery.'%');
+            }elseif ($searchField == 'date') {
+                $queryBuilder->where('m.date LIKE :searchQuery')
+                    ->setParameter('searchQuery', '%'.$searchQuery.'%');
+            } elseif ($searchField == 'nom_equipe') {
+                $queryBuilder->leftJoin('m.nom_equipe', 'e')
+                    ->where('e.nom LIKE :searchQuery')
+                    ->setParameter('searchQuery', '%'.$searchQuery.'%');
+            }
+        }
+    
+        // Get the matches based on the query
+        $matches = $queryBuilder->getQuery()->getResult();
+    
+        return $this->render('matches/afficheC.html.twig', [
+            'matches' => $matches,
+            'searchQuery' => $searchQuery,
+            'searchField' => $searchField,
+        ]);
+    }
+    
+    
+    
 
 #[Route('/matches/afficheCC', name: 'matches_afficheCC')]
 public function afficheCC(ManagerRegistry $doctrine): Response {
@@ -125,6 +164,7 @@ public function update(ManagerRegistry $doctrine, Request $request, $id): Respon
         'form' => $form->createView(),
     ]);
 }
+
 
  
 
