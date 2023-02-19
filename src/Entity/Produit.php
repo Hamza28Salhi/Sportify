@@ -44,8 +44,11 @@ class Produit
     private ?Categorie $categorie = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\NotBlank(message:"image is required")]
+    
     private ?string $image = null;
+
+    #[ORM\Column]
+    private ?int $quantite = null;
 
     public function getId(): ?int
     {
@@ -111,6 +114,18 @@ class Produit
     public function setImage(string $image=null): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
 
         return $this;
     }

@@ -76,19 +76,65 @@
              <!-- <span class="meta">May 20, 2020</span>-->
      
     
-<p><label for="quantite">Quantité :</label>
-<select id="quantite" name="quantite">
-  <option value="1">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
-  <option value="6">6</option>
-  <option value="7">7</option>
-  <option value="8">8</option>
-  <option value="9">9</option>
-  <option value="10">10</option>
-</select></p> 
+
+
+
+
+
+
+
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+<div>
+  <label for="quantite">Quantité :</label>
+  <div>
+    <button onclick="decrementQuantity()">-</button>
+    <input id="quantite" name="quantite" type="number" value="1" min="1">
+    <button onclick="incrementQuantity()">+</button>
+  </div>
+</div>
+
+<script>
+  function incrementQuantity() {
+    var input = document.getElementById("quantite");
+    var currentQuantity = parseInt(input.value);
+    input.value = currentQuantity + 1;
+  }
+
+  function decrementQuantity() {
+    var input = document.getElementById("quantite");
+    var currentQuantity = parseInt(input.value);
+    if (currentQuantity > 1) {
+      input.value = currentQuantity - 1;
+    }
+  }
+</script>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
            
