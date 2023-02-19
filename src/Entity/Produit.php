@@ -40,9 +40,11 @@ class Produit
     private ?string $marque_produit = null;
 
     #[ORM\ManyToOne(inversedBy: 'produit')]
+    #[Assert\NotBlank(message:"categorie is required")]
     private ?Categorie $categorie = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message:"image is required")]
     private ?string $image = null;
 
     public function getId(): ?int

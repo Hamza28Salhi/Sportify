@@ -46,7 +46,7 @@ class Categorie
         return $this->nom_categorie;
     }
 
-    public function setNomCategorie(string $nom_categorie): self
+    public function setNomCategorie(string $nom_categorie=null): self
     {
         $this->nom_categorie = $nom_categorie;
 
