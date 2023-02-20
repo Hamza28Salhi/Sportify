@@ -45,6 +45,9 @@ class Matches
     #[ORM\ManyToOne]
     #[Assert\NotBlank(message:"adversaire is required")]
     private ?Equipe $nom_equipe = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $video = null;
  
 
     public function getId(): ?int
@@ -128,6 +131,18 @@ class Matches
     public function __toString()
     {
          $this->nom_equipe;
+    }
+
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+
+    public function setVideo(?string $video): self
+    {
+        $this->video = $video;
+
+        return $this;
     }
 
 

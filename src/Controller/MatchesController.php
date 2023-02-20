@@ -21,20 +21,42 @@ class MatchesController extends AbstractController
             'controller_name' => 'MatchesController',
         ]);
     }
+
     #[Route('/matches/add', name: 'matches_add')]
-    public function addMatches(ManagerRegistry $doctrine,Request $req): Response {
+    public function addMatches(ManagerRegistry $doctrine, Request $req): Response {
         $em = $doctrine->getManager();
         $Matches = new Matches();
-        $form = $this->createForm(MatchesType::class,$Matches);
+        $form = $this->createForm(MatchesType::class, $Matches);
         $form->handleRequest($req);
         if($form->isSubmitted() && $form->isValid()){
+            // Handle the video upload
+            $videoFile = $form['video']->getData();
+            if ($videoFile) {
+                $newFilename = uniqid().'.'.$videoFile->guessExtension();
+
+                try {
+                    $videoFile->move(
+                        $this->getParameter('videos_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Handle exception
+                }
+
+                $Matches->setVideo($newFilename);
+            }
+
             $em->persist($Matches);
             $em->flush();
+
             return $this->redirectToRoute('matches_afficheC');
         }
 
-        return $this->renderForm('matches/add.html.twig',['form'=>$form]);
+        return $this->renderForm('matches/add.html.twig', [
+            'form' => $form,
+        ]);
     }
+
 
 
     #[Route('/matches/addns', name: 'matches_addns')]
