@@ -68,13 +68,18 @@ public function affichePP(ManagerRegistry $doctrine): Response {
 
 
 
-#[Route('/produit/afficheCP', name: 'produit_afficheCP')]
-public function afficheCP(ManagerRegistry $doctrine): Response {
+#[Route('/produit/afficheCP/{id}', name: 'produit_afficheCP')]
+public function afficheCP(ManagerRegistry $doctrine, $id): Response {
     $em = $doctrine->getManager();
-    $produit = $em->getRepository(Produit::class)->findAll();
+    $produit = $em->getRepository(Produit::class)->find($id);
+    
+    if (!$produit) {
+        throw $this->createNotFoundException('Produit not found');
+    }
 
     return $this->render('produit/afficheCP.html.twig', ['produit' => $produit]);
 }
+
 
 
 #[Route('/produit/{id}/delete', name: 'produit_delete')]
@@ -125,6 +130,8 @@ public function update(ManagerRegistry $doctrine, Request $request, $id, FileUpl
     ]);
 
 }
+
+
 
 
 }

@@ -26,7 +26,7 @@ class Categorie
     #[Assert\NotBlank(message:"nomCategorie is required")]
     private ?string $nom_categorie = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class)]
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class ,cascade:['remove'])]
     private Collection $produit;
 
     public function __construct()

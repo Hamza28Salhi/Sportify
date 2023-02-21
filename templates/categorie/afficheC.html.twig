@@ -19,7 +19,8 @@
 
     {% block body %}
     </head>
-
+ 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css">
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -365,6 +366,15 @@
                <button class="btn btn-primary">
   <a href="{{ path('produit_afficheP' ) }}" style="color: white;">produit</a>
 </button>
+
+
+  
+  <button class="btn btn-primary">
+    <a href="{{ path('produit_affichePP' ) }}" style="color: white;">
+      <i class='bx bxs-store'></i>
+    </a>
+  </button>
+
 </h1>
 
 
@@ -383,7 +393,7 @@
                                     <tbody>
                                     
                                         <tr>
-   
+   <th>Id</th>
     <th>Nom</th>
    
       <th>Action</th>
@@ -409,6 +419,8 @@
                                     </tbody>
                                 </table>
                             </div>
+
+                            
                         </div>
                     </div>
 

@@ -14,11 +14,14 @@
 
 <!-- Custom styles for this page -->
 <link href="{{asset('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+ </head>
+
 {% endblock %}
 
 
     {% block body %}
-    </head>
+   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css">
 
 <body id="page-top">
 
@@ -359,12 +362,22 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                                  <h1 class="h3 mb-2 text-gray-800">Tables                  <button class="btn btn-primary">
+                                  <h1 class="h3 mb-2 text-gray-800">Tables    
+                                  
+                                                <button class="btn btn-primary">
   <a href="{{ path('categorie_afficheC' ) }}" style="color: white;">categorie</a>
 </button>  
                <button class="btn btn-primary">
   <a href="{{ path('produit_afficheP' ) }}" style="color: grey;">produit</a>
 </button>
+
+
+  <button class="btn btn-primary">
+    <a href="{{ path('produit_affichePP' ) }}" style="color: white;">
+      <i class='bx bxs-store'></i>
+    </a>
+  </button>
+
 </h1>
 
 
@@ -413,12 +426,13 @@
   </td>
 
        <td>
-        <button class="btn btn-primary">
-        <a href="{{ path('produit_delete', {'id': i.id}) }}"style="color: white;">Delete</a>
-        </button>
-         <button class="btn btn-primary">
-         <a href="{{ path('produit_update', {'id': i.id}) }}"style="color: white;">Update</a>
-          </button>
+       <a href="{{ path('produit_delete', {'id': i.id}) }}" class="btn btn-danger">
+   <i class="bx bxs-trash"></i>
+</a>
+        <a href="{{ path('produit_update', {'id': i.id}) }}" class="btn btn-primary">
+   <i class="bx bxs-edit-alt"></i>
+</a>
+</a>
         
       </td>
        
@@ -428,6 +442,8 @@
                                     </tbody>
                                 </table>
                             </div>
+
+                           
                         </div>
                     </div>
 
