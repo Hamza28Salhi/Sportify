@@ -53,7 +53,15 @@ class EquipeController extends AbstractController
         $equipes = $em->getRepository(Equipe::class)->findAllOrderedByProperty($sortBy, $sortOrder);
         return $this->render('equipe/afficheC.html.twig', ['equipe' => $equipes]);
     }
-    
+    #[Route('/equipe/afficheCC', name: 'equipe_afficheCC')]
+public function afficheCC(ManagerRegistry $doctrine): Response {
+    $em = $doctrine->getManager();
+    $equipe = $em->getRepository(Equipe::class)->findAll();
+
+    return $this->render('equipe/afficheCC.html.twig', ['equipe' => $equipe]);
+}
+
+ 
     
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,13 +115,6 @@ public function update(ManagerRegistry $doctrine, Request $request, $id, FileUpl
     ]);
 }
 
-#[Route('/equipe/afficheCC', name: 'equipe_afficheCC')]
-public function afficheCC(ManagerRegistry $doctrine): Response {
-    $em = $doctrine->getManager();
-    $equipe = $em->getRepository(Equipe::class)->findAll();
-
-    return $this->render('equipe/afficheCC.html.twig', ['equipe' => $equipe]);
-}
 
 
 

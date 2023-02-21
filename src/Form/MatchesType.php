@@ -25,7 +25,7 @@ class MatchesType extends AbstractType
         $builder
         
             ->add('nom')
-            ->add('adversaire')
+            
             ->add('stade')
             ->add('date')
             ->add('score')
@@ -33,6 +33,7 @@ class MatchesType extends AbstractType
             ->add('video', FileType::class, [
                 'required' => false, // Make the video field optional
                 'label' => 'Video (MP4 file)', // Customize the label
+                'mapped' => false,
             ])
         
             ->add('save',SubmitType::class)

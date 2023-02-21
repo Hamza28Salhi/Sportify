@@ -84,7 +84,7 @@
       <div class="container">
         <div class="d-flex align-items-center">
           <div class="site-logo">
-            <a href="index.html">
+            <a href="{{ path('matches_afficheC' ) }}">
               <img src="{{ asset('images/logo.png') }}" alt="Logo">
             </a>
           </div>
@@ -123,7 +123,7 @@
     <div class="container">
       
 {% for i in matches %}
-  {% if i.id == 39 %}
+  {% if i.id == 12 %}
     <div class="row">
       <div class="col-lg-12">
         <div class="d-flex team-vs">
@@ -149,8 +149,7 @@
         </div>
         <div class="text-center mt-3">
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#videoModal{{i.id}}">
-            <i class="fa fa-play"></i> Play Video
-          </button>
+            <i class="fa fa-play"></i> HighLights
         </div>
       </div>
     </div>

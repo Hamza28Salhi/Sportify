@@ -22,10 +22,7 @@ class Matches
     #[Assert\NotBlank(message:"nom is required")]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255, )]
-    #[Assert\NotBlank(message:"adversaire is required")]
-
-    private ?string $adversaire = null;
+    
 
     #[ORM\Column(length: 255,)]
     #[Assert\NotBlank(message:"stade is required")]
@@ -67,17 +64,6 @@ class Matches
         return $this;
     }
 
-    public function getAdversaire(): ?string
-    {
-        return $this->adversaire;
-    }
-
-    public function setAdversaire(string $adversaire=null): self
-    {
-        $this->adversaire = $adversaire;
-
-        return $this;
-    }
 
     public function getStade(): ?string
     {

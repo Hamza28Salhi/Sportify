@@ -94,9 +94,6 @@ class MatchesController extends AbstractController
             } elseif ($searchField == 'id') {
                 $queryBuilder->where('m.id LIKE :searchQuery')
                     ->setParameter('searchQuery', '%'.$searchQuery.'%');
-            }elseif ($searchField == 'adversaire') {
-                $queryBuilder->where('m.adversaire LIKE :searchQuery')
-                    ->setParameter('searchQuery', '%'.$searchQuery.'%');
             } elseif ($searchField == 'score') {
                 $queryBuilder->where('m.score LIKE :searchQuery')
                     ->setParameter('searchQuery', '%'.$searchQuery.'%');

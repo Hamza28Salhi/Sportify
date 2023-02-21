@@ -13,7 +13,7 @@ class MatchesnsType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('adversaire')
+      
             ->add('stade')
             ->add('date')
             ->add('nom_equipe')

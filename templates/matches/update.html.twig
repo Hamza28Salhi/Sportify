@@ -44,11 +44,7 @@
     <td>{{ form_widget(form.nom) }}</td>
     <td>{{ form_errors(form.nom) }}</td>
   </tr>
-  <tr>
-    <td>{{ form_label(form.adversaire, "Adversaire") }}</td>
-    <td>{{ form_widget(form.adversaire) }}</td>
-    <td>{{ form_errors(form.adversaire) }}</td>
-  </tr>
+
   <tr>
     <td>{{ form_label(form.stade, "Stade") }}</td>
     <td>{{ form_widget(form.stade) }}</td>
@@ -70,6 +66,11 @@
     <td>{{ form_label(form.nom_equipe, "nom_equipe") }}</td>
     <td>{{ form_widget(form.nom_equipe) }}</td>
     <td>{{ form_errors(form.nom_equipe) }}</td>
+  </tr>
+    <tr>
+    <td>{{ form_label(form.video, "Video") }}</td>
+    <td>{{ form_widget(form.video) }}</td>
+    <td>{{ form_errors(form.video) }}</td>
   </tr>
 </table>
 
