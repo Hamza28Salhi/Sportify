@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\EquipeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\Collection;
+
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -41,6 +43,9 @@ class Equipe
     #[ORM\Column(length: 255, nullable: true)]
    
     private ?string $picture = null;
+
+    #[ORM\OneToMany(targetEntity: Matches::class, mappedBy: 'nom_equipe')]
+    private Collection $matches;
 
     public function getId(): ?int
     {
@@ -123,7 +128,39 @@ class Equipe
 
         return $this;
     }
+
+    public function __construct()
+    {
+        $this->matches = new ArrayCollection();
+    }
     
+    public function getMatches(): Collection
+    {
+        return $this->matches;
+    }
+
+    public function addMatch(Matches $match): self
+    {
+        if (!$this->matches->contains($match)) {
+            $this->matches[] = $match;
+            $match->setNomEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatch(Matches $match): self
+    {
+        if ($this->matches->contains($match)) {
+            $this->matches->removeElement($match);
+            // set the owning side to null (unless already changed)
+            if ($match->getNomEquipe() === $this) {
+                $match->setNomEquipe(null);
+            }
+        }
+
+        return $this;
+    }
 
     
 

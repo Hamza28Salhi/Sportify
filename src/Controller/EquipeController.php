@@ -9,7 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\File\UploadedFile ;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use DateTime;
 
 class EquipeController extends AbstractController
 {
@@ -53,15 +54,30 @@ class EquipeController extends AbstractController
         $equipes = $em->getRepository(Equipe::class)->findAllOrderedByProperty($sortBy, $sortOrder);
         return $this->render('equipe/afficheC.html.twig', ['equipe' => $equipes]);
     }
-    #[Route('/equipe/afficheCC', name: 'equipe_afficheCC')]
-public function afficheCC(ManagerRegistry $doctrine): Response {
-    $em = $doctrine->getManager();
-    $equipe = $em->getRepository(Equipe::class)->findAll();
-
-    return $this->render('equipe/afficheCC.html.twig', ['equipe' => $equipe]);
-}
-
  
+
+    #[Route('/equipe/afficheCC', name: 'equipe_afficheCC')]
+    public function afficheCC(ManagerRegistry $doctrine): Response {
+        $em = $doctrine->getManager();
+        $equipe = $em->getRepository(Equipe::class)->findAll();
+    
+        // Fetch the matches associated with each equipe
+        $matchesByEquipe = [];
+        foreach ($equipe as $eq) {
+            $matches = $eq->getMatches()->toArray();
+            $matchesByEquipe[$eq->getId()] = $matches;
+        }
+    
+        // Create a DateTime object for the current date and time
+        $now = new DateTime();
+    
+        return $this->render('equipe/afficheCC.html.twig', [
+            'equipe' => $equipe,
+            'matchesByEquipe' => $matchesByEquipe,
+            'now' => $now,
+        ]);
+    }
+    
     
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
