@@ -207,6 +207,7 @@ Classement</button>
  <a data-toggle="modal" data-target="#myModal-{{i.nom}}">
              <img src="{{ asset('uploads/' ~ i.picture ) }}" alt="Image">
              </a>
+     
 
                 </div>
                  <div id="myModal-{{i.nom}}" class="modal fade">
@@ -239,6 +240,7 @@ Classement</button>
                    <h4 style="font-size: 25px;">{{i.Classement}}</h4>
 
 
+
                     <p class="mb-5">
                
                      <h3 style="font-size: 30px;">Entraineur: </h3>
@@ -247,14 +249,7 @@ Classement</button>
 <h4 class="d-block" style="font-size: 25px;" > {{ i.joueurs|replace({' ': ''})|nl2br }}</h4>
                       <strong class="text-primary"></strong>
                     </p>
-                     <h5>Matches</h5>
-           {% for match in i.matches %}
-  {% if match.date < now %}
-    <div class="text-center widget-vs-contents mb-4"> 
-      <p class="mb-5">{{ match.nom }}</p>
-    </div>
-  {% endif %}
-{% endfor %}
+       
 
                   </div>
                 </div>
@@ -278,9 +273,42 @@ Classement</button>
               <div style="display: inline-block;">
   <h3 style="font-size: 16px; display: inline-block;">Classement:</h3>
   <strong class="text-primary" style="display: inline-block;">{{i.classement}}</strong>
+  
 </div>
 
+
                   </p>
+                                             <a data-toggle="modal" data-target="#newModal-{{i.nom}}">
+  <button type="button" class="btn btn-primary buttonn">Historique</button>
+</a>
+<div id="newModal-{{i.nom}}" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content custom-modal">
+      <!-- Modal body content goes here -->
+                    <h4 style="font-size: 27px;">Matches vs Sportify</h4>
+      {% for match in i.matches %}
+  {% if match.date < now %}
+    <div class="text-center widget-vs-contents mb-4">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>{{ match.nom }}</td>
+            <td>{{ match.stade }}</td>
+           <td>
+  <h4 style="font-size: 24px;">{{ match.score }}</h4>
+</td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+{% endfor %}
+
+    </div>
+  </div>
+</div>
+
 
                 </div>
               
