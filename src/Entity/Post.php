@@ -20,10 +20,23 @@ class Post
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"Titre manquant")]
+    #[Assert\Regex(
+        pattern: "/^[a-zA-Z]+$/",
+        message: "Le titre ne doit contenir que des lettres"
+    )]
     private ?string $titre_Post = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message:"Contenu manquant")]
+    #[Assert\Length(min: 30, minMessage: "Le texte doit comporter au moins 30 caractères")]
+    /*#[Assert\Regex(
+        pattern: '/\R{3,}/',
+        message: "Le texte doit comporter au moins 3 retours à la ligne"
+    )]*/
+    #[Assert\Regex(
+        pattern: '/(?:\n.*){2}/', 
+        message: "Le texte doit contenir au moins trois retours à la ligne."
+    )]
     private ?string $contenu_Post = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -31,6 +44,10 @@ class Post
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"Auteur manquant")]
+    #[Assert\Regex(
+        pattern: "/^[a-zA-Z]+$/",
+        message: "Le titre ne doit contenir que des lettres"
+    )]
     private ?string $auteur_Post = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

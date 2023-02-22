@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Entity\Commentaire;
+use App\Form\CommentaireType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,23 +50,7 @@ class PostController extends AbstractController
                 }
                 $post->setImagePost($newFilename);
             }
-/*
-           // récupérer le fichier image uploadé
-           $imageFile = $form->get('image_Post')->getData();
 
-        if ($imageFile) {
-            // déplacer le fichier vers un dossier de votre choix
-            $uploadsDirectory = $this->getParameter('uploads_directory');
-            $newFilename = uniqid().'.'.$imageFile->guessExtension();
-            $imageFile->move(
-                $uploadsDirectory,
-                $newFilename
-            );
-
-            // enregistrer le chemin vers le fichier dans l'entité Post
-            $post->setImagePost($uploadsDirectory.'/'.$newFilename);
-        }
-*/
 
             $em->persist($post);
             $em->flush();
@@ -92,6 +78,42 @@ public function showF(ManagerRegistry $doctrine): Response {
 
     return $this->render('post/post_show_front.html.twig', ['post' => $post]);
 }
+
+//afficher le post selectionné en front
+#[Route('/post/post_show_one/{id}', name: 'post_show_one')]
+public function showO(Request $request, ManagerRegistry $doctrine, int $id): Response
+{
+    $em = $doctrine->getManager();
+    $post = $em->getRepository(Post::class)->find($id);
+    $commentaires = new Commentaire();
+    //$commentaires->setDateCreationCommentaire(new \DateTime());
+    $form = $this->createForm(CommentaireType::class,$commentaires);
+    //$form->handleRequest($req);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $commentaires = $form->getData();
+        $commentaires->setDateCreationCommentaire(new \DateTime());
+        $commentaires->setPost($post); // On associe le commentaire au post
+        $em->persist($commentaires);
+        $em->flush();
+        return $this->redirectToRoute('post_show_one', ['id' => $id]);
+    }
+    if (!$post) {
+        throw $this->createNotFoundException('The post was not found');
+    }
+
+    //$content = $post->getContenuPost();
+    //$parts = explode("\n", $content, 3);
+    /*foreach ($parts as $part) {
+        echo '<p>' . trim($part) . '</p>';
+    }*/
+    return $this->render('post/post_show_one.html.twig', [
+        'post' => $post,
+        'commentaires' => $commentaires,
+        'form' => $form->createView(),
+    ]);
+    //'parts' => $parts,
+}
+
 
 
 #[Route('/post/{id}/post_delete', name: 'post_delete')]

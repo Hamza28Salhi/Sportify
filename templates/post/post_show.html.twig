@@ -389,6 +389,7 @@
     <th>Titre du post</th>
     <th>Contenu du post</th>
     <th>Auteur du post</th>
+    <th>Image du post</th>
     <th>Date de creation</th>
 
       <th>Action</th>
@@ -397,9 +398,15 @@
     <tr>
       <td>{{i.getIdPost()}}</td>
       <td>{{i.getTitrePost()}}</td>
-      <td>{{i.getContenuPost()}}</td>
-      <td>{{i.getAuteurPost()}}</td> 
-      <td> <img src="{{ asset('images/posts/' ~ i.getImagePost()) }}" alt="Image du post"> </td>
+      <td>{% if i.getContenuPost()|length <= 50 %}
+        {{ i.getContenuPost() }}
+      {% else %}
+        {{ i.getContenuPost()|slice(0, 50) ~ '...' }}
+      {% endif %}
+      </td>
+      {#<td>{{ i.getContenuPost() }} </td>#}
+      <td>{{i.getAuteurPost()}}</td>
+      <td> <img src="{{ asset('images/posts/' ~ i.getImagePost()) }}" alt="Image du post" style="max-height: 250px"> </td>
       {#<td>{{i.getCommentaires()[0].getAuteurCommentaire()}}</td>#}
       <td>{{i.getDateCreationPost() |date('Y-m-d h:i')}}</td>
 

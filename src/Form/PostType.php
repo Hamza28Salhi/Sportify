@@ -28,6 +28,7 @@ class PostType extends AbstractType
             ->add('contenu_Post')
             ->add('auteur_Post')
             ->add('image_Post', FileType::class, [
+                'mapped' => false,
                 'required' => false,
                 'label' => 'Image du Post'
             ])

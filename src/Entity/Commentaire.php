@@ -29,7 +29,6 @@ class Commentaire
     private ?string $auteur_Commentaire = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\NotBlank(message:"date de creation manquante")]
     private ?\DateTimeInterface $dateCreation_Commentaire = null;
 
     #[ORM\ManyToOne(inversedBy: 'commentaires')]

@@ -80,7 +80,7 @@
 
     </header>
 
-     <div class="hero overlay" style="background-image: url('{{ asset('images/bg_3.jpg') }}');">
+    <div class="hero overlay" style="background-image: url('{{ asset('images/bg_3.jpg') }}');">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-5 mx-auto text-center">
@@ -104,34 +104,31 @@
       </div>
 
 
-     <div class="row">
-        <div class="col-lg-4 mb-4">
-          <div class="custom-media d-block">
-            <div class="img mb-4">
-              <a href="single.html"><img src="{{ asset('images/img_1.jpg') }}" alt="Image" class="img-fluid"></a>
-            </div>
-            <div class="text">
-              <span class="meta">May 20, 2020</span>
-              <h3 class="mb-4"><a href="#">Romolu to stay at Real Nadrid?</a></h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus deserunt saepe tempora dolorem.</p>
-              <p><a href="#">Read more</a></p>
-            </div>
-          </div>
-        </div>
+  <div class="row">
+        
 
      
-      <div class="row">
+    <div class="row">
       {% for i in post %}
         <div class="col-lg-4 mb-4">
           <div class="custom-media d-block">
+            {#<td> <img src="{{ asset('images/posts/' ~ i.getImagePost()) }}" alt="Image du post" style="max-height: 250px"> </td>#}
             {#<div class="img mb-4">  a modifier (affichage d'images) 
               <a href="single.html"> <img src="{{ asset('images/' ~ i.NomProduit ~ '.png') }}" alt="Image"> </a>
             </div>#}
             <div class="text">
-              <span class="meta">{{i.getDateCreationPost() |date('Y-m-d, h:i')}}</span>
-              <h3 class="mb-4"><a href="#">{{i.getTitrePost()}}</a></h3>
-              <p>{{i.getContenuPost()}}</p>
-              <p><a href="#"> Read more</a></p> 
+               <a href="{{ path('post_show_one', {'id': i.getIdPost()}) }}"><img src="{{ asset('images/posts/' ~ i.getImagePost()) }}" alt="Image du post" style="max-height: 200px"></a>
+              {#<h3 class="mb-4"><a href="#">Romolu to stay at Real Nadrid?</a></h3>#}
+              <div ><span class="meta">{{i.getDateCreationPost() |date('Y-m-d, h:i')}}</span> </div>
+             
+              <h3 class="mb-4"><a href="{{ path('post_show_one', {'id': i.getIdPost()}) }}">{{i.getTitrePost()}}</a></h3>
+              
+              <td>{% if i.getContenuPost()|length <= 200 %}
+        {{ i.getContenuPost() }}
+      {% else %}
+        {{ i.getContenuPost()|slice(0, 200) ~ '...' }}
+      {% endif %} </td>
+              <p><a href="{{ path('post_show_one', {'id': i.getIdPost()}) }}"> Voir plus</a></p> 
             </div>
           </div>
         </div>
@@ -141,6 +138,7 @@
         
       </div>
 
+    </div>
       <div class="row justify-content-center">
         <div class="col-lg-7 text-center">
           <div class="custom-pagination">
@@ -262,7 +260,7 @@
 <script src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
 <script src="{{ asset('js/jquery.sticky.js') }}"></script>
 <script src="{{ asset('js/jquery.mb.YTPlayer.min.js') }}"></script>
-<script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script> 
 
 
 

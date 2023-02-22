@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Commentaire;
-//use App\Controller\PostController;
+use App\Controller\PostController;
 use App\Form\CommentaireType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -38,6 +38,23 @@ class CommentaireController extends AbstractController
         return $this->renderForm('commentaire/commentaire_add.html.twig',['form'=>$form]);
     }
 
+    //add front demo
+    #[Route('/commentaire/commentaire_add_front/{id}', name: 'commentaire_add_front')]
+    public function addCommentaireF(ManagerRegistry $doctrine,Request $req, $id): Response {
+        $em = $doctrine->getManager();
+        $commentaire = new Commentaire();
+        $form = $this->createForm(CommentaireType::class,$commentaire);
+        $form->handleRequest($req);
+        if($form->isSubmitted() && $form->isValid()){
+            $commentaire->setDateCreationCommentaire(new \DateTime());
+            $em->persist($commentaire);
+            $em->flush();
+            return $this->redirectToRoute('post_show_one',['id' => $id]);
+        }
+
+        return $this->renderForm('commentaire/commentaire_add.html.twig',['form'=>$form]);
+    }
+
     #[Route('/commentaire/commentaire_show', name: 'commentaire_show')]
 public function list(ManagerRegistry $doctrine): Response {
     $em = $doctrine->getManager();
@@ -62,12 +79,58 @@ public function delete(ManagerRegistry $doctrine, int $id): Response
 
     return $this->redirectToRoute('commentaire_show');
 }
+//supprimer front demo
+#[Route('/commentaire/{id}/{idC}/commentaire_delete_front', name: 'commentaire_delete_front')]
+public function deleteF(ManagerRegistry $doctrine, int $id, int $idC): Response
+{
+    $em = $doctrine->getManager();
+    $commentaire = $em->getRepository(Commentaire::class)->find($idC);
+
+    if (!$commentaire) {
+        throw $this->createNotFoundException('The commentaire was not found');
+    }
+
+    $em->remove($commentaire);
+    $em->flush();
+
+    return $this->redirectToRoute('post_show_one',['id' => $id]);
+}
+
+//update front demo
+#[Route('/commentaire/commentaire_update_front/{id}/{idC}', name: 'commentaire_update_front')]
+public function updateF(ManagerRegistry $doctrine, Request $request, $id, $idC): Response
+{
+    $em = $doctrine->getManager();
+    $commentaire = $em->getRepository(Commentaire::class)->find($idC); 
+
+    if (!$commentaire) {
+        throw new NotFoundHttpException('commentaire not found');
+    }
+
+    $form = $this->createForm(CommentaireType::class, $commentaire);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $commentaire->setDateCreationCommentaire(new \DateTime());
+        $em->flush();
+
+        return $this->redirectToRoute('post_show_one',['id' => $id]);
+    }
+
+
+    
+
+    return $this->render('commentaire/commentaire_update.html.twig', [
+        'commentaire' => $commentaire,
+        'form' => $form->createView(),
+    ]);
+}
 
 #[Route('/commentaire/commentaire_update/{id}', name: 'commentaire_update')]
 public function update(ManagerRegistry $doctrine, Request $request, $id): Response
 {
     $em = $doctrine->getManager();
-    $commentaire = $em->getRepository(Commentaire::class)->find($id); //on a changé utilisateur par Commentaire
+    $commentaire = $em->getRepository(Commentaire::class)->find($id); 
 
     if (!$commentaire) {
         throw new NotFoundHttpException('commentaire not found');
@@ -82,6 +145,9 @@ public function update(ManagerRegistry $doctrine, Request $request, $id): Respon
 
         return $this->redirectToRoute('commentaire_show');
     }
+
+
+    
 
     return $this->render('commentaire/commentaire_update.html.twig', [
         'commentaire' => $commentaire,
