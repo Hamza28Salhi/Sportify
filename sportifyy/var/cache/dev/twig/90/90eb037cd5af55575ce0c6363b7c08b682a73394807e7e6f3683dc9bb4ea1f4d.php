@@ -209,7 +209,10 @@ class __TwigTemplate_a2755bec7874bcf5eb519ff9f1ece80a5d0a4f5310b29ed9837667056e7
 
     </header>
 
-    <div class=\"hero overlay\" style=\"background-image: url('images/bg_3.jpg');\">
+    <div class=\"col-xl-12 hero overlay\"> <img src=\"";
+        // line 79
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/bg_3.jpg"), "html", null, true);
+        echo "\">  </img>
       <div class=\"container\">
         <div class=\"row align-items-center\">
           <div class=\"col-lg-5 ml-auto\">
@@ -829,7 +832,7 @@ class __TwigTemplate_a2755bec7874bcf5eb519ff9f1ece80a5d0a4f5310b29ed9837667056e7
 
     public function getDebugInfo()
     {
-        return array (  817 => 572,  811 => 569,  807 => 568,  803 => 567,  799 => 566,  795 => 565,  791 => 564,  787 => 563,  783 => 562,  779 => 561,  775 => 560,  771 => 559,  767 => 558,  763 => 557,  758 => 556,  751 => 555,  743 => 574,  741 => 555,  645 => 462,  629 => 449,  599 => 422,  583 => 409,  567 => 396,  550 => 382,  534 => 369,  518 => 356,  389 => 230,  379 => 223,  348 => 195,  338 => 188,  321 => 174,  311 => 167,  294 => 153,  284 => 146,  254 => 119,  187 => 55,  166 => 36,  159 => 35,  150 => 28,  145 => 26,  140 => 24,  135 => 22,  130 => 20,  125 => 18,  121 => 17,  117 => 16,  113 => 15,  109 => 14,  104 => 12,  99 => 10,  96 => 9,  89 => 8,  76 => 5,  67 => 576,  65 => 35,  58 => 30,  56 => 8,  52 => 6,  50 => 5,  44 => 1,);
+        return array (  820 => 572,  814 => 569,  810 => 568,  806 => 567,  802 => 566,  798 => 565,  794 => 564,  790 => 563,  786 => 562,  782 => 561,  778 => 560,  774 => 559,  770 => 558,  766 => 557,  761 => 556,  754 => 555,  746 => 574,  744 => 555,  648 => 462,  632 => 449,  602 => 422,  586 => 409,  570 => 396,  553 => 382,  537 => 369,  521 => 356,  392 => 230,  382 => 223,  351 => 195,  341 => 188,  324 => 174,  314 => 167,  297 => 153,  287 => 146,  257 => 119,  214 => 79,  187 => 55,  166 => 36,  159 => 35,  150 => 28,  145 => 26,  140 => 24,  135 => 22,  130 => 20,  125 => 18,  121 => 17,  117 => 16,  113 => 15,  109 => 14,  104 => 12,  99 => 10,  96 => 9,  89 => 8,  76 => 5,  67 => 576,  65 => 35,  58 => 30,  56 => 8,  52 => 6,  50 => 5,  44 => 1,);
     }
 
     public function getSourceContext()
@@ -912,7 +915,7 @@ class __TwigTemplate_a2755bec7874bcf5eb519ff9f1ece80a5d0a4f5310b29ed9837667056e7
 
     </header>
 
-    <div class=\"hero overlay\" style=\"background-image: url('images/bg_3.jpg');\">
+    <div class=\"col-xl-12 hero overlay\"> <img src=\"{{asset ('images/bg_3.jpg')}}\">  </img>
       <div class=\"container\">
         <div class=\"row align-items-center\">
           <div class=\"col-lg-5 ml-auto\">

@@ -161,7 +161,7 @@ class __TwigTemplate_fbfb842534f2789aa8ff4ee848dce1ee4fb65eb5a1331a80bdcfe054bde
                                 <a class=\"small\" href=\"forgot-password.html\">Forgot Password?</a>
                             </div>
                             <div class=\"text-center\">
-                                <a class=\"small\" href=\"login    \">Already have an account? Login!</a>
+                                <a class=\"small\" href=\"login\">Already have an account? Login!</a>
                             </div>
                         </div>
                     </div>
@@ -294,7 +294,7 @@ class __TwigTemplate_fbfb842534f2789aa8ff4ee848dce1ee4fb65eb5a1331a80bdcfe054bde
                                 <a class=\"small\" href=\"forgot-password.html\">Forgot Password?</a>
                             </div>
                             <div class=\"text-center\">
-                                <a class=\"small\" href=\"login    \">Already have an account? Login!</a>
+                                <a class=\"small\" href=\"login\">Already have an account? Login!</a>
                             </div>
                         </div>
                     </div>

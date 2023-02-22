@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vérification de commande{% endblock %}
+
+{% block body %}
+  <h1>Vérification de commande</h1>
+  <p>Vous avez sélectionné le produit "{{ produit.nom_produit }}" pour une quantité de {{ quantite }}. Le prix total est de {{ prix_total }} €.</p>
+  
+  <h2>Coordonnées de contact</h2>
+  <form action="{{ path('envoyer_message') }}" method="POST">
+    <div>
+      <label for="nom">Nom :</label>
+      <input type="text" id="nom" name="nom" required>
+    </div>
+    <div>
+      <label for="email">E-mail :</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+      <label for="telephone">Téléphone :</label>
+      <input type="tel" id="telephone" name="telephone">
+    </div>
+    <div>
+      <label for="message">Message :</label>
+      <textarea id="message" name="message"></textarea>
+    </div>
+    <button type="submit">Envoyer</button>
+  </form>
+{% endblock %}
