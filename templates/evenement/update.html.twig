@@ -31,7 +31,8 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <!--<div class="col-lg-5 d-none d-lg-block bg-register-image"></div>-->
+                    <img src="{{asset('img/add.png')}}" class="col-lg-5 d-none d-lg-block "> </img>
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
@@ -39,11 +40,7 @@
                             </div>
                             {{form_start(form, {'attr': {'novalidate': 'novalidate'}})}}
                             <table>
-                            <tr>
-                            <td>{{ form_label(form.id_evenement,"ID de l'événement")  }}</td>
-                            <td>{{ form_widget(form.id_evenement) }}</td>  
-                            <td> {{ form_errors(form.id_evenement) }} </td>
-                            </tr>
+                            
                             
                             <tr>
                             <td> {{ form_label(form.date,"date de l'événement")  }} </td>
@@ -68,6 +65,13 @@
                             <td>  {{ form_widget(form.description) }} </td>  
                             <td> {{ form_errors(form.description) }} </td>
                             </tr>
+
+                            <tr>
+                            <td> {{ form_label(form.titre,"titre de l'événement")  }} </td>
+                            <td>  {{ form_widget(form.titre) }} </td>  
+                            <td> {{ form_errors(form.titre) }} </td>
+                            </tr>
+                    
 
 
 

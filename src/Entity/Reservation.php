@@ -17,32 +17,37 @@ class Reservation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    #[Assert\NotBlank(message:"ID is required")]
-    private ?int $id_reservation = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\NotBlank(message:"date reservation is required")]
-    private ?\DateTimeInterface $date_reservation = null;
-     
-
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"heured is required")]
-    private ?string $heureD = null;
     
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"le nom is required")]
+    private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"heuref is required")]
-    private ?string $heureF = null;
-    
+    #[Assert\NotBlank(message:"le prénom is required")]
+    private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $typeSport = null;
-    #[Assert\NotBlank(message:"typeSport is required")]
+    #[Assert\NotBlank(message:"l'adresse mail is required")]
+    #[Assert\Email(message:"l'adresse mail est non valide")]
+    private ?string $adresse = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"coût is required")]
-    private ?string $cout = null;
+    #[Assert\NotBlank(message:"le numéro de téléphone is required")]
+    #[Assert\Positive(message:"le numéro de téléphone doit etre positive")]
+    /*#[Assert\Regex(
+        pattern:"[0-9]{1,8}$",
+         message:"Le numéro de téléphone doit être composé de 1 à 8 chiffres"
+     )]*/
+   
+   
+    //#[Assert\Length(min =8,max=8,exactMessage = "Le numéro de téléphone doit être composé de 8 chiffres")]
+    //#[ORM\Column(type="string", length=8, nullable=true)]
+    //private $telephone;
+    private ?string $telephone = null;    
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"paiement is required")]
+    private ?string $paiement = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?Evenement $evenement = null;
@@ -52,74 +57,65 @@ class Reservation
         return $this->id;
     }
 
-    public function getIdReservation(): ?int
+    
+
+    public function getNom(): ?string
     {
-        return $this->id_reservation;
+        return $this->nom;
     }
 
-    public function setIdReservation(int $id_reservation): self
+    public function setNom(string $nom=null): self
     {
-        $this->id_reservation = $id_reservation;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getDateReservation(): ?\DateTimeInterface
+    public function getPrenom(): ?string
     {
-        return $this->date_reservation;
+        return $this->prenom;
     }
 
-    public function setDateReservation(\DateTimeInterface $date_reservation): self
+    public function setPrenom(string $prenom=null): self
     {
-        $this->date_reservation = $date_reservation;
+        $this->prenom = $prenom;
 
         return $this;
     }
 
-    public function getHeureD(): ?string
+    public function getAdresse(): ?string
     {
-        return $this->heureD;
+        return $this->adresse;
     }
 
-    public function setHeureD(string $heureD): self
+    public function setAdresse(string $adresse=null): self
     {
-        $this->heureD = $heureD;
+        $this->adresse = $adresse;
 
         return $this;
     }
 
-    public function getHeureF(): ?string
+    public function getTelephone(): ?string
     {
-        return $this->heureF;
+        return $this->telephone;
     }
 
-    public function setHeureF(string $heureF): self
+    public function setTelephone(string $telephone=null): self
     {
-        $this->heureF = $heureF;
+        $this->telephone = $telephone;
 
         return $this;
     }
 
-    public function getTypeSport(): ?string
+
+    public function getPaiement(): ?string
     {
-        return $this->typeSport;
+        return $this->paiement;
     }
 
-    public function setTypeSport(string $typeSport): self
+    public function setPaiement(string $paiement=null): self
     {
-        $this->typeSport = $typeSport;
-
-        return $this;
-    }
-
-    public function getCout(): ?string
-    {
-        return $this->cout;
-    }
-
-    public function setCout(string $cout): self
-    {
-        $this->cout = $cout;
+        $this->paiement = $paiement;
 
         return $this;
     }

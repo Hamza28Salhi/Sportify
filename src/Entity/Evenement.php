@@ -17,9 +17,7 @@ class Evenement
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    #[Assert\NotBlank(message:"ID is required")]
-    private ?int $id_evenement = null;
+    
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank(message:"date is required")]
@@ -40,6 +38,13 @@ class Evenement
     #[ORM\OneToMany(mappedBy: 'evenement', targetEntity: Reservation::class)]
     private Collection $Reservations;
 
+    #[ORM\Column(length: 255,nullable:true)]
+    public ?string $even_pic = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"titre is required")]
+    private ?string $titre = null;
+
     public function __construct()
     {
         $this->Reservations = new ArrayCollection();
@@ -50,24 +55,16 @@ class Evenement
         return $this->id;
     }
 
-    public function getIdEvenement(): ?int
-    {
-        return $this->id_evenement;
-    }
+    
 
-    public function setIdEvenement(int $id_evenement): self
-    {
-        $this->id_evenement = $id_evenement;
-
-        return $this;
-    }
+    
 
     public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(\DateTimeInterface $date=null): self
     {
         $this->date = $date;
 
@@ -79,7 +76,7 @@ class Evenement
         return $this->type;
     }
 
-    public function setType(string $type): self
+    public function setType(string $type=null): self
     {
         $this->type = $type;
 
@@ -91,7 +88,7 @@ class Evenement
         return $this->lieu;
     }
 
-    public function setLieu(string $lieu): self
+    public function setLieu(string $lieu=null): self
     {
         $this->lieu = $lieu;
 
@@ -103,7 +100,7 @@ class Evenement
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(string $description=null): self
     {
         $this->description = $description;
 
@@ -136,6 +133,30 @@ class Evenement
                 $Reservation->setEvenement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEvenPic(): ?string
+    {
+        return $this->even_pic;
+    }
+
+    public function setEvenPic(string $even_pic=null): self
+    {
+        $this->even_pic = $even_pic;
+
+        return $this;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): self
+    {
+        $this->titre = $titre;
 
         return $this;
     }

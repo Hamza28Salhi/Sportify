@@ -31,7 +31,8 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <!--<div class="col-lg-5 d-none d-lg-block bg-register-image"></div>-->
+                    <img src="{{asset('img/add.png')}}" class="col-lg-5 d-none d-lg-block "> </img>
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
@@ -39,40 +40,38 @@
                             </div>
                             {{form_start(form, {'attr': {'novalidate': 'novalidate'}})}}
 <table>
+
+
 <tr>
-<td>{{ form_label(form.id_reservation,"ID de réservation")  }}</td>
-<td>{{ form_widget(form.id_reservation) }}</td>  
-<td> {{ form_errors(form.id_reservation) }} </td>
+<td> {{ form_label(form.nom,"nom de réservation")  }} </td>
+<td>{{ form_widget(form.nom) }} </td>  
+<td> {{ form_errors(form.nom) }}</td>
 </tr>
 
 <tr>
-<td> {{ form_label(form.date_reservation,"date de réservation")  }} </td>
-<td>{{ form_widget(form.date_reservation) }} </td>  
-<td> {{ form_errors(form.date_reservation) }}</td>
+<td> {{ form_label(form.prenom,"prenom de réservation")  }} </td>
+<td>{{ form_widget(form.prenom) }} </td>  
+<td> {{ form_errors(form.prenom) }}</td>
 </tr>
 
 <tr>
-<td>{{ form_label(form.heure_d,"heure de début réservation")  }}</td>
-<td> {{ form_widget(form.heure_d) }} </td>  
-<td> {{ form_errors(form.heure_d) }} </td>
+<td> {{ form_label(form.adresse,"adresse mail de réservation")  }} </td>
+<td>  {{ form_widget(form.adresse) }} </td>  
+<td> {{ form_errors(form.adresse) }} </td>
 </tr>
 
 <tr>
-<td> {{ form_label(form.heure_f,"heure de fin réservation")  }} </td>
-<td>  {{ form_widget(form.heure_f) }} </td>  
-<td> {{ form_errors(form.heure_f) }} </td>
+<td> {{ form_label(form.telephone,"numéro de téléphone de réservation")  }} </td>
+<td>  {{ form_widget(form.telephone) }} </td>  
+<td> {{ form_errors(form.telephone) }} </td>
 </tr>
 
-<tr>
-<td> {{ form_label(form.type_sport,"type sport de réservation")  }} </td>
-<td>  {{ form_widget(form.type_sport) }} </td>  
-<td> {{ form_errors(form.type_sport) }} </td>
-</tr>
+
 
 <tr>
-<td> {{ form_label(form.cout,"cout de réservation")  }} </td>
-<td>  {{ form_widget(form.cout) }} </td>  
-<td> {{ form_errors(form.cout) }} </td>
+<td> {{ form_label(form.paiement,"paiement de réservation")  }} </td>
+<td>  {{ form_widget(form.paiement) }} </td>  
+<td> {{ form_errors(form.paiement) }} </td>
 </tr>
 
 

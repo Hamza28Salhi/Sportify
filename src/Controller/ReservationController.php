@@ -31,7 +31,7 @@ class ReservationController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $em->persist($reservation);
             $em->flush();
-            return $this->redirectToRoute('reservation_add');
+            return $this->redirectToRoute('reservation_list');
         }
 
         return $this->renderForm('reservation/addR.html.twig',['form'=>$form]);

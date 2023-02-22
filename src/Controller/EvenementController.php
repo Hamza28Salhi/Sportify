@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Repository\EvenementRepository;
 use App\Entity\Reservation;
 use App\Form\FormReservationType;
+use App\Service\FileUploader;
+use Symfony\Component\HttpFoundation\File\UploadedFile ;
 
 
 class EvenementController extends AbstractController
@@ -26,15 +28,20 @@ class EvenementController extends AbstractController
     }
 
     #[Route('/evenement/add', name: 'evenement_add')]
-    public function addEvenement(ManagerRegistry $doctrine,Request $req): Response {
+    public function addEvenement(ManagerRegistry $doctrine,Request $req,FileUploader $fileUploader): Response {
         $em = $doctrine->getManager();
         $Evenement = new Evenement();
         $form = $this->createForm(FormEvenementType::class,$Evenement);
         $form->handleRequest($req);
         if($form->isSubmitted() && $form->isValid()){
+            $file = $form['even_pic']->getData();
+            if ($file) {
+                $fileName = $fileUploader->upload($file);
+                $Evenement->setEvenPic($fileName);
+            }
             $em->persist($Evenement);
             $em->flush();
-            return $this->redirectToRoute('evenement_add');
+            return $this->redirectToRoute('evenement_list');
         }
 
         return $this->renderForm('evenement/add.html.twig',['form'=>$form]);
@@ -47,6 +54,14 @@ class EvenementController extends AbstractController
         $evenement = $em->getRepository(Evenement::class)->findAll();
     
         return $this->render('evenement/list.html.twig', ['evenement' => $evenement]);
+    }
+
+    #[Route('/evenement/listE', name: 'evenement_listE')]
+    public function listE(ManagerRegistry $doctrine): Response {
+        $em = $doctrine->getManager();
+        $evenement = $em->getRepository(Evenement::class)->findAll();
+    
+        return $this->render('evenement/listE.html.twig', ['evenement' => $evenement]);
     }
 
     #[Route('/evenement/{id}/delete', name: 'evenement_delete')]
@@ -66,7 +81,7 @@ public function delete(ManagerRegistry $doctrine, int $id): Response
 }
 
 #[Route('/evenement/update/{id}', name: 'evenement_update')]
-public function update(ManagerRegistry $doctrine, Request $request, $id): Response
+public function update(ManagerRegistry $doctrine, Request $request, $id,FileUploader $fileUploader): Response
 {
     $em = $doctrine->getManager();
     $evenement = $em->getRepository(Evenement::class)->find($id);
@@ -77,6 +92,11 @@ public function update(ManagerRegistry $doctrine, Request $request, $id): Respon
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+        $file = $form['even_pic']->getData();
+            if ($file) {
+                $fileName = $fileUploader->upload($file);
+                $evenement->setEvenPic($fileName);
+            }
         $em->flush();
 
         return $this->redirectToRoute('evenement_list');
@@ -87,6 +107,17 @@ public function update(ManagerRegistry $doctrine, Request $request, $id): Respon
         'form' => $form->createView(),
     ]);
 }
+
+#[Route(path: '/profile', name: 'home')]
+    public function home(EvenementRepository $evenement,ManagerRegistry $doctrine): Response
+    {
+        $em = $doctrine->getManager();
+        $EvenementRepository = $em->getRepository(Evenement::class);
+        return $this->render('evenement/listE.html.twig', [
+            'evenement' => $evenement,
+            
+        ]);
+    }
 
 
 }

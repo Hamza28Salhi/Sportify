@@ -382,22 +382,22 @@
                                     
                                         <tr>
                                              <th>Id</th>
-                                            <th>Date</th>
-                                            <th>heured</th>
-                                            <th>heuref</th>
-                                            <th>typesport</th>
-                                            <th>cout</th>
+                                            <th>Nom</th>
+                                            <th>Prenom</th>
+                                            <th>Adresse</th>
+                                            <th>Telephone</th>
+                                            <th>paiement</th>
    
       <th>Action</th>
   </tr>
   {% for i in reservation %}
     <tr>
       <td>{{i.id}}</td>
-      <td>{{i.datereservation |date('Y-m-d')}}</td>
-      <td>{{i.heured}}</td>
-      <td>{{i.heuref}}</td>
-      <td>{{i.typesport}}</td>
-      <td>{{i.cout}}</td>
+      <td>{{i.nom}}</td>
+      <td>{{i.prenom}}</td>
+      <td>{{i.adresse}}</td>
+      <td>{{i.telephone}}</td>
+      <td>{{i.paiement}}</td>
 
       <td>  
       <button class="btn btn-primary">

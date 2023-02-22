@@ -14,21 +14,30 @@ use App\Entity\Evenement;
 
 
 
+
 class FormReservationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
         
-            ->add('id_reservation')
-            ->add('date_reservation')
-            ->add('heure_d')
-            ->add('heure_f')
-            ->add('type_sport')
-            ->add('cout')
+            
+          
+            ->add('nom')
+            ->add('prenom')
+            ->add('adresse')
+            ->add('telephone')          
+            ->add('paiement', ChoiceType::class,
+                array(
+                    'choices' => array(
+                        'Par chèque' => 'Par chèque',
+                        'Virement' => 'Virement',
+                        'Espèces' => 'Espèces',
+                    )
+                ))
             ->add('evenement',EntityType::class,
                ['class'=>Evenement::class,
-             'choice_label'=>'id_evenement',
+             'choice_label'=>'description',
         'multiple'=>false]) 
             ->add('save',SubmitType::class)
                     ;

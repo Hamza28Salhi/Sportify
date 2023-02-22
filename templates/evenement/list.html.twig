@@ -372,6 +372,9 @@
                     <button class="btn btn-primary">
   <a href="{{ path('evenement_add' ) }}" style="color: white;">Add evenement</a>
 </button>
+<button class="btn btn-primary">
+  <a href="{{ path('home' ) }}" style="color: white;">go to home</a>
+</button>
                        
                         </div>
                         <div class="card-body">
@@ -386,6 +389,7 @@
                                             <th>Type</th>
                                             <th>Lieu</th>
                                             <th>Description</th>
+                                            <th>evenpic</th>
    
                                           <th>Action</th>
   </tr>
@@ -396,6 +400,7 @@
       <td>{{i.type}}</td>
       <td>{{i.lieu}}</td>
       <td>{{i.description}}</td>
+      <td><img class="img-profile " src="{{ asset('uploads/' ~ i.even_pic) }}" style="max-height: 80px"></td>
         <td>
         <button class="btn btn-primary">
             <a href="{{ path('evenement_delete', {'id': i.id}) }}"style="color: white;">Delete</a>
