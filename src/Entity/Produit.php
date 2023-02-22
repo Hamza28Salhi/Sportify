@@ -42,12 +42,14 @@ class Produit
     #[ORM\ManyToOne(inversedBy: 'produit')]
     #[Assert\NotBlank(message:"categorie is required")]
     private ?Categorie $categorie = null;
-
+    
     #[ORM\Column(length: 255, nullable: true)]
     
     private ?string $image = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"quantite is required")]
+   
     private ?int $quantite = null;
 
     public function getId(): ?int

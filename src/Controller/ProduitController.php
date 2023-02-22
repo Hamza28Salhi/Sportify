@@ -134,4 +134,40 @@ public function update(ManagerRegistry $doctrine, Request $request, $id, FileUpl
 
 
 
+#[Route('/produit/recherche', name: 'produit_recherche')]
+public function searchProduit(Request $request)
+{
+    $searchTerm = $request->request->get('searchTerm');
+
+    $produits = $this->getDoctrine()
+        ->getRepository(Produit::class)
+        ->createQueryBuilder('p')
+        ->where('p.nom_produit LIKE :searchTerm')
+        ->orWhere('p.prix_produit LIKE :searchTerm')
+        ->orWhere('p.marque_produit LIKE :searchTerm')
+        ->orWhere('p.categorie LIKE :searchTerm')
+        ->setParameter('searchTerm', '%' . $searchTerm . '%')
+        ->getQuery()
+        ->getResult();
+
+    return $this->render('produit/index.html.twig', [
+        'produits' => $produits,
+    ]);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
