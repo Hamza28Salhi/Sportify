@@ -107,6 +107,12 @@
         <div class="row">
           <div class="col-lg-7">
             <form action="#">
+            
+                <div class="col-6 title-section">
+          <h2 class="heading">General informations: </h2>
+                </div>
+
+              
               <div class="form-group">
                 <li>Full Name: </li>
                 <li class="form-control">{{app.user.full_name}}</li>
@@ -119,6 +125,28 @@
                 <li>Date Of Birth: </li>
                 <li class="form-control">{{app.user.date_naiss | date('Y-m-d')}}</li>
               </div>
+              <div class="form-group">
+                <li>Address: </li>
+                <li class="form-control">{{app.user.address}}</li>
+              </div>
+              {% if is_granted('ROLE_BOBO') %}
+              <br></br>
+              <div class="col-6 title-section">
+          <h2 class="heading">Shop Manager : </h2>
+                </div>
+              <div class="form-group">
+                <li>Tax registration number: </li>
+                <li class="form-control">{{app.user.matr_fisc}}</li>
+              </div>
+              <div class="form-group">
+                <li>Departement : </li>
+                <li class="form-control">{{app.user.prod_category}}</li>
+              </div>
+              <div class="form-group">
+                <li>Job title : </li>
+                <li class="form-control">{{app.user.job_position}}</li>
+              </div>
+              {% endif %}
               <div class="form-group">
                 <a href="{{ path('profile_update', {'id': app.user.Id}) }}" class="btn btn-primary py-3 px-5">  Update</a>
               </div>

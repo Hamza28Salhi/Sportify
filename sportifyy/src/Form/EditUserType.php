@@ -22,13 +22,7 @@ class EditUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-             ->add('full_name', TextType::class, [
-                 'constraints' => [
-                     new NotBlank([
-                         'message' => 'Please add your name',
-                     ]),
-                 ],
-             ])
+             ->add('full_name')
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new NotBlank([

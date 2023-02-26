@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -62,17 +63,7 @@ class RegistrationFormType extends AbstractType
                     ]
             ])
 
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
+            
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
@@ -95,9 +86,26 @@ class RegistrationFormType extends AbstractType
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+                    
                 ],
+                
             ])
-        ;
+            
+            ->add('address', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please add your address',
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('show_second_form', CheckboxType::class, [
+                'required' => false,
+                
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

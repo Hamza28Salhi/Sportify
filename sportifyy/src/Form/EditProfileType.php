@@ -14,21 +14,17 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class EditProfileType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('full_name',TextType::class, [
-            'constraints' => [
-                new NotBlank([
-                    'message' => 'Please add your name',
-                ]),
-            ],
-            
-        ])
+        ->add('full_name')
+        ->add('address')
         ->add('email', EmailType::class, [
             'constraints' => [
                 new NotBlank([
@@ -54,16 +50,38 @@ class EditProfileType extends AbstractType
             ],
         ])
         ->add('date_naiss')
-        
-        
         ->add('submit', SubmitType::class)
     ;
+
+        if ($options['is_bobo']) {
+            $builder
+            ->add('matr_fisc', TextType::class, [
+                'constraints' => [
+                    new Assert\Regex([
+                        'pattern' => '/^\d{7}\d\/\d\/\d\/\d{3}$/',
+                        'message' => 'Please enter a valid string in the format "1234567x/x/x/xxx".'
+                    ]),
+                    new Assert\Length([
+                        'min' => 16,
+                        'max' => 16,
+                        'exactMessage' => 'Length should be 13'
+                    ])
+                ]
+            ])
+            ->add('job_position')
+            ->add('prod_category');
+        }
+        
+        
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'is_bobo' => false,
         ]);
+        
     }
 }

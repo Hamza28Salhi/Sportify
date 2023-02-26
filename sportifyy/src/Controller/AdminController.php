@@ -13,6 +13,7 @@ use App\Form\EditUserType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Service\FileUploader;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 class AdminController extends AbstractController
@@ -22,6 +23,9 @@ class AdminController extends AbstractController
     {
         return $this->render('user/updateProfile.html.twig');
     }
+
+   
+
 
 
     #[Route('/admin', name: 'index')]
@@ -118,6 +122,7 @@ public function search(Request $request)
     {
         $form = $this->createForm(SearchFormType::class);
         $form->handleRequest($request);
+        $searchQuery = $request->query->get('search');
 
         $results = [];
 
@@ -129,8 +134,19 @@ public function search(Request $request)
         return $this->render('list.html.twig', [
             'search_form' => $form->createView(),
             'results' => $results,
+            'searchQuery' => $searchQuery
         ]);
     }
+
+
+    #[Route('admin/{sortBy}/{sortOrder<[^/]+>}', name: 'user_sort')]
+    public function afficheC(ManagerRegistry $doctrine, $sortBy = 'id', $sortOrder = 'asc'): Response {
+        $em = $doctrine->getManager();
+        $sortOrder = str_replace('/', '', $sortOrder);
+        $user = $em->getRepository(User::class)->findAllOrderedByProperty($sortBy, $sortOrder);
+        return $this->render('admin/list.html.twig', ['user' => $user]);
+    }
+
 
 
 }

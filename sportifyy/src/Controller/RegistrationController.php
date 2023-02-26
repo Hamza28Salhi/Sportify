@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Form\SecondFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,9 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            
+            $showSecondForm = $form->get('show_second_form')->getData();
             // encode the plain password
             $file = $form['user_pic']->getData();
             if ($file) {
@@ -42,16 +46,53 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+           
 
+            if  ($showSecondForm) {
+                $entityManager->persist($user);
+            $entityManager->flush();
+
+                return $this->redirectToRoute('app_register2', ['id' => (int) $user->getId()]);
+            }
+            else{
+            // do anything else you need here, like send an email
             $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_login');
+        }
+    }
+
+
+        return $this->render('registration/register.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/register2/{id}', name: 'app_register2')]
+    public function register2(Request $request, EntityManagerInterface $entityManager, $id): Response
+    {
+        $user = $entityManager->getRepository(User::class)->find($id);
+        $secondForm = $this->createForm(secondFormType::class, $user);
+        $secondForm->handleRequest($request);
+
+        if ($secondForm->isSubmitted() && $secondForm->isValid()) {
+
+           
+            
+            // encode the plain password
+           
+
+            
             $entityManager->flush();
             // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+
+
+        return $this->render('registration/register2.html.twig', [
+            'secondForm' => $secondForm->createView(),
         ]);
     }
 

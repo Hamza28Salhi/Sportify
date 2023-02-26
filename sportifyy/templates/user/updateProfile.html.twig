@@ -98,13 +98,17 @@
       
     
           
-            <div class="site-section">
+    <div class="site-section">
       <div class="">
         <div class="row">
           <div class="col-lg-7">
+          
     {{ form_start(editprofileForm,{'attr': {'novalidate': 'novalidate'}} ) }}
             {{ form_start(editprofileForm) }} 
             
+            <div class="col-6 title-section">
+          <h2 class="heading">General</h2>
+                </div>
               <div class="form-group">
                 <li>Full Name: </li>
                 <a class="form-group">{{ form_widget(editprofileForm.full_name)}}</a>
@@ -117,12 +121,49 @@
                 <li>Date Of Birth: </li>
                 <a class="form-group">{{ form_widget(editprofileForm.date_naiss) }}</a>
               </div>
+              <div class="form-group">
+                <li>Address: </li>
+                <a class="form-group">{{ form_widget(editprofileForm.address) }}</a>
+              </div>
+              <div class="form-group">
+                <li>Profile Picture: </li>
+                <a class="form-group">{{ form_widget(editprofileForm.user_pic) }}</a>
+              </div>
+              </div>
+
+              {% if is_bobo %}
+              <div class="col-lg-4 ml-auto">
+            
+
+            <ul class="list-unstyled">
+            <div class="col-6 title-section">
+          <h2 class="heading">Shop Manager</h2>
+                </div>
+              <div class="form-group">
+                <li>Tax registration number: </li>
+                <a class="form-group">{{ form_widget(editprofileForm.matr_fisc) }}</a>
+              </div>
+              <div class="mb-2">
+                <li>Departement: </li>
+                <a class="form-group">{{ form_widget(editprofileForm.prod_category) }}</a>
+              </div>
+              <div class="form-group">
+                <li>Job title: </li>
+                <a class="form-group">{{ form_widget(editprofileForm.job_position) }}</a>
+              </div>
               
+            </ul>
+          </div>
+              
+              
+              
+              {% endif %}
               
               {{ form_end(editprofileForm) }}
 
 
 </div>
+
           <div class="col-lg-4 ml-auto">
             
             <ul class="list-unstyled">

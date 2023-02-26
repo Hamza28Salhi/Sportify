@@ -171,9 +171,7 @@
     </div>
 </form>
 
-    {% if searchQuery %}
-        <p>Search results for "{{ searchQuery }}" in "{{ searchField }}":</p>
-    {% endif %}
+    
 
 
                     <!-- Topbar Navbar -->
@@ -317,9 +315,47 @@
 
   <tr>
     <th>Id</th>
-    <th>Full Name</th>
-    <th>Email</th>
-    <th>Date of Birth</th>
+
+
+    <th><a href="{{ path('user_sort', {'sortBy': 'full_name', 'sortOrder': (app.request.get('sortBy') == 'full_name' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+    {% if app.request.get('sortBy') == 'full_name' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        <i class="fas fa-sort-alpha-down"></i>
+      {% else %}
+        <i class="fas fa-sort-alpha-up"></i>
+      {% endif %}
+    {% else %}
+      <i class="fas fa-sort"></i>
+    {% endif %}
+  </a>Full Name</th>
+
+
+    <th><a href="{{ path('user_sort', {'sortBy': 'email', 'sortOrder': (app.request.get('sortBy') == 'email' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+    {% if app.request.get('sortBy') == 'email' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        <i class="fas fa-sort-alpha-down"></i>
+      {% else %}
+        <i class="fas fa-sort-alpha-up"></i>
+      {% endif %}
+    {% else %}
+      <i class="fas fa-sort"></i>
+    {% endif %}
+  </a>Email</th>
+
+
+    <th><a href="{{ path('user_sort', {'sortBy': 'date_naiss', 'sortOrder': (app.request.get('sortBy') == 'date_naiss' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+    {% if app.request.get('sortBy') == 'date_naiss' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        <i class="fas fa-sort-alpha-down"></i>
+      {% else %}
+        <i class="fas fa-sort-alpha-up"></i>
+      {% endif %}
+    {% else %}
+      <i class="fas fa-sort"></i>
+    {% endif %}
+  </a>Date Of Birth</th>
+
+
     <th>Picture</th>
     <th>Roles</th>
     <th>Action<th>
@@ -344,8 +380,19 @@
                             {% endif %}
                         {% endfor %}
                     </td>
-            <td><a href="{{ path('user_delete', {'id': i.Id}) }}">Delete</a> 
-          <a href="{{ path('user_update', {'id': i.Id}) }}">Update</a></td>
+            <td><a href="{{ path('user_delete', {'id': i.Id}) }}" class="btn btn-danger btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-trash"></i>
+                                        </span>
+                                        <span class="text">Delete</span>
+                                    </a>
+<br></br>
+                <a href="{{ path('user_update', {'id': i.Id}) }}" class="btn btn-secondary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-arrow-right"></i>
+                                        </span>
+                                        <span class="text">Update</span>
+                                    </a></td>
     {% else %}
     <tr>
       <td>{{i.id}}</td>
@@ -364,14 +411,26 @@
                             {% endif %}
                         {% endfor %}
                     </td>
-            <td><a href="{{ path('user_delete', {'id': i.Id}) }}">Delete</a> 
-          <a href="{{ path('user_update', {'id': i.Id}) }}">Update</a></td>
+            <td><a href="{{ path('user_delete', {'id': i.Id}) }}" class="btn btn-danger btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-trash"></i>
+                                        </span>
+                                        <span class="text">Delete</span>
+                                    </a>
+<br></br>
+                <a href="{{ path('user_update', {'id': i.Id}) }}" class="btn btn-secondary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-arrow-right"></i>
+                                        </span>
+                                        <span class="text">Update</span>
+                                    </a></td>
 
     </tr>
     {% endif %}
     </tr>
   {% endfor %}
   
+
 
                                        
                                     </tbody>

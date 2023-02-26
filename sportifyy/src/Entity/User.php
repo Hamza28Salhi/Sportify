@@ -33,7 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-
+    #[Assert\NotBlank]
     public ?string $full_name = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -41,6 +41,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     public ?string $user_pic = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    public ?string $matr_fisc = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    public ?string $prod_category = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    public ?string $job_position = null;
+
+    /**
+     * @var bool
+     */
+    public $show_second_form;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Address = null;
 
 
 
@@ -56,7 +73,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email=null): self
     {
         $this->email = $email;
 
@@ -140,7 +157,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->full_name;
     }
 
-    public function setFullName(string $full_name): self
+    public function setFullName(string $full_name=null): self
     {
         $this->full_name = $full_name;
 
@@ -152,7 +169,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->date_naiss;
     }
 
-    public function setDateNaiss(\DateTimeInterface $date_naiss): self
+    public function setDateNaiss(\DateTimeInterface $date_naiss ): self
     {
         $this->date_naiss = $date_naiss;
 
@@ -171,6 +188,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getMatrFisc(): ?string
+    {
+        return $this->matr_fisc;
+    }
+
+    public function setMatrFisc(string $matr_fisc): self
+    {
+        $this->matr_fisc = $matr_fisc;
+
+        return $this;
+    }
+
+    public function getProdCategory(): ?string
+    {
+        return $this->prod_category;
+    }
+
+    public function setProdCategory(string $prod_category): self
+    {
+        $this->prod_category = $prod_category;
+
+        return $this;
+    }
+
+    public function getJobPosition(): ?string
+    {
+        return $this->job_position;
+    }
+
+    public function setJobPosition(string $job_position): self
+    {
+        $this->job_position = $job_position;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->Address;
+    }
+
+    public function setAddress(string $Address): self
+    {
+        $this->Address = $Address;
+
+        return $this;
+    }
 
 
     

@@ -34,6 +34,7 @@ class UserController extends AbstractController
     #[Route('update/{id}', name: 'profile_update')]
     public function profile(ManagerRegistry $doctrine, Request $request, $id, FileUploader $fileUploader): Response
 {
+    $isBobo = $this->isGranted('ROLE_BOBO');
     $em = $doctrine->getManager();
     $user = $em->getRepository(User::class)->find($id);
 
@@ -41,7 +42,9 @@ class UserController extends AbstractController
         throw new NotFoundHttpException('user not found');
     }
 
-    $form = $this->createForm(EditProfileType::class, $user);
+    $form = $this->createForm(EditProfileType::class, $user ,[
+        'is_bobo' => $isBobo,
+]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
@@ -57,6 +60,7 @@ class UserController extends AbstractController
 
     return $this->render('user/updateProfile.html.twig', [
         'user' => $user,
+        'is_bobo' => $user,
         'editprofileForm' => $form->createView(),
     ]);
 }
