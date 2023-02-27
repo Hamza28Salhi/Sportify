@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <h1>Mon panier</h1>
+
+  {{ table|raw }}
+
+  <a href="{{ path('afficher_cp') }}">Commander</a>
+{% endblock %}

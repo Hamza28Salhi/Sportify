@@ -119,6 +119,11 @@
       </div>
 
 
+
+
+
+
+
      
 
      
@@ -168,18 +173,21 @@
              <p> <td>Categorie: {{i.Categorie}}</td></p> 
        {% if i.Quantite > 0 %}
   <p style="color: #ff007f; display: flex; align-items: center;">
-    <i class='bx bx-error-circle' style="margin-right: 0.5rem; color: #ff007f;"></i> {{ i.Quantite }} Articles seulement
+    <i class='bx bxs-error-circle bx-flashing'  style="margin-right: 0.5rem; color: #ff007f;"></i> {{ i.Quantite }} Articles seulement
   </p>
 {% else %}
   <p style="color: red; display: flex; align-items: center;">
-    <i class='bx bxs-x-circle' style="margin-right: 0.5rem;"></i> Rupture de stock
+    <i  class='bx bxs-x-circle bx-burst'  style="margin-right: 0.5rem;"></i> Rupture de stock
   </p>
 {% endif %}
+
+
+
              
 {% if i.Quantite > 0 %}
   <p>
     <a href="{{ path('produit_afficheCP', {'id': i.id}) }}" class="btn btn-primary" style="display: inline-flex; align-items: center; font-size: 1rem;">
-      <i class='bx bxs-cart-add' style="margin-right: 0.5rem;"></i> Ajouter au panier
+      <i class='bx bxs-cart-add bx-tada' style="margin-right: 0.5rem;"></i> Ajouter au panier
     </a>
   </p>
 {% else %}

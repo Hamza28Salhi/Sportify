@@ -397,13 +397,178 @@
                                     
                                         <tr>
     <th>Id</th>
-    <th>Nom</th>
-     <th>prix_produit</th>
+      <th>
+ <a href="{{ path('produit_afficheP', {'sortBy': 'nom_produit', 'sortOrder': (app.request.get('sortBy') == 'nom' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+   {% if app.request.get('sortBy') == 'nom_produit' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        
+       <i class='bx bx-sort-a-z' style='color:#004183'  ></i>
+      {% else %}
+         <i class='bx bx-sort-a-z' ></i>
+      {% endif %}
+    {% else %}
+     <i class='bx bx-sort-a-z' ></i>
+    {% endif %}
+
+</a>
+    <a href="{{path('produit_afficheP', {'sortBy': 'nom_produit', 'sortOrder': (app.request.get('sortBy') == 'nom' and app.request.get('sortOrder') == 'asc') ? 'asc' : 'desc'}) }}">
+    {% if app.request.get('sortBy') == 'nom_produit' %}
+      {% if app.request.get('sortOrder') == 'desc' %}
+        
+ <i class='bx bx-sort-z-a' style='color:#004183'  ></i>
+      {% else %}
+        <i class='bx bx-sort-z-a' ></i>
+      {% endif %}
+    {% else %}
+     <i class='bx bx-sort-z-a' ></i>
+    {% endif %} 
+
+  </a>Nom
+</th>
+
+
+
+        <th>
+  <a href="{{ path('produit_afficheP', {'sortBy': 'prix_produit', 'sortOrder': (app.request.get('sortBy') == 'prix' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+   {% if app.request.get('sortBy') == 'prix_produit' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        
+        <i class='bx bxs-up-arrow-circle'  style='color:#004183'></i>
+      {% else %}
+        <i class='bx bxs-up-arrow-circle' ></i>
+      {% endif %}
+    {% else %}
+      <i class='bx bxs-up-arrow-circle' ></i>
+    {% endif %}
+</a>
+
+    <a href="{{path('produit_afficheP', {'sortBy': 'prix_produit', 'sortOrder': (app.request.get('sortBy') == 'prix' and app.request.get('sortOrder') == 'asc') ? 'asc' : 'desc'}) }}">
+    {% if app.request.get('sortBy') == 'prix_produit' %}
+      {% if app.request.get('sortOrder') == 'desc' %}
+         <i class='bx bxs-down-arrow-circle'  style='color:#004183'></i>
+      {% else %}
+       <i class='bx bxs-down-arrow-circle' ></i>
+      {% endif %}
+    {% else %}
+      <i class='bx bxs-down-arrow-circle' ></i>
+    {% endif %} 
+
+
+  
+  </a>PrixProduit
+
+</th>
+
+
+
+
+
+
+
+
     
-    <th>marque_produit</th>
-    <th>categorie</th>
+    <th> 
+ <a href="{{ path('produit_afficheP', {'sortBy': 'marque_produit', 'sortOrder': (app.request.get('sortBy') == 'marque' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+   {% if app.request.get('sortBy') == 'marque_produit' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        
+       <i class='bx bx-sort-a-z' style='color:#004183'  ></i>
+      {% else %}
+         <i class='bx bx-sort-a-z' ></i>
+      {% endif %}
+    {% else %}
+     <i class='bx bx-sort-a-z' ></i>
+    {% endif %}
+    </a>
+
+    <a href="{{path('produit_afficheP', {'sortBy': 'marque_produit', 'sortOrder': (app.request.get('sortBy') == 'marque' and app.request.get('sortOrder') == 'asc') ? 'asc' : 'desc'}) }}">
+    {% if app.request.get('sortBy') == 'marque_produit' %}
+      {% if app.request.get('sortOrder') == 'desc' %}
+        
+ <i class='bx bx-sort-z-a' style='color:#004183'  ></i>
+      {% else %}
+        <i class='bx bx-sort-z-a' ></i>
+      {% endif %}
+    {% else %}
+     <i class='bx bx-sort-z-a' ></i>
+    {% endif %} 
+
+
+  </a>marque_produit</th>
+
+
+
+
+   <th>
+ <a href="{{ path('produit_afficheP', {'sortBy': 'categorie', 'sortOrder': (app.request.get('sortBy') == 'categorie' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+   {% if app.request.get('sortBy') == 'categorie' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        
+       <i class='bx bx-sort-a-z' style='color:#004183'  ></i>
+      {% else %}
+         <i class='bx bx-sort-a-z' ></i>
+      {% endif %}
+    {% else %}
+     <i class='bx bx-sort-a-z' ></i>
+    {% endif %}
+</a>
+
+    <a href="{{path('produit_afficheP', {'sortBy': 'categorie', 'sortOrder': (app.request.get('sortBy') == 'categorie' and app.request.get('sortOrder') == 'asc') ? 'asc' : 'desc'}) }}">
+    {% if app.request.get('sortBy') == 'categorie' %}
+      {% if app.request.get('sortOrder') == 'desc' %}
+        
+ <i class='bx bx-sort-z-a' style='color:#004183'  ></i>
+      {% else %}
+        <i class='bx bx-sort-z-a' ></i>
+      {% endif %}
+    {% else %}
+     <i class='bx bx-sort-z-a' ></i>
+    {% endif %} 
+
+  </a>categorie</th>
+
+
+
+
+
+
+
+
    <th>image</th>
-   <th>quantite</th>
+
+
+
+
+    <th>
+  <a href="{{ path('produit_afficheP', {'sortBy': 'quantite', 'sortOrder': (app.request.get('sortBy') == 'quantite' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+   {% if app.request.get('sortBy') == 'quantite' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        
+        <i class='bx bxs-up-arrow-circle'  style='color:#004183'></i>
+      {% else %}
+        <i class='bx bxs-up-arrow-circle' ></i>
+      {% endif %}
+    {% else %}
+      <i class='bx bxs-up-arrow-circle' ></i>
+    {% endif %}
+</a>
+
+    <a href="{{path('produit_afficheP', {'sortBy': 'quantite', 'sortOrder': (app.request.get('sortBy') == 'quantite' and app.request.get('sortOrder') == 'asc') ? 'asc' : 'desc'}) }}">
+    {% if app.request.get('sortBy') == 'quantite' %}
+      {% if app.request.get('sortOrder') == 'desc' %}
+         <i class='bx bxs-down-arrow-circle'  style='color:#004183'></i>
+      {% else %}
+       <i class='bx bxs-down-arrow-circle' ></i>
+      {% endif %}
+    {% else %}
+      <i class='bx bxs-down-arrow-circle' ></i>
+    {% endif %} 
+</a>
+   quantite</th>
+
+
+
+
       <th>Action</th>
   </tr>
   {% for i in produit %}
@@ -435,9 +600,11 @@
 </a>
         
       </td>
+        
        
     </tr>
   {% endfor %}
+   <a class="btn btn-success" href="{{ path('pdf') }}">Create pdf</a>
                                        
                                     </tbody>
                                 </table>

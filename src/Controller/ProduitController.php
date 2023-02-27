@@ -1,6 +1,13 @@
 <?php
 
 namespace App\Controller;
+
+
+use Dompdf\Dompdf;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+
 use App\Service\FileUploader;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +20,11 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Knp\Component\Pager\PaginatorInterface;
 
+
+
+use Symfony\Component\Form\FormBuilderInterface;
 
 
 class ProduitController extends AbstractController
@@ -50,13 +61,19 @@ class ProduitController extends AbstractController
         return $this->renderForm('produit/addP.html.twig',['form'=>$form]);
 }
 
-#[Route('/produit/afficheP', name: 'produit_afficheP')]
-public function afficheP(ManagerRegistry $doctrine): Response {
+#[Route('/produit/afficheP/{sortBy}/{sortOrder<[^/]+>}', name: 'produit_afficheP')]
+public function afficheP(ManagerRegistry $doctrine, $sortBy = 'id', $sortOrder = 'asc'): Response {
     $em = $doctrine->getManager();
-    $produit = $em->getRepository(Produit::class)->findAll();
+    $sortOrder = str_replace('/', '', $sortOrder);
+    $produit = $em->getRepository(Produit::class)->findAllOrderedByProperty($sortBy, $sortOrder);
 
     return $this->render('produit/afficheP.html.twig', ['produit' => $produit]);
 }
+
+
+
+
+
 
 #[Route('/produit/affichePP', name: 'produit_affichePP')]
 public function affichePP(ManagerRegistry $doctrine): Response {
@@ -135,33 +152,68 @@ public function update(ManagerRegistry $doctrine, Request $request, $id, FileUpl
 
 
 #[Route('/produit/recherche', name: 'produit_recherche')]
-public function searchProduit(Request $request)
+public function searchProduit(Request $request, PaginatorInterface $paginator)
 {
-    $searchTerm = $request->request->get('searchTerm');
+    $searchTerm = $request->query->get('searchTerm');
+    $em = $this->getDoctrine()->getManager();
 
-    $produits = $this->getDoctrine()
-        ->getRepository(Produit::class)
-        ->createQueryBuilder('p')
-        ->where('p.nom_produit LIKE :searchTerm')
+    $queryBuilder = $em->getRepository(Produit::class)->createQueryBuilder('p');
+    $queryBuilder->where('p.nom_produit LIKE :searchTerm')
         ->orWhere('p.prix_produit LIKE :searchTerm')
         ->orWhere('p.marque_produit LIKE :searchTerm')
         ->orWhere('p.categorie LIKE :searchTerm')
         ->setParameter('searchTerm', '%' . $searchTerm . '%')
-        ->getQuery()
-        ->getResult();
+        ->orderBy('p.id', 'ASC');
 
-    return $this->render('produit/index.html.twig', [
-        'produits' => $produits,
-    ]);
+    $pagination = $paginator->paginate(
+        $queryBuilder, /* query NOT result */
+        $request->query->getInt('page', 1), /*page number*/
+        5 /*limit per page*/
+    );
+
+    return $this->render('produit/search.html.twig', ['pagination' => $pagination]);
 }
 
 
 
 
+ 
+    
+    
 
-
-
-
+    #[Route('/pdf', name: 'pdf', methods: ['GET'])]
+    public function pdf(ProduitRepository $ProduitRepository): Response
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new OptionsResolver();
+        $pdfOptions->setDefaults([
+            'defaultFont' => 'Arial',
+        ]);
+    
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+    
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('produit/pdf.html.twig', [
+            'produits' => $ProduitRepository->findAll(),
+        ]);
+    
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+    
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+    
+        // Render the HTML as PDF
+        $dompdf->render();
+    
+        // Output the generated PDF to Browser (inline view)
+        $output = $dompdf->output();
+        $response = new Response($output);
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'inline; filename="mypdf.pdf"');
+        return $response;
+    }
 
 
 

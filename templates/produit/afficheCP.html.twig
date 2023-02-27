@@ -75,56 +75,23 @@
             <div class="text">
              <!-- <span class="meta">May 20, 2020</span>-->
      
-    
+    <form method="post" class="counter d-flex" action="ajouter_panier.php">
 <div>
       <label for="quantite">Ajout quantité:</label>
       <div style="display: flex; align-items: center;">
         <div style="padding: 0.25rem 0.5rem; font-size: 1.5rem; cursor: pointer;" onclick="decrementQuantite()">-</div>
-        <input type="number" id="quantite" name="quantite" value="0" min="0" max="{{ produit.Quantite }}" style="margin: 0 0.5rem; width: 3rem; text-align: center;">
+        <input type="number" id="quantite" name="quantite" value="1" min="1" max="{{ produit.Quantite }}" style="margin: 0 0.5rem; width: 3rem; text-align: center;">
         <div style="padding: 0.25rem 0.5rem; font-size: 1.5rem; cursor: pointer;" onclick="incrementQuantite()" {% if produit.Quantite == 0 %} disabled {% endif %}>+</div>
       </div>
     </div>
 
 
+</form>
 
 
 
 
 
-
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-         
-                
-                 
-
-          
                
                <p> <button class="btn btn-primary">
   <a href="{{ path('produit_affichePP' ) }}" style="color: white;">Poursuivre vos achats</a>
