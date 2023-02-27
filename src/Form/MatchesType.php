@@ -15,6 +15,11 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+
 
 use App\Repository\EquipeRepository;
 
@@ -27,8 +32,24 @@ class MatchesType extends AbstractType
             ->add('nom')
             
             ->add('stade')
-            ->add('date')
-            ->add('score')
+            ->add('date', DateTimeType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'date is required'
+                    ]),
+                    new LessThanOrEqual([
+                        'value' => 'today',
+                        'message' => 'The date must be in the past'
+                    ])
+                ]
+            ])
+            ->add('score', null, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Score is required'
+                    ])
+                ]
+            ])
             ->add('nom_equipe')
             ->add('video', FileType::class, [
                 'required' => false, // Make the video field optional

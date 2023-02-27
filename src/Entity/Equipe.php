@@ -7,6 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+
+
 
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -19,33 +22,50 @@ class Equipe
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("equipes")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("equipes")]
     #[Assert\NotBlank(message:"nom is required")]
+    #[Assert\Regex(
+        pattern:"/^[A-Z]/",
+         message:"The first letter of the string must be uppercase"
+    )]
+   
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("equipes")]
     #[Assert\NotBlank(message:"joueur is required")]
     private ?string $joueurs = null;
 
     #[ORM\Column]
+    #[Groups("equipes")]
     #[Assert\NotBlank(message:"classement is required")]
+    #[Assert\GreaterThanOrEqual(
+        value:0,
+         message:"The value of classement must not be negative"
+    )]
     private ?int $classement = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("equipes")]
     #[Assert\NotBlank(message:"entraineur is required")]
     private ?string $entraineur = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("equipes")]
     #[Assert\NotBlank(message:"categorie is required")]
     private ?string $categorie = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("equipes")]
    
     private ?string $picture = null;
 
     #[ORM\OneToMany(targetEntity: Matches::class, mappedBy: 'nom_equipe')]
+    #[Groups("equipes")]
     private Collection $matches;
 
     public function getId(): ?int

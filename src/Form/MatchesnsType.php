@@ -7,6 +7,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+
 class MatchesnsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -15,7 +20,17 @@ class MatchesnsType extends AbstractType
             ->add('nom')
       
             ->add('stade')
-            ->add('date')
+            ->add('date', DateTimeType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'date is required'
+                    ]),
+                    new GreaterThanOrEqual([
+                        'value' => 'today',
+                        'message' => 'The date must be in the future'
+                    ])
+                ]
+            ])
             ->add('nom_equipe')
             ->add('save', SubmitType::class)
           ;

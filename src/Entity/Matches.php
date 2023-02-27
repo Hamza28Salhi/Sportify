@@ -20,6 +20,10 @@ class Matches
 
     #[ORM\Column(length: 255, )]
     #[Assert\NotBlank(message:"nom is required")]
+    #[Assert\Regex(
+            pattern:"/^[A-Z]/",
+             message:"The first letter of the string must be uppercase"
+        )]
     private ?string $nom = null;
 
     
@@ -30,6 +34,7 @@ class Matches
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE,)]
     #[Assert\NotBlank(message:"date is required")]
+    
 
     private ?\DateTimeInterface $date = null;
 
