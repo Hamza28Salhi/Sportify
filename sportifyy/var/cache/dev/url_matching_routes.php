@@ -25,6 +25,9 @@ return [
         '/login' => [[['_route' => 'app_login', '_controller' => 'App\\Controller\\SecurityController::login'], null, null, null, false, false, null]],
         '/logout' => [[['_route' => 'app_logout', '_controller' => 'App\\Controller\\SecurityController::logout'], null, null, null, false, false, null]],
         '/user' => [[['_route' => 'app_user', '_controller' => 'App\\Controller\\UserController::index'], null, null, null, false, false, null]],
+        '/user/mobile' => [[['_route' => 'app_user_mobile', '_controller' => 'App\\Controller\\UserMobileController::index'], null, null, null, false, false, null]],
+        '/AllUsers' => [[['_route' => 'list', '_controller' => 'App\\Controller\\UserMobileController::getStudents'], null, null, null, false, false, null]],
+        '/addUserJSON/new' => [[['_route' => 'addUserJSON', '_controller' => 'App\\Controller\\UserMobileController::addStudentJSON'], null, null, null, false, false, null]],
         '/search' => [[['_route' => 'search', '_controller' => 'App\\Controller\\SearchController::search'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
@@ -44,8 +47,15 @@ return [
                     .'|update/([^/]++)(*:222)'
                 .')'
                 .'|/register2/([^/]++)(*:250)'
-                .'|/update/([^/]++)(*:274)'
-                .'|/_error/(\\d+)(?:\\.([^/]++))?(*:310)'
+                .'|/u(?'
+                    .'|pdate(?'
+                        .'|/([^/]++)(*:280)'
+                        .'|UserJSON/([^/]++)(*:305)'
+                    .')'
+                    .'|ser/([^/]++)(*:326)'
+                .')'
+                .'|/deleteUserJSON/([^/]++)(*:359)'
+                .'|/_error/(\\d+)(?:\\.([^/]++))?(*:395)'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
@@ -58,8 +68,11 @@ return [
         199 => [[['_route' => 'produit_delete', '_controller' => 'App\\Controller\\ProduitController::produit'], ['id'], null, null, false, false, null]],
         222 => [[['_route' => 'produit_update', '_controller' => 'App\\Controller\\ProduitController::update'], ['id'], null, null, false, true, null]],
         250 => [[['_route' => 'app_register2', '_controller' => 'App\\Controller\\RegistrationController::register2'], ['id'], null, null, false, true, null]],
-        274 => [[['_route' => 'profile_update', '_controller' => 'App\\Controller\\UserController::profile'], ['id'], null, null, false, true, null]],
-        310 => [
+        280 => [[['_route' => 'profile_update', '_controller' => 'App\\Controller\\UserController::profile'], ['id'], null, null, false, true, null]],
+        305 => [[['_route' => 'updateUserJSON', '_controller' => 'App\\Controller\\UserMobileController::updateUserJSON'], ['id'], null, null, false, true, null]],
+        326 => [[['_route' => 'user', '_controller' => 'App\\Controller\\UserMobileController::UserId'], ['id'], null, null, false, true, null]],
+        359 => [[['_route' => 'deleteUserJSON', '_controller' => 'App\\Controller\\UserMobileController::deleteUserJSON'], ['id'], null, null, false, true, null]],
+        395 => [
             [['_route' => '_preview_error', '_controller' => 'error_controller::preview', '_format' => 'html'], ['code', '_format'], null, null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],

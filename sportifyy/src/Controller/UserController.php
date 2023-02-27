@@ -55,7 +55,7 @@ class UserController extends AbstractController
         }
         $em->flush();
 
-        return $this->redirectToRoute('hello');
+        return $this->redirectToRoute('home');
     }
 
     return $this->render('user/updateProfile.html.twig', [

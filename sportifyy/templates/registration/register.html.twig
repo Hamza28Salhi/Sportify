@@ -10,6 +10,12 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <style>
+.container {
+  max-width: 1300px;
+  
+}
+</style>
     {% endblock %}
 
 
@@ -22,13 +28,13 @@
 
     <div class="container">
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="card-body p-0">
+        <div class="card o-hidden border-0 shadow-lg my-5" style="min-width: 1300px">
+            <div class="card-body p-0" style="min-width: 1400px" >
                 <!-- Nested Row within Card Body -->
-                <div class="row" style="min-width: 1000px">
-                    <img src="{{asset('img/sacha.png')}}" style="min-height: 300px" class="col-lg-5 d-none d-lg-block "> </img>
-                    <div class="col-lg-7">
-                        <div class="p-5">
+                <div class="row" >
+                    <img src="{{asset('img/sacha.png')}}" style="min-width: 500px" class="col-lg-5 d-none d-lg-block "> </img>
+                    <div class="col-lg-7" >
+                        <div class="p-5" >
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Join The Sportify Army!</h1>
                             </div>
@@ -41,8 +47,11 @@
          {{ form_start(registrationForm) }}  
         <div class="col-sm-6">{{ form_row(registrationForm.full_name, {label: 'Full name: '}) }}</div>
         <div class="col-sm-6">{{ form_row(registrationForm.email, {label: 'Email: '}) }}</div>
-        <div class="col-sm-6">{{ form_row(registrationForm.plainPassword, {label: 'Password: '}) }}</div>
+       
+        <div class="col-sm-4">{{ form_row(registrationForm.plainPassword, {label: 'Password: '}) }}</div>
+        
         <div class="col-sm-6">{{ form_row(registrationForm.address, {label: 'Address: '}) }}</div>
+        
         <div class="col-sm-6">{{ form_row(registrationForm.date_naiss, {label: 'Date Of Birth: '}) }}</div>
         <div class="col-sm-6">{{ form_row(registrationForm.user_pic, {label: 'Insert your image: '}) }}</div>
         <div class="col-sm-6">{{ form_row(registrationForm.show_second_form, {label: 'Apply for a shop manager: '}) }}</div>

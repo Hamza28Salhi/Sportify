@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -17,38 +18,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("user")]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique: true)]
+    #[ORM\Column(length: 180, unique: true, nullable: true)]
+    #[Groups("user")]
     #[Assert\Email(message:"'{{ value }}' is not a valid Email")]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups("user")]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups("user")]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("user")]
     #[Assert\NotBlank]
     public ?string $full_name = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups("user")]
     public ?\DateTimeInterface $date_naiss = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("user")]
     public ?string $user_pic = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("user")]
     public ?string $matr_fisc = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("user")]
     public ?string $prod_category = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("user")]
     public ?string $job_position = null;
 
     /**
@@ -56,7 +67,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public $show_second_form;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("user")]
     private ?string $Address = null;
 
 
@@ -169,7 +181,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->date_naiss;
     }
 
-    public function setDateNaiss(\DateTimeInterface $date_naiss ): self
+    public function setDateNaiss(\DateTimeInterface $date_naiss=null ): self
     {
         $this->date_naiss = $date_naiss;
 
@@ -193,7 +205,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->matr_fisc;
     }
 
-    public function setMatrFisc(string $matr_fisc): self
+    public function setMatrFisc(string $matr_fisc=null): self
     {
         $this->matr_fisc = $matr_fisc;
 
@@ -205,7 +217,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->prod_category;
     }
 
-    public function setProdCategory(string $prod_category): self
+    public function setProdCategory(string $prod_category=null): self
     {
         $this->prod_category = $prod_category;
 
@@ -217,7 +229,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->job_position;
     }
 
-    public function setJobPosition(string $job_position): self
+    public function setJobPosition(string $job_position=null): self
     {
         $this->job_position = $job_position;
 
@@ -229,7 +241,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->Address;
     }
 
-    public function setAddress(string $Address): self
+    public function setAddress(string $Address=null): self
     {
         $this->Address = $Address;
 

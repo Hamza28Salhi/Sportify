@@ -30,6 +30,12 @@ return [
     'hello' => [[], ['_controller' => 'App\\Controller\\UserController::bro'], [], [['text', '/admin/hello']], [], [], []],
     'app_user' => [[], ['_controller' => 'App\\Controller\\UserController::index'], [], [['text', '/user']], [], [], []],
     'profile_update' => [['id'], ['_controller' => 'App\\Controller\\UserController::profile'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/update']], [], [], []],
+    'app_user_mobile' => [[], ['_controller' => 'App\\Controller\\UserMobileController::index'], [], [['text', '/user/mobile']], [], [], []],
+    'list' => [[], ['_controller' => 'App\\Controller\\UserMobileController::getStudents'], [], [['text', '/AllUsers']], [], [], []],
+    'user' => [['id'], ['_controller' => 'App\\Controller\\UserMobileController::UserId'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/user']], [], [], []],
+    'addUserJSON' => [[], ['_controller' => 'App\\Controller\\UserMobileController::addStudentJSON'], [], [['text', '/addUserJSON/new']], [], [], []],
+    'updateUserJSON' => [['id'], ['_controller' => 'App\\Controller\\UserMobileController::updateUserJSON'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/updateUserJSON']], [], [], []],
+    'deleteUserJSON' => [['id'], ['_controller' => 'App\\Controller\\UserMobileController::deleteUserJSON'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/deleteUserJSON']], [], [], []],
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
     'search' => [[], ['_controller' => 'App\\Controller\\SearchController::search'], [], [['text', '/search']], [], [], []],
 ];

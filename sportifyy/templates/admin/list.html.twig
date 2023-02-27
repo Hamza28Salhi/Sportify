@@ -301,7 +301,7 @@
 <a href="{{ path('app_register' ) }}" style="color: white;">Add user</a>
 </button>
 <button class="btn btn-primary">
-<a href="hello" style="color: white;">Go Back To Front</a>
+<a href="{{ path('home' ) }}" style="color: white;">Go Back To Front</a>
 </button>
                        
                         </div>
@@ -314,6 +314,11 @@
                                         <tr>
 
   <tr>
+
+
+
+
+
     <th>Id</th>
 
 
@@ -354,10 +359,13 @@
       <i class="fas fa-sort"></i>
     {% endif %}
   </a>Date Of Birth</th>
-
+<th>Address</th>
 
     <th>Picture</th>
     <th>Roles</th>
+    <th>Tax registration number</th>
+    <th>Departement</th>
+    <th>Job title</th>
     <th>Action<th>
   </tr>
   {% for i in user %}
@@ -368,6 +376,7 @@
       <td><div class="text-s font-weight-bold text-success text- mb-1">{{i.full_name}}</div></td>
       <td><div class="text-s font-weight-bold text-success text- mb-1">{{i.email}}</div></td>
       <td><div class="text-s font-weight-bold text-success text- mb-1">{{i.date_naiss | date('Y-m-d') }}</div></td>
+      <td><div class="text-s font-weight-bold text-success text- mb-1">{{i.address}}</div></td>
       <td><img class="img-profile rounded-circle" src="{{ asset('uploads/' ~ i.user_pic) }}" style="max-height: 80px"></td>
       <td>
                        {% for role in i.roles %}
@@ -380,6 +389,9 @@
                             {% endif %}
                         {% endfor %}
                     </td>
+        <td><div class="text-s font-weight-bold text-success text- mb-1">{{i.matr_fisc}}</div></td>
+        <td><div class="text-s font-weight-bold text-success text- mb-1">{{i.prod_category}}</div></td>
+        <td><div class="text-s font-weight-bold text-success text- mb-1">{{i.job_position}}</div></td>
             <td><a href="{{ path('user_delete', {'id': i.Id}) }}" class="btn btn-danger btn-icon-split">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-trash"></i>
@@ -399,6 +411,8 @@
       <td>{{i.full_name}}</td>
       <td>{{i.email}}</td>
       <td>{{i.date_naiss | date('Y-m-d') }}</td>
+      <td>{{i.address}}</td>
+      
       <td><img class="img-profile rounded-circle" src="{{ asset('uploads/' ~ i.user_pic) }}" style="max-height: 80px"></td>
       <td>
                        {% for role in i.roles %}
@@ -411,6 +425,9 @@
                             {% endif %}
                         {% endfor %}
                     </td>
+        <td>{{i.matr_fisc}}</td>
+      <td>{{i.prod_category}}</td>
+      <td>{{i.job_position}}</td>
             <td><a href="{{ path('user_delete', {'id': i.Id}) }}" class="btn btn-danger btn-icon-split">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-trash"></i>

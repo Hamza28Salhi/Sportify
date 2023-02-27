@@ -157,7 +157,7 @@ class __TwigTemplate_a31d5ad68ae1a56f40e05a74f56721d75da5f146ed9a34a8d3e381b5085
         echo "</div>
         <div class=\"col-sm-6\">";
         // line 48
-        echo $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(twig_get_attribute($this->env, $this->source, (isset($context["registrationForm"]) || array_key_exists("registrationForm", $context) ? $context["registrationForm"] : (function () { throw new RuntimeError('Variable "registrationForm" does not exist.', 48, $this->source); })()), "show_second_form", [], "any", false, false, false, 48), 'row', ["label" => "Apply for a shop manager:   "]);
+        echo $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(twig_get_attribute($this->env, $this->source, (isset($context["registrationForm"]) || array_key_exists("registrationForm", $context) ? $context["registrationForm"] : (function () { throw new RuntimeError('Variable "registrationForm" does not exist.', 48, $this->source); })()), "show_second_form", [], "any", false, false, false, 48), 'row', ["label" => "Apply for a shop manager: "]);
         echo "</div>
         
 
@@ -325,7 +325,7 @@ class __TwigTemplate_a31d5ad68ae1a56f40e05a74f56721d75da5f146ed9a34a8d3e381b5085
         <div class=\"col-sm-6\">{{ form_row(registrationForm.address, {label: 'Address: '}) }}</div>
         <div class=\"col-sm-6\">{{ form_row(registrationForm.date_naiss, {label: 'Date Of Birth: '}) }}</div>
         <div class=\"col-sm-6\">{{ form_row(registrationForm.user_pic, {label: 'Insert your image: '}) }}</div>
-        <div class=\"col-sm-6\">{{ form_row(registrationForm.show_second_form, {label: 'Apply for a shop manager:   '}) }}</div>
+        <div class=\"col-sm-6\">{{ form_row(registrationForm.show_second_form, {label: 'Apply for a shop manager: '}) }}</div>
         
 
     {% if secondForm is defined %}

@@ -27,5 +27,7 @@ services:
         arguments:
             $targetDirectory: '%kernel.project_dir%/public/uploads'
             # config/services.yaml
+
+         
 parameters:
     videos_directory: '%kernel.project_dir%/public/videos'
