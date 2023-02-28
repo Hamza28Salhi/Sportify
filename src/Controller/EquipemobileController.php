@@ -34,6 +34,8 @@ class EquipemobileController extends AbstractController
         //* students en  tableau associatif simple.
         // $studentsNormalises = $normalizer->normalize($students, 'json', ['groups' => "students"]);
 
+
+        
         // //* Nous utilisons la fonction json_encode pour transformer un tableau associatif en format JSON
         // $json = json_encode($studentsNormalises);
 
@@ -44,7 +46,7 @@ class EquipemobileController extends AbstractController
     }
 
     #[Route("/equipemobile/{id}", name: "equipe")]
-    public function StudentId($id, NormalizerInterface $normalizer, EquipeRepository $repo)
+    public function EquipeId($id, NormalizerInterface $normalizer, EquipeRepository $repo)
     {
         $equipe = $repo->find($id);
         $equipeNormalises = $normalizer->normalize($equipe, 'json', ['groups' => "equipes"]);

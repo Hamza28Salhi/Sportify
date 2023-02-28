@@ -116,7 +116,30 @@ class MatchesController extends AbstractController
             'searchField' => $searchField,
         ]);
     }
-    
+    #[Route('/matches/statistics', name: 'matches_statistics')]
+public function statistics(ManagerRegistry $doctrine): Response {
+    $em = $doctrine->getManager();
+    $matchesRepository = $em->getRepository(Matches::class);
+
+    // Get the total number of matches
+    $totalMatches = $matchesRepository->createQueryBuilder('m')
+        ->select('COUNT(m.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+
+    // Get the number of matches per team
+    $teamMatches = $matchesRepository->createQueryBuilder('m')
+        ->select('e.nom AS teamName', 'COUNT(m.id) AS matchCount')
+        ->leftJoin('m.nom_equipe', 'e')
+        ->groupBy('e.id')
+        ->getQuery()
+        ->getResult();
+
+    return $this->render('matches/statistics.html.twig', [
+        'totalMatches' => $totalMatches,
+        'teamMatches' => $teamMatches,
+    ]);
+}
     
     
 

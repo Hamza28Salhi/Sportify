@@ -18,6 +18,25 @@
 
     {% block body %}
     </head>
+    
+<style>
+  .flashy-button {
+    background-color: #ff0000; /* red background color */
+    color: #ffffff; /* white text color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #000000; /* black shadow */
+    transition: all 0.2s ease-in-out; /* add a smooth transition */
+  }
+
+  .flashy-button:hover {
+    transform: scale(1.1); /* scale up the button on hover */
+    box-shadow: 0px 0px 20px #000000; /* increase the shadow size */
+  }
+</style>
+
 
 <body id="page-top">
 
@@ -71,12 +90,11 @@
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ path('matches_afficheCC' ) }}" data-toggle="collapse" data-target="#collapseUtilities"
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Front</span>
+                    <span>Utilities</span>
                 </a>
-                    
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -160,19 +178,29 @@
                     </form>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                  <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="{{ path('matches_afficheC') }}" method="get">
+    <div class="input-group">
+        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" name="search">
+        <select class="form-control bg-light border-0 small" name="search_field">
+            <option value="id">Id</option>
+            <option value="nom">Nom</option>
+        
+            <option value="date">Date</option>
+             <option value="score">score</option>
+            <option value="nom_equipe">Nom Equipe</option>
+        </select>
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search fa-sm"></i>
+            </button>
+        </div>
+    </div>
+</form>
 
+   
+
+
+  
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -357,27 +385,26 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                
 
                     <!-- Page Heading -->
-                                  <h1 class="h3 mb-2 text-gray-800">Tables                  <button class="btn btn-primary">
-  <a href="{{ path('equipe_afficheC' ) }}" style="color: grey;">Equipes</a>
+                    <h1 class="h3 mb-2 text-gray-800">Tables                  <button class="btn btn-primary">
+  <a href="{{ path('equipe_afficheC' ) }}" style="color: white;">Equipes</a>
 </button>  
                <button class="btn btn-primary">
   <a href="{{ path('matches_afficheC' ) }}" style="color: white;">Matches</a>
 </button>
  <button class="btn btn-primary">
-  <a href="{{ path('matches_statistics' ) }}" style="color: white;">Statistics</a>
+  <a href="{{ path('matches_statistics' ) }}" style="color: grey;">Statistics</a>
   </button>
 </h1>
-
+ 
 
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                    <button class="btn btn-primary">
-  <a href="{{ path('equipe_add' ) }}" style="color: white;">Add Equipe</a>
+                    <button class="btn btn-primary  " onclick="animateButton(this)">
+  <a href="{{ path('matches_afficheCadd' ) }}" style="color: white;">Add Matches</a>
 </button>
                        
                         </div>
@@ -387,125 +414,51 @@
                                 
                                     <tbody>
                                     
-                                        <tr>
-    <th>Id</th>
-        <th>
-  <a href="{{ path('equipe_afficheC', {'sortBy': 'nom', 'sortOrder': (app.request.get('sortBy') == 'nom' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
-    {% if app.request.get('sortBy') == 'nom' %}
-      {% if app.request.get('sortOrder') == 'asc' %}
-        <i class="fas fa-sort-alpha-down"></i>
-      {% else %}
-        <i class="fas fa-sort-alpha-up"></i>
-      {% endif %}
-    {% else %}
-      <i class="fas fa-sort"></i>
-    {% endif %}
-  </a>Nom
-</th>
+                                         <tr>
+    <h1>Matches Statistics</h1>
+     <p>Nombre total de Match contre Sportify: {{ totalMatches }}</p>
 
+    <h2>Les matches Contre Sportify Par Equipe</h2>
 
-   <th>
-  <a href="{{ path('equipe_afficheC', {'sortBy': 'joueurs', 'sortOrder': (app.request.get('sortBy') == 'joueurs' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
-    {% if app.request.get('sortBy') == 'joueurs' %}
-      {% if app.request.get('sortOrder') == 'asc' %}
-        <i class="fas fa-sort-alpha-down"></i>
-      {% else %}
-        <i class="fas fa-sort-alpha-up"></i>
-      {% endif %}
-    {% else %}
-      <i class="fas fa-sort"></i>
-    {% endif %}
-  </a>joueurs
-</th>
+    <canvas id="matchesPerTeamChart"></canvas>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var teamNames = [];
+        var matchCounts = [];
 
-    <th>
-  <a href="{{ path('equipe_afficheC', {'sortBy': 'classement', 'sortOrder': (app.request.get('sortBy') == 'classement' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
-    {% if app.request.get('sortBy') == 'classement' %}
-      {% if app.request.get('sortOrder') == 'asc' %}
-        <i class="fas fa-sort-alpha-down"></i>
-      {% else %}
-        <i class="fas fa-sort-alpha-up"></i>
-      {% endif %}
-    {% else %}
-      <i class="fas fa-sort"></i>
-    {% endif %}
-  </a>Classement
-</th>
+        {% for row in teamMatches %}
+            teamNames.push('{{ row["teamName"] }}');
+            matchCounts.push('{{ row["matchCount"] }}');
+        {% endfor %}
 
-    <th>
-  <a href="{{ path('equipe_afficheC', {'sortBy': 'entraineur', 'sortOrder': (app.request.get('sortBy') == 'entraineur' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
-    {% if app.request.get('sortBy') == 'entraineur' %}
-      {% if app.request.get('sortOrder') == 'asc' %}
-        <i class="fas fa-sort-alpha-down"></i>
-      {% else %}
-        <i class="fas fa-sort-alpha-up"></i>
-      {% endif %}
-    {% else %}
-      <i class="fas fa-sort"></i>
-    {% endif %}
-  </a>Entraineur
-</th>
+        var chartData = {
+            labels: teamNames,
+            datasets: [{
+                label: 'Number of Matches',
+                data: matchCounts,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        };
 
-    <th>
-  <a href="{{ path('equipe_afficheC', {'sortBy': 'categorie', 'sortOrder': (app.request.get('sortBy') == 'categorie' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
-    {% if app.request.get('sortBy') == 'categorie' %}
-      {% if app.request.get('sortOrder') == 'asc' %}
-        <i class="fas fa-sort-alpha-down"></i>
-      {% else %}
-        <i class="fas fa-sort-alpha-up"></i>
-      {% endif %}
-    {% else %}
-      <i class="fas fa-sort"></i>
-    {% endif %}
-  </a>Categorie
-</th>
+        var chartOptions = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
 
-   <th>
-  <a href="{{ path('equipe_afficheC', {'sortBy': 'picture', 'sortOrder': (app.request.get('sortBy') == 'picture' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
-    {% if app.request.get('sortBy') == 'picture' %}
-      {% if app.request.get('sortOrder') == 'asc' %}
-        <i class="fas fa-sort-alpha-down"></i>
-      {% else %}
-        <i class="fas fa-sort-alpha-up"></i>
-      {% endif %}
-    {% else %}
-      <i class="fas fa-sort"></i>
-    {% endif %}
-  </a>Logo
-</th>
-
-    <th>Action</th>
-    
-      
-  </tr>
-  {% for i in equipe %}
-    <tr>
-      <td>{{i.id}}</td>
-      <td>{{i.nom}}</td>
-      <td><textarea name="joueurs">{{ i.joueurs }}</textarea></td>
-      <td>{{i.classement}}</td>
-      <td>{{i.entraineur}}</td>
-      <td>{{i.categorie}}</td>
-      <td>
-    {% if i.picture %}
-      <img src="{{ asset('uploads/' ~ i.picture) }}" alt="{{ i.nom }}" style="max-height: 100px">
-    {% else %}
-      No picture
-    {% endif %}
-  </td>
-       <td>
-        <button class="btn btn-primary">
-        <a href="{{ path('equipe_delete', {'id': i.id}) }}"style="color: white;">Delete</a>
-        </button>
-         <button class="btn btn-primary">
-         <a href="{{ path('equipe_update', {'id': i.id}) }}"style="color: white;">Update</a>
-          </button>
-        
-      </td>
-       
-    </tr>
-  {% endfor %}
+        var chart = new Chart('matchesPerTeamChart', {
+            type: 'bar',
+            data: chartData,
+            options: chartOptions
+        });
+    </script>
                                        
                                     </tbody>
                                 </table>
@@ -559,6 +512,79 @@
             </div>
         </div>
     </div>
+    <style>
+  .flashy-button {
+    background-color: #0000ff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #000000;
+    transition: all 0.2s ease-in-out;
+  }
+   .red-button {
+    background-color: #ff0000;
+  }
+
+  .blue-button {
+    background-color: #0000ff;
+  }
+
+  .flashy-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 0px 20px #000000;
+  }
+
+  .center-container {
+      text-align: center;
+    position: absolute;
+    bottom: 500px;
+    left: 50%;
+    transform: translateX(-35%);
+    
+  }
+
+  .center-button {
+    display: inline-block;
+    margin: 0 auto;
+    width: 400px;
+    height: 100px;
+    font-size: 40px;
+    padding: 20px;
+  }
+   .animate {
+    animation-name: updown;
+    animation-duration: 1.1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+  }
+
+  @keyframes updown {
+    0% {
+      transform: translateY(0);
+    }
+    25% {
+      transform: translateY(-50px);
+    }
+    50% {
+      transform: translateY(0);
+    }
+    75% {
+      transform: translateY(50px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+</style>
+<script>
+  function animateButton(button) {
+    button.classList.add('animate');
+    setTimeout(function() {
+      button.classList.remove('animate');
+    }, 1000);
+  }
+</script>
     {% endblock %}
 {% block js %}
     <!-- Bootstrap core JavaScript-->
