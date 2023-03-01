@@ -5,3 +5,24 @@
 search:
   path: /search
   controller: App\Controller\SearchController::search
+
+admin_registrations:
+    path: '/admin/registrations'
+    controller: App\Controller\AdminController::index'
+    methods: ['GET']
+    requirements:
+        _role: 'ROLE_ADMIN'
+
+admin_registration_approve:
+    path: '/admin/registrations/{id}/approve'
+    controller: App\Controller\AdminController::approve'
+    methods: ['GET']
+    requirements:
+        _role: 'ROLE_ADMIN'
+
+admin_registration_reject:
+    path: '/admin/registrations/{id}/reject'
+    controller: App\Controller\AdminController::reject'
+    methods: ['GET']
+    requirements:
+        _role: 'ROLE_ADMIN'

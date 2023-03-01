@@ -148,5 +148,46 @@ public function search(Request $request)
     }
 
 
+    #[Route('/admin/registrations', name: 'admin_registrations')]
+    public function RegistrationAdminController ()
+    {
+        // Query the database for all pending user registrations
+        $user = $this->getDoctrine()->getRepository(User::class)->findBy(['confirmed' => false]);
+
+        return $this->render('admin/registrations.html.twig', [
+            'user' => $user,
+        ]);
+}
+
+
+
+    /**
+     * @Route("/admin/registrations/{id}/approve", name="admin_registration_approve")
+     */
+    public function approve(Request $request, User $user)
+    {
+        $user->setConfirmed(true);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'User registration approved.');
+
+        return $this->redirectToRoute('admin_registrations');
+    }
+
+    /**
+     * @Route("/admin/registrations/{id}/reject", name="admin_registration_reject")
+     */
+    public function reject(Request $request, User $user)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'User registration rejected.');
+
+        return $this->redirectToRoute('admin_registrations');
+    }
 
 }

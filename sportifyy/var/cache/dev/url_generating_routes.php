@@ -38,4 +38,7 @@ return [
     'deleteUserJSON' => [['id'], ['_controller' => 'App\\Controller\\UserMobileController::deleteUserJSON'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/deleteUserJSON']], [], [], []],
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
     'search' => [[], ['_controller' => 'App\\Controller\\SearchController::search'], [], [['text', '/search']], [], [], []],
+    'admin_registrations' => [[], ['_controller' => 'App\\Controller\\AdminController::index\''], ['_role' => 'ROLE_ADMIN'], [['text', '/admin/registrations']], [], [], []],
+    'admin_registration_approve' => [['id'], ['_controller' => 'App\\Controller\\AdminController::approve\''], ['_role' => 'ROLE_ADMIN'], [['text', '/approve'], ['variable', '/', '[^/]++', 'id', true], ['text', '/admin/registrations']], [], [], []],
+    'admin_registration_reject' => [['id'], ['_controller' => 'App\\Controller\\AdminController::reject\''], ['_role' => 'ROLE_ADMIN'], [['text', '/reject'], ['variable', '/', '[^/]++', 'id', true], ['text', '/admin/registrations']], [], [], []],
 ];

@@ -15,6 +15,9 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile ;
 use App\Service\FileUploader;
+use Swift_Mailer;
+use Swift_Message;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 
 
@@ -46,6 +49,8 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+            // set the confirmation status to false
            
 
             if  ($showSecondForm) {
@@ -80,6 +85,15 @@ class RegistrationController extends AbstractController
            
             
             // encode the plain password
+
+
+            
+
+            
+            
+            
+
+            
            
 
             
@@ -87,7 +101,8 @@ class RegistrationController extends AbstractController
             // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_login');
-        }
+            } 
+        
 
 
 

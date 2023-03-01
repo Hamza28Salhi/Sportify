@@ -72,8 +72,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $Address = null;
 
 
+    
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $confirmed = false;
 
+    public function isConfirmed(): bool
+    {
+        return $this->confirmed;
+    }
 
+    public function setConfirmed(bool $confirmed): self
+    {
+        $this->confirmed = $confirmed;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
