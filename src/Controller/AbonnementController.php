@@ -1,6 +1,9 @@
 <?php
 
+
 namespace App\Controller;
+use App\services\QrcodeService;
+use App\Repository\AbonnementRepository;
 
 use App\Entity\Abonnement;
 use App\Form\AbonnementType;
@@ -10,6 +13,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Knp\Component\Pager\PaginatorInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
+
+
 
 
 class AbonnementController extends AbstractController
@@ -35,6 +43,7 @@ class AbonnementController extends AbstractController
         $form = $this->createForm(AbonnementType::class,$abonnement);
         $form->handleRequest($req);
         if($form->isSubmitted() && $form->isValid()){
+           
             $em->persist($abonnement);
             $em->flush();
             return $this->redirectToRoute('abonnement_add');
@@ -43,14 +52,19 @@ class AbonnementController extends AbstractController
         return $this->renderForm('abonnement/add.html.twig',['form'=>$form]);
     }
     #[Route('/abonnement/list', name: 'abonnement_list')]
-    public function list(ManagerRegistry $doctrine): Response {
-        $em = $doctrine->getManager();
-        $abonnement = $em->getRepository(Abonnement::class)->findAll();
+    public function list(AbonnementRepository $abonnementRepository,PaginatorInterface $paginator,Request $request): Response {
+        $data = $abonnementRepository->findAll();
+        $abonnement = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+           6 /*limit per page*/
+        );
+        
     
         return $this->render('abonnement/list.html.twig', ['abonnement' => $abonnement]);
     }
     #[Route('/abonnement/{id}/delete', name: 'abonnement_delete')]
-public function delete(ManagerRegistry $doctrine, int $id): Response
+public function delete(ManagerRegistry $doctrine, int $id,FlashyNotifier $flashy): Response
 {
     $em = $doctrine->getManager();
     $abonne = $em->getRepository(Abonnement::class)->find($id);
@@ -61,6 +75,7 @@ public function delete(ManagerRegistry $doctrine, int $id): Response
 
     $em->remove($abonne);
     $em->flush();
+    $flashy->error('Event created!', 'http://your-awesome-link.com');
 
     return $this->redirectToRoute('abonnement_list');
 }

@@ -330,7 +330,7 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Abonnement
+                                    Profile
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -421,6 +421,10 @@
                 </div>
                 <!-- /.container-fluid -->
 
+<div class="d-flex justify-content-center">
+  {% do categorie.SetPageRange(2) %}
+  {{ knp_pagination_render(categorie, "pagination.html.twig") }}
+</div>
             </div>
             <!-- End of Main Content -->
 
@@ -464,6 +468,7 @@
             </div>
         </div>
     </div>
+    
     {% endblock %}
 {% block js %}
     <!-- Bootstrap core JavaScript-->
@@ -478,8 +483,8 @@
 
 <!-- Page level custom scripts -->
     <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+    
     </body>
 
 </html>
-
         {% endblock %}

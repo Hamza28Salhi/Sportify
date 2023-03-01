@@ -20,6 +20,10 @@ class Abonnement
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"nom is required")]
+    #[Assert\Regex(
+            pattern:"/^[A-Z]/",
+            message:"The first letter of the string must be uppercase")]
+    
     
     private ?string $nom = null;
 
@@ -27,9 +31,11 @@ class Abonnement
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"description is required")]
     private ?string $description = null;
+    
 
     #[ORM\Column]
     #[Assert\NotBlank(message:"prix is required")]
+    #[Assert\Positive(message:"Prix doit etre positive")]
     private ?int $prix = null;
 
     #[ORM\OneToMany(mappedBy: 'abonnement', targetEntity: Categorie::class)]

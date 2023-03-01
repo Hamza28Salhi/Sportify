@@ -56,13 +56,22 @@
                             <td> {{ form_widget(form.prix) }} </td>  
                             <td> {{ form_errors(form.prix) }} </td>
                             </tr>
-
-
-
+  
 
 
 </table>
-{{ form_widget(form.save)}} 
+<div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                
+                                        <button type="Submit"  class="btn btn-primary btn-rounded" >Update </button>
+                                       
+                                   
+                            </div>
+                        </div>
+                    </div>
+
+
 {{form_end(form)}}
  
 

@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base3.html.twig' %}
 
-<head>
-  <title>Soccer &mdash; Website by Colorlib</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 {% block css %}
   <link href="{{asset('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap')}}" rel="stylesheet">
@@ -29,10 +24,19 @@
 
 {% endblock %}
 
-</head>
 
-<body>
+
+
 {% block body %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Soccer &mdash; Website by Colorlib</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head> 
+<body>
   <div class="site-wrap">
 
     <div class="site-mobile-menu site-navbar-target">
@@ -79,7 +83,7 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-9 mx-auto text-center">
-            <h1 class="text-white">Profile</h1>
+            <h1 class="text-white">Abonnement</h1>
           </div>
         </div>
       </div>
@@ -179,6 +183,9 @@
         </div>
       </div>
     </footer>
+    </body>
+
+</html>
 
 
 
@@ -204,6 +211,3 @@
   <script src="{{asset('js/main.js')}}"></script>
   {% endblock %}
 {% endblock %}
-</body>
-
-</html>

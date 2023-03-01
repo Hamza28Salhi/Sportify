@@ -8,7 +8,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Persistence\ManagerRegistry;   
+use Doctrine\Persistence\ManagerRegistry; 
+use App\Repository\CategorieRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
+
+
 
 class CategorieController extends AbstractController
 {
@@ -45,14 +50,18 @@ class CategorieController extends AbstractController
         return $this->renderForm('categorie/add.html.twig',['categorieForm'=>$form]);
     }
     #[Route('/categorie/list', name: 'categorie_list')]
-    public function list(ManagerRegistry $doctrine): Response {
-        $em = $doctrine->getManager();
-        $categorie = $em->getRepository(Categorie::class)->findAll();
+    public function list(CategorieRepository $categorieRepository,PaginatorInterface $paginator,Request $request): Response {
+        $data = $categorieRepository->findAll();
+        $categorie = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+           3 /*limit per page*/
+        );
     
         return $this->render('categorie/list.html.twig', ['categorie' => $categorie]);
     }
     #[Route('/categorie/{id}/delete', name: 'categorie_delete')]
-public function delete(ManagerRegistry $doctrine, int $id): Response
+public function delete(ManagerRegistry $doctrine, int $id, FlayNotifier $flashy): Response
 {
     $em = $doctrine->getManager();
     $abonne = $em->getRepository(Categorie::class)->find($id);
@@ -60,9 +69,11 @@ public function delete(ManagerRegistry $doctrine, int $id): Response
     if (!$abonne) {
         throw $this->createNotFoundException('The membership was not found');
     }
+    $flashy->error('Abonnement supprimé!', 'http://your-awesome-link.com');
 
     $em->remove($abonne);
     $em->flush();
+
 
     return $this->redirectToRoute('categorie_list');
 }
