@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -15,10 +17,13 @@ class Post
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    #[Groups("posts")]
+    //private ?int $id = null; 
+    public ?int $id = null; //public car probleme dans PostMobileController
 
 
     #[ORM\Column(length: 255)]
+    #[Groups("posts")]
     #[Assert\NotBlank(message:"Titre manquant")]
     #[Assert\Regex(
         pattern: "/^[a-zA-Z]+$/",
@@ -27,26 +32,25 @@ class Post
     private ?string $titre_Post = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups("posts")]
     #[Assert\NotBlank(message:"Contenu manquant")]
-    #[Assert\Length(min: 30, minMessage: "Le texte doit comporter au moins 30 caractères")]
-    /*#[Assert\Regex(
-        pattern: '/\R{3,}/',
-        message: "Le texte doit comporter au moins 3 retours à la ligne"
-    )]*/
+    #[Assert\Length(min: 30, minMessage: "Le post doit comporter au moins 30 caractères")]
     #[Assert\Regex(
         pattern: '/(?:\n.*){2}/', 
-        message: "Le texte doit contenir au moins trois retours à la ligne."
+        message: "Le post doit contenir au moins trois retours à la ligne."
     )]
     private ?string $contenu_Post = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("posts")]
     private ?string $image_Post = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("posts")]
     #[Assert\NotBlank(message:"Auteur manquant")]
     #[Assert\Regex(
         pattern: "/^[a-zA-Z]+$/",
-        message: "Le titre ne doit contenir que des lettres"
+        message: "L'auteur ne doit contenir que des lettres"
     )]
     private ?string $auteur_Post = null;
 
@@ -85,7 +89,7 @@ class Post
         return $this->titre_Post;
     }
 
-    public function setTitrePost(string $titre_Post): self
+    public function setTitrePost(string $titre_Post): self //    public function setTitrePost(string $titre_Post=null): self
     {
         $this->titre_Post = $titre_Post;
 

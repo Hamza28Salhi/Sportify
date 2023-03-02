@@ -13,12 +13,22 @@ use App\Entity\Post;
 use App\Form\PostType;
 use App\Entity\Commentaire;
 use App\Form\CommentaireType;
+use App\Repository\CommentaireRepository;
+use App\Form\CommentaireFrontType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class PostController extends AbstractController
 {
+    private $commentaireRepository;
+
+    public function __construct(CommentaireRepository $commentaireRepository)
+    {
+        $this->commentaireRepository = $commentaireRepository;
+    }
+
+
     #[Route('/post', name: 'app_post')]
     public function index(): Response
     {
@@ -81,37 +91,39 @@ public function showF(ManagerRegistry $doctrine): Response {
 
 //afficher le post selectionné en front
 #[Route('/post/post_show_one/{id}', name: 'post_show_one')]
-public function showO(Request $request, ManagerRegistry $doctrine, int $id): Response
+public function showO(Request $request, ManagerRegistry $doctrine, int $id,CommentaireRepository $commentaireRepository): Response
 {
     $em = $doctrine->getManager();
-    $post = $em->getRepository(Post::class)->find($id);
-    $commentaires = new Commentaire();
-    //$commentaires->setDateCreationCommentaire(new \DateTime());
-    $form = $this->createForm(CommentaireType::class,$commentaires);
+    //$post = $em->getRepository(Post::class)->find($id);
+    $post = $this->getDoctrine()->getRepository(Post::class)->find($id);
+    $commentaires = $commentaireRepository->findBy(['post' => $post]);
+    $commentaire = new Commentaire();
+    //$commentaire->setDateCreationCommentaire(new \DateTime());
+    $commentaireFrontForm = $this->createForm(CommentaireFrontType::class, $commentaire);
+    $commentaireFrontForm->handleRequest($request);
     //$form->handleRequest($req);
-    if ($form->isSubmitted() && $form->isValid()) {
-        $commentaires = $form->getData();
-        $commentaires->setDateCreationCommentaire(new \DateTime());
-        $commentaires->setPost($post); // On associe le commentaire au post
-        $em->persist($commentaires);
-        $em->flush();
-        return $this->redirectToRoute('post_show_one', ['id' => $id]);
-    }
-    if (!$post) {
-        throw $this->createNotFoundException('The post was not found');
+    if ($commentaireFrontForm->isSubmitted() && $commentaireFrontForm->isValid()) {
+        // Ajout du post correspondant au commentaire
+        $commentaire->setPost($post);
+
+        // Sauvegarde du commentaire en base de données
+        $entityManager = $this->getDoctrine()->getManager();
+        $commentaire->setDateCreationCommentaire(new \DateTime());
+        $entityManager->persist($commentaire);
+        $entityManager->flush();
+
+        // Redirection vers la page du post avec le nouveau commentaire
+        return $this->redirectToRoute('post_show_one', ['id' => $post->getIdPost()]);
     }
 
-    //$content = $post->getContenuPost();
-    //$parts = explode("\n", $content, 3);
-    /*foreach ($parts as $part) {
-        echo '<p>' . trim($part) . '</p>';
-    }*/
+    // Récupération des commentaires du post
+    $commentaires = $commentaireRepository->findBy(['post' => $post], ['dateCreation_Commentaire' => 'ASC']);
+
     return $this->render('post/post_show_one.html.twig', [
         'post' => $post,
         'commentaires' => $commentaires,
-        'form' => $form->createView(),
+        'commentaire_front_form' => $commentaireFrontForm->createView(), // Ajout de la variable contenant le formulaire
     ]);
-    //'parts' => $parts,
 }
 
 

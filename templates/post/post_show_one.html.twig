@@ -64,7 +64,7 @@
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="matches.html" class="nav-link">Matches</a></li>
                 <li><a href="players.html" class="nav-link">Players</a></li>
-                <li class="active"><a href="blog.html" class="nav-link">Blog</a></li>
+                <li class="active"><a href="{{ path('post_show_front') }}" class="nav-link">Blog</a></li>
                 <li><a href="contact.html" class="nav-link">Contact</a></li>
               </ul>
             </nav>
@@ -138,42 +138,36 @@
               <!-- END comment-list -->
               
               <div class="comment-form-wrap pt-5">
-                <h3 class="mb-5">Leave a comment</h3> 
-                                                {#FORMULAIRE COMMENTAIRE#}
-{{form_start(form,{'attr': {'novalidate': 'novalidate'}} )}}                {#<input type="submit" value="Ajouter un commentaire" />#}
-                
-                  <div class="form-group">
-                    
-                    <label for="auteur_Commentaire"> auteur_Commentaire</label>
-                    {#<input type="text" class="{{ asset(form_row(form.auteur_Commentaire) )}}" id="name">#}
-                    <input type="{{ asset(form_row(form.auteur_Commentaire) )}}" name="auteur_Commentaire"class="form-control" id="name">
-                  
-    {#{{ form_row(form.auteur_Commentaire) }}#}
-                  </div>
+                                               
+                                                  {# NOUVELLES MODIFICATIONS COMMENCENT ICI #}
+                                                  <h1>Ajouter un commentaire</h1>
 
-                  <div class="form-group">
-                    
-                    <label for="contenu_Commentaire">contenu_Commentaire</label>
-                    <textarea type="{{ asset(form_row(form.contenu_Commentaire))}}" name="contenu_Commentaire" id="message" cols="30" rows="10" class="form-control"></textarea>
-                  {#{{ form_row(form.contenu_Commentaire) }}#}
-                  </div>
-                  
-                  <div class="form-group">
-                    {{(form_widget(form.save))}}
-                    {#<input type="{{ asset(form_widget(form.save))}}" value="Ajouter le commentaire" class="btn btn-primary py-3 px-4 text-white">
-                  #}</div>
-    {{ form_end(form) }}
+    {# Ajouter un nouveau commentaire #}
+    {{ form_start(commentaire_front_form) }}
 
-        
+    {{ form_label(commentaire_front_form.contenu_Commentaire) }}
+    {{ form_widget(commentaire_front_form.contenu_Commentaire, {'attr': {'class': 'form-control mb-3'}}) }}
+    {{ form_errors(commentaire_front_form.contenu_Commentaire) }}
 
-                
-                                                  {#FORMULAIRE COMMENTAIRE#}
+    {{ form_label(commentaire_front_form.auteur_Commentaire) }}
+    {{ form_widget(commentaire_front_form.auteur_Commentaire, {'attr': {'class': 'form-control mb-3'}}) }}
+    {{ form_errors(commentaire_front_form.auteur_Commentaire) }}
+
+    <button type="submit" class="btn btn-primary">Ajouter le commentaire</button>
+    {{ form_end(commentaire_front_form) }}
+         <a href="{{ path('post_show_one', {'id': post.getIdPost()}) }}" style="color: white; "></a> {#novalidate#}
+
+
+                                                  {#NOUVELLES MODIFICATIONS S'ARRETENT ICI#}
               </div>
-            </div>           
-<p><a href="{{ path('commentaire_add_front',{'id': post.getIdPost()}) }}"> Ajouter commentaire</a></p> 
-      <p><a href="{{ path('post_show_front') }}"> Accueil</a></p>
-
+            </div>    
+                   
+{#<p><a href="{{ path('commentaire_add_front',{'id': post.getIdPost()}) }}"> Ajouter commentaire</a></p> #}
+      <div>
+      <p><a href="{{ path('post_show_front') }}">Revenir vers l'accueil</a></p>
+      </div>
           </div>
+          
           <div class="col-md-4 sidebar">
             <div class="sidebar-box">
               <form action="#" class="search-form">
@@ -193,6 +187,7 @@
                 <li><a href="#">Événements <span>(14)</span></a></li>
               </div>
             </div>
+            
             <div class="sidebar-box">
               {#<img src="images/person_1.jpg" alt="Image placeholder" class="img-fluid mb-4">#}
               <h3 class="text-uppercase">A propos de l'auteur</h3>
