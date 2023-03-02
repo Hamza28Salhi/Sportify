@@ -80,10 +80,8 @@ return [[
 '[C]App%5CController%5CAdminController%23afficheC' => 1,
 'App%5CController%5CAdminController%23RegistrationAdminController' => 0,
 '[C]App%5CController%5CAdminController%23RegistrationAdminController' => 1,
-'App%5CController%5CAdminController%23approve' => 2,
-'[C]App%5CController%5CAdminController%23approve' => 1,
-'App%5CController%5CAdminController%23reject' => 3,
-'[C]App%5CController%5CAdminController%23reject' => 1,
+'App%5CController%5CAdminController%23statistics' => 0,
+'[C]App%5CController%5CAdminController%23statistics' => 1,
 'App%5CController%5CCategorieController' => 0,
 '[C]App%5CController%5CCategorieController' => 1,
 'App%5CController%5CCategorieController%23index' => 0,
@@ -294,7 +292,7 @@ return [[
 '[C]App%5CEntity%5CUser%24show_second_form' => 1,
 'App%5CEntity%5CUser%24Address' => 0,
 '[C]App%5CEntity%5CUser%24Address' => 1,
-'App%5CEntity%5CUser%24confirmed' => 4,
+'App%5CEntity%5CUser%24confirmed' => 2,
 '[C]App%5CEntity%5CUser%24confirmed' => 1,
 'Doctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController' => 0,
 '[C]Doctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController' => 1,
@@ -772,52 +770,8 @@ return [[
 ], [
 
 0 => [],
-1 => 1677598910,
+1 => 1677695771,
 2 => static function () {
-    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
-        $o = [
-            clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
-        ],
-        null,
-        [
-            'Symfony\\Component\\Routing\\Annotation\\Route' => [
-                'path' => [
-                    '/admin/registrations/{id}/approve',
-                ],
-                'name' => [
-                    'admin_registration_approve',
-                ],
-            ],
-        ],
-        [
-            $o[0],
-        ],
-        []
-    );
-},
-3 => static function () {
-    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
-        $o = [
-            clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
-        ],
-        null,
-        [
-            'Symfony\\Component\\Routing\\Annotation\\Route' => [
-                'path' => [
-                    '/admin/registrations/{id}/reject',
-                ],
-                'name' => [
-                    'admin_registration_reject',
-                ],
-            ],
-        ],
-        [
-            $o[0],
-        ],
-        []
-    );
-},
-4 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
             clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),

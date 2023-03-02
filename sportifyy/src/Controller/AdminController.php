@@ -14,6 +14,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Service\UserStatisticsService;
 
 
 class AdminController extends AbstractController
@@ -161,33 +163,32 @@ public function search(Request $request)
 
 
 
-    /**
-     * @Route("/admin/registrations/{id}/approve", name="admin_registration_approve")
-     */
-    public function approve(Request $request, User $user)
-    {
-        $user->setConfirmed(true);
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($user);
-        $entityManager->flush();
 
-        $this->addFlash('success', 'User registration approved.');
 
-        return $this->redirectToRoute('admin_registrations');
-    }
+#[Route('/statistics', name: 'user_statistics')]
+public function statistics(ManagerRegistry $doctrine): Response {
+    $em = $doctrine->getManager();
+    $userRepository = $em->getRepository(User::class);
 
-    /**
-     * @Route("/admin/registrations/{id}/reject", name="admin_registration_reject")
-     */
-    public function reject(Request $request, User $user)
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($user);
-        $entityManager->flush();
+    // Get the total number of users
+    $totalUsers = $userRepository->createQueryBuilder('u')
+        ->select('COUNT(u.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
 
-        $this->addFlash('success', 'User registration rejected.');
+    // Get the number of users per role
+    $userRoles = $userRepository->createQueryBuilder('u')
+        ->select('u.roles AS roleName', 'COUNT(u.id) AS userCount')
+        ->groupBy('u.roles')
+        ->getQuery()
+        ->getResult();
 
-        return $this->redirectToRoute('admin_registrations');
-    }
+    // ...rest of the code
+
+    return $this->render('admin/statistique.html.twig', [
+        'totalUsers' => $totalUsers,
+        'userRoles' => $userRoles,
+    ]);
+}
 
 }

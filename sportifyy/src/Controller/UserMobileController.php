@@ -58,6 +58,7 @@ class UserMobileController extends AbstractController
 
         $user->setEmail($req->get('email'));
         $user->setFullName($req->get('full_name'));
+        $user->setAddress($req->get('address'));
         $user->setPassword($req->get('password'));
         
         

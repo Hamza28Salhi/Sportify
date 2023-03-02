@@ -10,6 +10,7 @@ return [
     'user_update' => [['id'], ['_controller' => 'App\\Controller\\AdminController::update'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/admin/update']], [], [], []],
     'user_search' => [[], ['_controller' => 'App\\Controller\\AdminController::search'], [], [['text', '/admin/search']], [], [], []],
     'user_sort' => [['sortBy', 'sortOrder'], ['sortBy' => 'id', 'sortOrder' => 'asc', '_controller' => 'App\\Controller\\AdminController::afficheC'], ['sortOrder' => '[^/]+'], [['variable', '/', '[^/]+', 'sortOrder', true], ['variable', '/', '[^/]++', 'sortBy', true], ['text', '/admin']], [], [], []],
+    'user_statistics' => [[], ['_controller' => 'App\\Controller\\AdminController::statistics'], [], [['text', '/statistics']], [], [], []],
     'app_categorie' => [[], ['_controller' => 'App\\Controller\\CategorieController::index'], [], [['text', '/categorie']], [], [], []],
     'categorie_add' => [[], ['_controller' => 'App\\Controller\\CategorieController::addCategorie'], [], [['text', '/categorie/addC']], [], [], []],
     'categorie_afficheC' => [[], ['_controller' => 'App\\Controller\\CategorieController::afficheC'], [], [['text', '/categorie/afficheC']], [], [], []],
@@ -41,4 +42,5 @@ return [
     'admin_registrations' => [[], ['_controller' => 'App\\Controller\\AdminController::index\''], ['_role' => 'ROLE_ADMIN'], [['text', '/admin/registrations']], [], [], []],
     'admin_registration_approve' => [['id'], ['_controller' => 'App\\Controller\\AdminController::approve\''], ['_role' => 'ROLE_ADMIN'], [['text', '/approve'], ['variable', '/', '[^/]++', 'id', true], ['text', '/admin/registrations']], [], [], []],
     'admin_registration_reject' => [['id'], ['_controller' => 'App\\Controller\\AdminController::reject\''], ['_role' => 'ROLE_ADMIN'], [['text', '/reject'], ['variable', '/', '[^/]++', 'id', true], ['text', '/admin/registrations']], [], [], []],
+    'statistics' => [[], ['_controller' => 'App\\Controller\\AdminController::statistics'], [], [['text', '/statistics']], [], [], []],
 ];

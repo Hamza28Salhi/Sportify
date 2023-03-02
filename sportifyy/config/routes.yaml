@@ -26,3 +26,10 @@ admin_registration_reject:
     methods: ['GET']
     requirements:
         _role: 'ROLE_ADMIN'
+
+
+
+statistics:
+    path: /statistics
+    controller: App\Controller\AdminController::statistics
+    methods: GET

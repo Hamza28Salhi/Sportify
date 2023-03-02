@@ -6,7 +6,22 @@
 parameters:
 
 services:
-    
+    App\Twig\ArrayExtension:
+        tags:
+            - { name: twig.extension }
+    App\Twig\UserRolesChartExtension:
+        tags: [twig.extension]
+    App\Twig\RandomColorExtension:
+        tags: [twig.extension]
+    App\Repository\UserRepository:
+        class: App\Repository\UserRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
+        arguments:
+            - 'App\Entity\User'
+    App\Service\UserStatisticsService:
+        class: App\Service\UserStatisticsService
+        arguments:
+            - '@App\Repository\UserRepository'
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

@@ -28,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     #[Groups("user")]
-    private array $roles = [];
+    public array $roles = [];
 
     /**
      * @var string The hashed password
@@ -69,7 +69,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups("user")]
-    private ?string $Address = null;
+    public ?string $Address = null;
 
 
     

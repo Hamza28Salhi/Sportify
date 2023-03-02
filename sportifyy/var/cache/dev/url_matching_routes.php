@@ -12,6 +12,10 @@ return [
         '/admin' => [[['_route' => 'index', '_controller' => 'App\\Controller\\AdminController::index'], null, null, null, false, false, null]],
         '/admin/list' => [[['_route' => 'user_list', '_controller' => 'App\\Controller\\AdminController::userlist'], null, null, null, false, false, null]],
         '/admin/search' => [[['_route' => 'user_search', '_controller' => 'App\\Controller\\AdminController::search'], null, null, null, false, false, null]],
+        '/statistics' => [
+            [['_route' => 'user_statistics', '_controller' => 'App\\Controller\\AdminController::statistics'], null, null, null, false, false, null],
+            [['_route' => 'statistics', '_controller' => 'App\\Controller\\AdminController::statistics'], null, ['GET' => 0], null, false, false, null],
+        ],
         '/categorie' => [[['_route' => 'app_categorie', '_controller' => 'App\\Controller\\CategorieController::index'], null, null, null, false, false, null]],
         '/categorie/addC' => [[['_route' => 'categorie_add', '_controller' => 'App\\Controller\\CategorieController::addCategorie'], null, null, null, false, false, null]],
         '/categorie/afficheC' => [[['_route' => 'categorie_afficheC', '_controller' => 'App\\Controller\\CategorieController::afficheC'], null, null, null, false, false, null]],

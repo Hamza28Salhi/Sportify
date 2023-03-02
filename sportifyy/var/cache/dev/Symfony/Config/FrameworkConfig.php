@@ -522,19 +522,9 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
         return $this->annotations;
     }
 
-    /**
-     * @return \Symfony\Config\Framework\SerializerConfig|$this
-     */
-    public function serializer($value = [])
+    public function serializer(array $value = []): \Symfony\Config\Framework\SerializerConfig
     {
-        if (!\is_array($value)) {
-            $this->_usedProperties['serializer'] = true;
-            $this->serializer = $value;
-
-            return $this;
-        }
-
-        if (!$this->serializer instanceof \Symfony\Config\Framework\SerializerConfig) {
+        if (null === $this->serializer) {
             $this->_usedProperties['serializer'] = true;
             $this->serializer = new \Symfony\Config\Framework\SerializerConfig($value);
         } elseif (0 < \func_num_args()) {
@@ -987,7 +977,7 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
 
         if (array_key_exists('serializer', $value)) {
             $this->_usedProperties['serializer'] = true;
-            $this->serializer = \is_array($value['serializer']) ? new \Symfony\Config\Framework\SerializerConfig($value['serializer']) : $value['serializer'];
+            $this->serializer = new \Symfony\Config\Framework\SerializerConfig($value['serializer']);
             unset($value['serializer']);
         }
 
@@ -1171,7 +1161,7 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
             $output['annotations'] = $this->annotations->toArray();
         }
         if (isset($this->_usedProperties['serializer'])) {
-            $output['serializer'] = $this->serializer instanceof \Symfony\Config\Framework\SerializerConfig ? $this->serializer->toArray() : $this->serializer;
+            $output['serializer'] = $this->serializer->toArray();
         }
         if (isset($this->_usedProperties['propertyAccess'])) {
             $output['property_access'] = $this->propertyAccess->toArray();
