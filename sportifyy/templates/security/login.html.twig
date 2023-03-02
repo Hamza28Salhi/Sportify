@@ -1,6 +1,17 @@
-{% extends 'register.html.twig' %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block css %}
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Register</title>
+
+   
     <!-- Custom fonts for this template-->
     <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link
@@ -9,15 +20,13 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
-    {% endblock %}
+    
+
+</head>
 
 
-{% block title %}Register{% endblock %}
-
-{% block body %}
-
-
-    <div class="container">
+<body class="bg-gradient-primary">
+<div class="container">
 
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
@@ -27,9 +36,11 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Welcome back !</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Join The Sportify Army!</h1>
                             </div>
-                            <form class="user">
+
+
+
 <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -59,18 +70,15 @@
                 <input type="checkbox" name="_remember_me"> Remember me
             </label>
         </div>
-    <button  type="submit">
+    <button  type="submit" href="{{ path('home' ) }}">
         Sign in
     </button>
 
-    
-</form>
-<div class="text-center">
+    <hr>
+                            <div class="text-center">
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
                             </div>
-                            <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -78,8 +86,6 @@
         </div>
 
     </div>
-
-    {% block js %}
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
@@ -90,6 +96,9 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-    {% endblock %}
 
- {% endblock %}
+    </body>
+
+</html>
+
+    
