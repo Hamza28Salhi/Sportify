@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h1>Mon panier</h1>
+    {% if panier|length > 0 %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Produit</th>
+            <th>Prix unitaire</th>
+            <th>Quantité</th>
+            <th>Prix total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in panier %}
+            <tr>
+              <td>{{ item.produit.Nom }}</td>
+              <td>{{ item.produit.Prix }} €</td>
+              <td>{{ item.quantite }}</td>
+              <td>{{ item.produit.Prix * item.quantite }} €</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3" class="text-right">Total :</td>
+            <td>{{ total }} €</td>
+          </tr>
+        </tfoot>
+      </table>
+    {% else %}
+      <p>Votre panier est vide</p>
+    {% endif %}
+    <a href="{{ path('produit_affichePP' ) }}" class="btn btn-primary">Poursuivre vos achats</a>
+  </div>
+{% endblock %}

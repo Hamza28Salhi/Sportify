@@ -1,6 +1,13 @@
 <?php
 
 namespace App\Controller;
+
+
+use Dompdf\Dompdf;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+
 use App\Service\FileUploader;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,8 +20,12 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Knp\Component\Pager\PaginatorInterface;
 
 
+
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProduitController extends AbstractController
 {
@@ -50,13 +61,19 @@ class ProduitController extends AbstractController
         return $this->renderForm('produit/addP.html.twig',['form'=>$form]);
 }
 
-#[Route('/produit/afficheP', name: 'produit_afficheP')]
-public function afficheP(ManagerRegistry $doctrine): Response {
+#[Route('/produit/afficheP/{sortBy}/{sortOrder<[^/]+>}', name: 'produit_afficheP')]
+public function afficheP(ManagerRegistry $doctrine, $sortBy = 'id', $sortOrder = 'asc'): Response {
     $em = $doctrine->getManager();
-    $produit = $em->getRepository(Produit::class)->findAll();
+    $sortOrder = str_replace('/', '', $sortOrder);
+    $produit = $em->getRepository(Produit::class)->findAllOrderedByProperty($sortBy, $sortOrder);
 
     return $this->render('produit/afficheP.html.twig', ['produit' => $produit]);
 }
+
+
+
+
+
 
 #[Route('/produit/affichePP', name: 'produit_affichePP')]
 public function affichePP(ManagerRegistry $doctrine): Response {
@@ -68,13 +85,18 @@ public function affichePP(ManagerRegistry $doctrine): Response {
 
 
 
-#[Route('/produit/afficheCP', name: 'produit_afficheCP')]
-public function afficheCP(ManagerRegistry $doctrine): Response {
+#[Route('/produit/afficheCP/{id}', name: 'produit_afficheCP')]
+public function afficheCP(ManagerRegistry $doctrine, $id): Response {
     $em = $doctrine->getManager();
-    $produit = $em->getRepository(Produit::class)->findAll();
+    $produit = $em->getRepository(Produit::class)->find($id);
+    
+    if (!$produit) {
+        throw $this->createNotFoundException('Produit not found');
+    }
 
     return $this->render('produit/afficheCP.html.twig', ['produit' => $produit]);
 }
+
 
 
 #[Route('/produit/{id}/delete', name: 'produit_delete')]
@@ -125,6 +147,85 @@ public function update(ManagerRegistry $doctrine, Request $request, $id, FileUpl
     ]);
 
 }
+
+
+
+
+
+
+
+
+ 
+    
+    
+
+    #[Route('/pdf', name: 'pdf', methods: ['GET'])]
+    public function pdf(ProduitRepository $ProduitRepository): Response
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new OptionsResolver();
+        $pdfOptions->setDefaults([
+            'defaultFont' => 'Arial',
+        ]);
+    
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+    
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('produit/pdf.html.twig', [
+            'produits' => $ProduitRepository->findAll(),
+        ]);
+    
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+    
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+    
+        // Render the HTML as PDF
+        $dompdf->render();
+    
+        // Output the generated PDF to Browser (inline view)
+        $output = $dompdf->output();
+        $response = new Response($output);
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'inline; filename="mypdf.pdf"');
+        return $response;
+    }
+
+
+
+
+
+
+
+
+    #[Route('/produit/statistics', name: 'produits_statistics')]
+    public function statistics(ManagerRegistry $doctrine): Response {
+        $em = $doctrine->getManager();
+        $ProduitRepository = $em->getRepository(Produit::class);
+    
+        // Get the total number of produits
+        $totalProduits = $ProduitRepository->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    
+        // Get the number of produits per category
+        $categoryProduits = $ProduitRepository->createQueryBuilder('p')
+            ->select('c.nom_categorie AS categoryName', 'COUNT(p.id) AS produitCount')
+            ->leftJoin('p.categorie', 'c')
+            ->groupBy('c.id')
+            ->getQuery()
+            ->getResult();
+    
+        return $this->render('produit/statistics.html.twig', [
+            'totalProduits' => $totalProduits,
+            'categoryProduits' => $categoryProduits,
+        ]);
+    }
+
+
 
 
 }

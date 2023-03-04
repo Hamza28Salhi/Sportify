@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -71,12 +72,71 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups("user")]
     public ?string $Address = null;
 
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    private $resetToken;
 
+
+   /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    public $activationToken;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    public $isActive = false;
+
+    // ...
+
+
+    const ROLE_BOBO = 'ROLE_BOBO';
+
+    
+    
     
     /**
      * @ORM\Column(type="boolean")
      */
-    private $confirmed = false;
+    public $confirmed = false;
+
+    
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
+    }
+    
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activationToken;
+    }
+
+    public function setActivationToken(?string $activationToken): self
+    {
+        $this->activationToken = $activationToken;
+
+        return $this;
+    }
+
+    public function getIsActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
 
     public function isConfirmed(): bool
     {
@@ -132,10 +192,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+    
         return array_unique($roles);
     }
+    public function hasRole(string $role): bool
+{
+    return in_array($role, $this->roles);
+}
 
     public function setRoles(array $roles): self
     {

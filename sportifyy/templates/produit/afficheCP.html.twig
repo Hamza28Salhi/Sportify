@@ -75,77 +75,31 @@
             <div class="text">
              <!-- <span class="meta">May 20, 2020</span>-->
      
-    
-
-
-
-
-
-
-
-
- 
- 
-
-
-
-
-
-
-
-
-
-
-
+    <form method="post" class="counter d-flex" action="ajouter_panier.php">
 <div>
-  <label for="quantite">Quantité :</label>
-  <div>
-    <button onclick="decrementQuantity()">-</button>
-    <input id="quantite" name="quantite" type="number" value="1" min="1">
-    <button onclick="incrementQuantity()">+</button>
-  </div>
-</div>
+      <label for="quantite">Ajout quantité:</label>
+      <div style="display: flex; align-items: center;">
+        <div style="padding: 0.25rem 0.5rem; font-size: 1.5rem; cursor: pointer;" onclick="decrementQuantite()">-</div>
+        <input type="number" id="quantite" name="quantite" value="1" min="1" max="{{ produit.Quantite }}" style="margin: 0 0.5rem; width: 3rem; text-align: center;">
+        <div style="padding: 0.25rem 0.5rem; font-size: 1.5rem; cursor: pointer;" onclick="incrementQuantite()" {% if produit.Quantite == 0 %} disabled {% endif %}>+</div>
+      </div>
+    </div>
 
-<script>
-  function incrementQuantity() {
-    var input = document.getElementById("quantite");
-    var currentQuantity = parseInt(input.value);
-    input.value = currentQuantity + 1;
-  }
 
-  function decrementQuantity() {
-    var input = document.getElementById("quantite");
-    var currentQuantity = parseInt(input.value);
-    if (currentQuantity > 1) {
-      input.value = currentQuantity - 1;
-    }
-  }
-</script>
- 
+</form>
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-           
-                
-                 
-
-             
                
                <p> <button class="btn btn-primary">
-  <a  style="color: white;">Poursuivre vos achats</a>
+  <a href="{{ path('produit_affichePP' ) }}" style="color: white;">Poursuivre vos achats</a>
 </button> </p> 
+
+
+
+
 <p> <button class="btn btn-primary">
   <a  style="color: white;">Finaliser la commande</a>
 </button> </p> 
@@ -172,9 +126,60 @@
       </div>
     </div>
 
+   
+    
 
     
     
+<script>
+  function incrementQuantite() {
+    var quantiteInput = document.getElementById("quantite");
+    var quantite = parseInt(quantiteInput.value);
+    var maxQuantite = parseInt(quantiteInput.max);
+    var plusButton = document.querySelector("div[onclick='incrementQuantite()']");
+    if (quantite < maxQuantite) {
+      quantiteInput.value = quantite + 1;
+      if (quantite + 1 >= maxQuantite) {
+        plusButton.style.cursor = "not-allowed";
+      }
+    }
+  }
+
+  function decrementQuantite() {
+    var quantiteInput = document.getElementById("quantite");
+    var quantite = parseInt(quantiteInput.value);
+    if (quantite > 1) {
+      quantiteInput.value = quantite - 1;
+      var plusButton = document.querySelector("div[onclick='incrementQuantite()']");
+      plusButton.style.cursor = "pointer";
+    }
+  }
+  
+  var quantiteInput = document.getElementById("quantite");
+  quantiteInput.onkeyup = function() {
+    var quantite = parseInt(quantiteInput.value);
+    var maxQuantite = parseInt(quantiteInput.max);
+    var plusButton = document.querySelector("div[onclick='incrementQuantite()']");
+    if (quantite >= maxQuantite) {
+      plusButton.style.cursor = "not-allowed";
+    } else {
+      plusButton.style.cursor = "pointer";
+    }
+  };
+  
+  quantiteInput.onchange = function() {
+    var quantite = parseInt(quantiteInput.value);
+    var maxQuantite = parseInt(quantiteInput.max);
+    var plusButton = document.querySelector("div[onclick='incrementQuantite()']");
+    if (quantite >= maxQuantite) {
+      plusButton.style.cursor = "not-allowed";
+    } else {
+      plusButton.style.cursor = "pointer";
+    }
+  };
+</script>
+ 
+ 
 
 
 

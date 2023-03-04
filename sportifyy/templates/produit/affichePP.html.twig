@@ -1,4 +1,5 @@
 
+{% extends 'base3.html.twig' %}
 {% block css %}
 <!DOCTYPE html>
 
@@ -29,6 +30,14 @@
   <link rel="stylesheet" href="{{ asset('css/aos.css') }}">
 
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
 
 
 
@@ -61,13 +70,34 @@
             </a>
           </div>
           <div class="ml-auto">
+          <nav class="site-navigation position-relative text-right" role="navigation">
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+              {% if is_granted('ROLE_ADMIN') %}
+
+                <a href="{{ path('matches_afficheC') }}" class="nav-link">Manage Matches</a>
+                <a href="{{ path('user_list') }}" class="nav-link">Manage Users</a>
+                <img src="{{asset('images/admin.png')}}" width="30" height="30"></img> 
+                {% endif %}
+                {% if is_granted('ROLE_BOBO') %}
+
+                <a href="{{ path('categorie_afficheC') }}" class="nav-link">Manage Products</a>
+                <img src="{{asset('images/shop.png')}}" width="30" height="30"></img>
+                {% endif %}
+                <a class="nav-link"><a href="{{ path('app_logout') }}">Logout</a>
+                <img src="{{asset('images/logout.png')}}" width="25" height="25"></img></a>
+                </ul>
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="matches.html" class="nav-link">Matches</a></li>
-                <li><a href="players.html" class="nav-link">Players</a></li>
-                <li class="active"><a href="blog.html" class="nav-link">Produits</a></li>
-                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li><a href="{{ path('matches_afficheCC') }}" class="nav-link">Matches</a></li>
+                <li><a href="evenements.html" class="nav-link">Evenements</a></li>
+                <li><a href="blog.html" class="nav-link">Blog</a></li>
+                <li><a href="abonnements.html" class="nav-link">Abonnements</a></li>
+                <li class="active"><a href="{{ path('produit_affichePP') }}" class="nav-link">Boutique</a></li>
+                <li ><a href="{{ path('hello2') }}" class="nav-link">Profile</a></li>
+                
+                
+                
               </ul>
             </nav>
 
@@ -100,6 +130,11 @@
       </div>
 
 
+
+
+
+
+
      
 
      
@@ -110,21 +145,77 @@
            
             <div class="text">
              <!-- <span class="meta">May 20, 2020</span>-->
-                <td>
+          
+
+
+
+
+<style>
+  img:hover {
+    transform: scale(1.6);
+    transition: transform 0.2s ease-in-out;
+  }
+</style>
+   <td>
     {% if i.Image %}
       <img src="{{ asset('uploads/' ~ i.Image) }}" alt="{{ i.NomProduit }}" style="max-height: 230px">
     {% else %}
       No picture
     {% endif %}
   </td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               <h3 class="mb-4"><a href="#">{{i.NomProduit}}</a></h3>
               <p>{{i.PrixProduit}} Dinars</p>
               <p>Marque:<a href="#"> {{i.MarqueProduit}}</a></p> 
              <p> <td>Categorie: {{i.Categorie}}</td></p> 
-                   
-               <p> <button class="btn btn-primary">
-  <a href="{{ path('produit_afficheCP' ) }}" style="color: white;">Ajouter au panier</a>
-</button> </p> 
+       {% if i.Quantite > 0 %}
+  <p style="color: #ff007f; display: flex; align-items: center;">
+    <i class='bx bxs-error-circle bx-flashing'  style="margin-right: 0.5rem; color: #ff007f;"></i> {{ i.Quantite }} Articles seulement
+  </p>
+{% else %}
+  <p style="color: red; display: flex; align-items: center;">
+    <i  class='bx bxs-x-circle bx-burst'  style="margin-right: 0.5rem;"></i> Rupture de stock
+  </p>
+{% endif %}
+
+
+
+             
+{% if i.Quantite > 0 %}
+  <p>
+    <a href="{{ path('produit_afficheCP', {'id': i.id}) }}" class="btn btn-primary" style="display: inline-flex; align-items: center; font-size: 1rem;">
+      <i class='bx bxs-cart-add bx-tada' style="margin-right: 0.5rem;"></i> Ajouter au panier
+    </a>
+  </p>
+{% else %}
+  <p style="color: red;"> Ce produit n'est pas disponible pour le moment.</p>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
           </div>
         </div>
@@ -233,7 +324,7 @@
   
 
 
-  <!-- .site-wrap -->
+
   {% block js %}
 
 
@@ -259,8 +350,9 @@
 
 
 
-   {% endblock %}
+   
 
 </body>
 
 </html>
+{% endblock %}

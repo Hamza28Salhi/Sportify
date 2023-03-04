@@ -22,12 +22,13 @@ services:
         class: App\Service\UserStatisticsService
         arguments:
             - '@App\Repository\UserRepository'
-    App\EventListener\UserRegistrationListener:
+    App\Security\LoginAuthenticator:
         arguments:
-            $mailer: '@Symfony\Component\Mailer\MailerInterface'
-            $twig: '@twig'
-        tags:
-            - { name: kernel.event_subscriber }
+            $urlGenerator: '@router'
+        tags: ['security.authenticator']
+    App\Service\SendMailService:
+        arguments:
+            $mailer: '@swiftmailer.mailer.default'
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

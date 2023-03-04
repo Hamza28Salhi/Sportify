@@ -26,6 +26,12 @@
   <link rel="stylesheet" href="{{asset('css/aos.css')}}">
 
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+
+		<!-- Fichiers JS -->
+		<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
+		
+		<script src="{{ asset('assets/js/scripts.js') }}" defer></script>
   {% endblock %}
 
 
@@ -33,6 +39,14 @@
 
 <body>
   {% block body %}
+  {% if app.user and app.user.isVerified == false %}
+			<div class="alert alert-warning alert-dismissible" role="alert">
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				<div class="alert-message">
+					<strong>Votre compte n'est pas activé</strong>, <a href="{{ path('resend_verif') }}">renvoyer le lien d'activation</a>
+				</div>
+			</div>
+		{% endif %}
 
   <div class="site-wrap">
 

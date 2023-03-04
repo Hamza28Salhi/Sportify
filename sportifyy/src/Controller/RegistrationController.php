@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Form\SecondFormType;
@@ -15,9 +16,9 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile ;
 use App\Service\FileUploader;
-use Swift_Mailer;
-use Swift_Message;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 
 
@@ -28,7 +29,7 @@ class RegistrationController extends AbstractController
 
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, FileUploader $fileUploader, TokenGeneratorInterface $tokenGenerator, MailerInterface $mailer): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -62,8 +63,24 @@ class RegistrationController extends AbstractController
             }
             else{
             // do anything else you need here, like send an email
+
+            // Generate a unique activation token
+            $activationToken = $tokenGenerator->generateToken();
+            $user->setActivationToken($activationToken);
+
+
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $email = (new TemplatedEmail())
+                ->from('sportify0123@gmail.com')
+                ->to($user->getEmail())
+                ->subject('Activate your account')
+                ->htmlTemplate('registration/activate_account_email.html.twig')
+                ->context([
+                    'user' => $user,
+                ]);
+            $mailer->send($email);
             return $this->redirectToRoute('app_login');
         }
     }
@@ -88,6 +105,10 @@ class RegistrationController extends AbstractController
 
             $entityManager->flush();
 
+             
+
+            // do anything else you need here, like send a confirmation email
+
             
 
             return $this->redirectToRoute('app_login');
@@ -102,7 +123,25 @@ class RegistrationController extends AbstractController
     }
 
 
-    
+    /**
+     * @Route("/activate-account/{id}/{token}", name="app_activate_account")
+     */
+    public function activateAccount(UserRepository $userRepository, string $id, string $token): Response
+    {
+        $user = $userRepository->find($id);
+
+        if (!$user || $user->getActivationToken() !== $token) {
+            throw $this->createNotFoundException('The activation link is invalid');
+        }
+
+        $user->setIsActive(true);
+        $user->setActivationToken(null);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_login');
+    }
 
 
 }

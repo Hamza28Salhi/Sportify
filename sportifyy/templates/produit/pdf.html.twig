@@ -1,0 +1,49 @@
+
+
+
+<div class="container">
+  
+
+
+<img src="images/admin.jpg" alt="Image description">
+  
+
+<h1 style="color: #1C6D58; font-weight: bold; text-align: center;">Liste des produits</h1>
+
+
+
+ <div class="table-responsive">
+  <table class="table mb-0" style="border-collapse: collapse; border: 2px solid black; width: 90%; margin: auto;">
+  <thead>
+    <tr style="background-color: #309887; color: #fff;">
+      <th style="border: 1px solid black;">Id</th>
+      <th style="border: 1px solid black;">Nom</th>
+      <th style="border: 1px solid black;">PrixProduit</th>
+      <th style="border: 1px solid black;">marque_produit</th>
+      <th style="border: 1px solid black;">categorie</th>
+      <th style="border: 1px solid black;">quantite</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in produits %}
+    <tr style="background-color: {{ cycle(['#E8F5E9',  '#E1F5FE'], loop.index0) }};">
+      <td style="border: 1px solid black;">{{i.Id}}</td>
+      <td style="border: 1px solid black;">{{i.NomProduit}}</td>
+      <td style="border: 1px solid black;">{{i.PrixProduit}}</td>
+      <td style="border: 1px solid black;">{{i.MarqueProduit}}</td>
+      <td style="border: 1px solid black;">{{i.Categorie}}</td>
+      <td style="border: 1px solid black;">{{i.Quantite}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+
+
+  </div>
+
+ 
+</div>

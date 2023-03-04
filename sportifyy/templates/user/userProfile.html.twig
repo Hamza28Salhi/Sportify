@@ -28,8 +28,12 @@
 {% endblock %}
 
 {% block body %}
+
 <body>
+
+
   <div class="site-wrap">
+  
 
     <div class="site-mobile-menu site-navbar-target">
       <div class="site-mobile-menu-header">
@@ -86,7 +90,7 @@
                 <li><a href="evenements.html" class="nav-link">Evenements</a></li>
                 <li><a href="blog.html" class="nav-link">Blog</a></li>
                 <li><a href="abonnements.html" class="nav-link">Abonnements</a></li>
-                <li><a href="boutique.html" class="nav-link">Boutique</a></li>
+                <li><a href="{{ path('produit_affichePP') }}" class="nav-link">Boutique</a></li>
                 <li class="active"><a href="{{ path('hello2') }}" class="nav-link">Profile</a></li>
                 
                 
