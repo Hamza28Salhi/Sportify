@@ -603,6 +603,8 @@
 
     <!-- Page level custom scripts -->
     <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+        {{ parent() }}
+    <script src="{{ asset('path/to/highcharts.js') }}"></script>
     </body>
 
 </html>

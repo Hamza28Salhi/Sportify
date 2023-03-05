@@ -24,6 +24,8 @@
   <link rel="stylesheet" href="{{ asset('fonts/flaticon/font/flaticon.css') }}">
 
   <link rel="stylesheet" href="{{ asset('css/aos.css') }}">
+  <link rel="stylesheet" href="{{ asset('fullcalendar/main.css') }}" />
+<script src="{{ asset('fullcalendar/main.js') }}"></script>
 
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <style>
@@ -585,6 +587,7 @@ Classement</button>
   </div>
 </div>
 
+
 <!-- JavaScript to sort the table on button click -->
 <script>
   const button = document.querySelector('[data-target="#exampleModal"]');
@@ -608,6 +611,18 @@ Classement</button>
 </html>
 {% endblock %}
 {% block js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      events: [
+        // Here you can pass the matches data from your controller
+        // and format it to match the expected format of the calendar library
+      ]
+    });
+    calendar.render();
+  });
+</script>
 
 <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ asset('js/jquery-migrate-3.0.1.min.js') }}"></script>
