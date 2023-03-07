@@ -1,3 +1,6 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+add_to_cart:
+    path: '/produit/add/{id}'
+    controller: 'App\Controller\CartController::add'

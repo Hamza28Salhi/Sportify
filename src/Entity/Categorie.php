@@ -9,7 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
@@ -18,11 +18,13 @@ class Categorie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("categories")]
     private ?int $id = null;
 
    
 
     #[ORM\Column(length: 50)]
+    #[Groups("categories")]
     #[Assert\NotBlank(message:"nomCategorie is required")]
     private ?string $nom_categorie = null;
 

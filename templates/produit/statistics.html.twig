@@ -1,5 +1,4 @@
 
-
 {% extends 'base2.html.twig' %}
 
 
@@ -404,227 +403,106 @@
                                 
                                     <tbody>
                                     
-                                        <tr>
-    <th>Id</th>
-      <th>
- <a href="{{ path('produit_afficheP', {'sortBy': 'nom_produit', 'sortOrder': (app.request.get('sortBy') == 'nom' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
-   {% if app.request.get('sortBy') == 'nom_produit' %}
-      {% if app.request.get('sortOrder') == 'asc' %}
-        
-       <i class='bx bx-sort-a-z' style='color:#004183'  ></i>
-      {% else %}
-         <i class='bx bx-sort-a-z' ></i>
-      {% endif %}
-    {% else %}
-     <i class='bx bx-sort-a-z' ></i>
-    {% endif %}
-
-</a>
-    <a href="{{path('produit_afficheP', {'sortBy': 'nom_produit', 'sortOrder': (app.request.get('sortBy') == 'nom' and app.request.get('sortOrder') == 'asc') ? 'asc' : 'desc'}) }}">
-    {% if app.request.get('sortBy') == 'nom_produit' %}
-      {% if app.request.get('sortOrder') == 'desc' %}
-        
- <i class='bx bx-sort-z-a' style='color:#004183'  ></i>
-      {% else %}
-        <i class='bx bx-sort-z-a' ></i>
-      {% endif %}
-    {% else %}
-     <i class='bx bx-sort-z-a' ></i>
-    {% endif %} 
-
-  </a>Nom
-</th>
-
-
-
-        <th>
-  <a href="{{ path('produit_afficheP', {'sortBy': 'prix_produit', 'sortOrder': (app.request.get('sortBy') == 'prix' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
-   {% if app.request.get('sortBy') == 'prix_produit' %}
-      {% if app.request.get('sortOrder') == 'asc' %}
-        
-        <i class='bx bxs-up-arrow-circle'  style='color:#004183'></i>
-      {% else %}
-        <i class='bx bxs-up-arrow-circle' ></i>
-      {% endif %}
-    {% else %}
-      <i class='bx bxs-up-arrow-circle' ></i>
-    {% endif %}
-</a>
-
-    <a href="{{path('produit_afficheP', {'sortBy': 'prix_produit', 'sortOrder': (app.request.get('sortBy') == 'prix' and app.request.get('sortOrder') == 'asc') ? 'asc' : 'desc'}) }}">
-    {% if app.request.get('sortBy') == 'prix_produit' %}
-      {% if app.request.get('sortOrder') == 'desc' %}
-         <i class='bx bxs-down-arrow-circle'  style='color:#004183'></i>
-      {% else %}
-       <i class='bx bxs-down-arrow-circle' ></i>
-      {% endif %}
-    {% else %}
-      <i class='bx bxs-down-arrow-circle' ></i>
-    {% endif %} 
-
-
-  
-  </a>PrixProduit
-
-</th>
-
-
-
-
-
-
-
-
-    
-    <th> 
- <a href="{{ path('produit_afficheP', {'sortBy': 'marque_produit', 'sortOrder': (app.request.get('sortBy') == 'marque' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
-   {% if app.request.get('sortBy') == 'marque_produit' %}
-      {% if app.request.get('sortOrder') == 'asc' %}
-        
-       <i class='bx bx-sort-a-z' style='color:#004183'  ></i>
-      {% else %}
-         <i class='bx bx-sort-a-z' ></i>
-      {% endif %}
-    {% else %}
-     <i class='bx bx-sort-a-z' ></i>
-    {% endif %}
-    </a>
-
-    <a href="{{path('produit_afficheP', {'sortBy': 'marque_produit', 'sortOrder': (app.request.get('sortBy') == 'marque' and app.request.get('sortOrder') == 'asc') ? 'asc' : 'desc'}) }}">
-    {% if app.request.get('sortBy') == 'marque_produit' %}
-      {% if app.request.get('sortOrder') == 'desc' %}
-        
- <i class='bx bx-sort-z-a' style='color:#004183'  ></i>
-      {% else %}
-        <i class='bx bx-sort-z-a' ></i>
-      {% endif %}
-    {% else %}
-     <i class='bx bx-sort-z-a' ></i>
-    {% endif %} 
-
-
-  </a>marque_produit</th>
-
-
-
-
-   <th>
- <a href="{{ path('produit_afficheP', {'sortBy': 'categorie', 'sortOrder': (app.request.get('sortBy') == 'categorie' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
-   {% if app.request.get('sortBy') == 'categorie' %}
-      {% if app.request.get('sortOrder') == 'asc' %}
-        
-       <i class='bx bx-sort-a-z' style='color:#004183'  ></i>
-      {% else %}
-         <i class='bx bx-sort-a-z' ></i>
-      {% endif %}
-    {% else %}
-     <i class='bx bx-sort-a-z' ></i>
-    {% endif %}
-</a>
-
-    <a href="{{path('produit_afficheP', {'sortBy': 'categorie', 'sortOrder': (app.request.get('sortBy') == 'categorie' and app.request.get('sortOrder') == 'asc') ? 'asc' : 'desc'}) }}">
-    {% if app.request.get('sortBy') == 'categorie' %}
-      {% if app.request.get('sortOrder') == 'desc' %}
-        
- <i class='bx bx-sort-z-a' style='color:#004183'  ></i>
-      {% else %}
-        <i class='bx bx-sort-z-a' ></i>
-      {% endif %}
-    {% else %}
-     <i class='bx bx-sort-z-a' ></i>
-    {% endif %} 
-
-  </a>categorie</th>
-
-
-
-
-
-
-
-
-   <th>image</th>
-
-
-
-
-    <th>
-  <a href="{{ path('produit_afficheP', {'sortBy': 'quantite', 'sortOrder': (app.request.get('sortBy') == 'quantite' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
-   {% if app.request.get('sortBy') == 'quantite' %}
-      {% if app.request.get('sortOrder') == 'asc' %}
-        
-        <i class='bx bxs-up-arrow-circle'  style='color:#004183'></i>
-      {% else %}
-        <i class='bx bxs-up-arrow-circle' ></i>
-      {% endif %}
-    {% else %}
-      <i class='bx bxs-up-arrow-circle' ></i>
-    {% endif %}
-</a>
-
-    <a href="{{path('produit_afficheP', {'sortBy': 'quantite', 'sortOrder': (app.request.get('sortBy') == 'quantite' and app.request.get('sortOrder') == 'asc') ? 'asc' : 'desc'}) }}">
-    {% if app.request.get('sortBy') == 'quantite' %}
-      {% if app.request.get('sortOrder') == 'desc' %}
-         <i class='bx bxs-down-arrow-circle'  style='color:#004183'></i>
-      {% else %}
-       <i class='bx bxs-down-arrow-circle' ></i>
-      {% endif %}
-    {% else %}
-      <i class='bx bxs-down-arrow-circle' ></i>
-    {% endif %} 
-</a>
-   quantite</th>
-
-
-
-
-      <th>Action</th>
-  </tr>
-  {% for i in produit %}
-    <tr>
-       <td>{{i.Id}}</td>
-      <td>{{i.NomProduit}}</td>
-      <td>{{i.PrixProduit}}</td>
-     
-      <td>{{i.MarqueProduit}}</td>
-      <td>{{i.Categorie}}</td>
-       <td>
-    {% if i.Image %}
-      <img src="{{ asset('uploads/' ~ i.Image) }}" alt="{{ i.NomProduit }}" style="max-height: 100px">
-    {% else %}
-      No picture
-    {% endif %}
-  </td>
-  <td>{{i.Quantite}}</td>
+                                      
  
   </td>
 
-       <td>
-       <a href="{{ path('produit_delete', {'id': i.id}) }}" class="btn btn-danger">
-   <i class="bx bxs-trash"></i>
-</a>
-        <a href="{{ path('produit_update', {'id': i.id}) }}" class="btn btn-primary">
-   <i class="bx bxs-edit-alt"></i>
-</a>
-</a>
+      
       <button class="btn btn-primary">
   <a href="{{ path('produits_statistics' ) }}" style="color: grey;">Statistics</a>
   </button>
-</h1>     
+</h1>   
       </td>
         
        
     </tr>
-  {% endfor %}
-   <button class="btn btn-primary">
-  <a href="{{ path('produits_statistics' ) }}" style="color: grey;">Statistics</a>
-  </button>
-</h1>  
+  
    <a class="btn btn-success" href="{{ path('pdf') }}">Create pdf</a>
+   
                                        
                                     </tbody>
                                 </table>
                             </div>
+
+
+
+
+
+
+
+
+
+
+
+ <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                
+                                    <tbody>
+                                    
+                                         <tr>
+    <h1>Produits Statistics</h1>
+     <p>Nombre total de Produit: {{ totalProduits }}</p>
+
+    <h2>Les produits Par Categorie</h2>
+
+    <canvas id="matchesPerTeamChart"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var categoryNames = [];
+        var produitCounts = [];
+        {% for row in categoryProduits %}
+            categoryNames.push('{{ row["categoryName"] }}');
+            produitCounts.push('{{ row["produitCount"] }}');
+        {% endfor %}
+        var chartData = {
+            labels: categoryNames,
+            datasets: [{
+                label: 'Number of Produits',
+                data: produitCounts,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        };
+        var chartOptions = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
+        var chart = new Chart('matchesPerTeamChart', {
+            type: 'bar',
+            data: chartData,
+            options: chartOptions
+        });
+    </script>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                            
                         </div>

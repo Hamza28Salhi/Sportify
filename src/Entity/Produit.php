@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -21,33 +21,39 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("produits")]
     private ?int $id = null;
 
   
 
     #[ORM\Column(length: 255)]
+    #[Groups("produits")]
     #[Assert\NotBlank(message:"nomproduit is required")]
     private ?string $nom_produit = null;
 
     #[ORM\Column]
+    #[Groups("produits")]
     #[Assert\NotBlank(message:"Prix is required")]
     #[Assert\Positive(message:"Prix doit etre positif")]
     private ?float $prix_produit = null;
 
     
     #[ORM\Column(length: 255)]
+    #[Groups("produits")]
     #[Assert\NotBlank(message:"marque is required")]
     private ?string $marque_produit = null;
 
     #[ORM\ManyToOne(inversedBy: 'produit')]
+    #[Groups("produits")]
     #[Assert\NotBlank(message:"categorie is required")]
     private ?Categorie $categorie = null;
     
     #[ORM\Column(length: 255, nullable: true)]
-    
+    #[Groups("produits")]
     private ?string $image = null;
 
     #[ORM\Column]
+    #[Groups("produits")]
     #[Assert\NotBlank(message:"quantite is required")]
    
     private ?int $quantite = null;

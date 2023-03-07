@@ -116,9 +116,41 @@
         <div class="col-6 title-section">
           <h2 class="heading">Produits</h2>
         </div>
+
+
+
+ <p>
+ 
+         <p>
+    <a href="{{ path('cart' ) }}" class="btn btn-primary" style="display: inline-flex; align-items: center; font-size: 1rem;">
+      <i class='bx bxs-cart-add bx-tada' style="margin-right: 0.5rem;"></i>  panier
+    </a>
+  </p>
+   </p>
+
+
+
+
       </div>
+      
+<h2 
+   <th>
+ <a href="{{ path('produit_affichePP', {'sortBy': 'categorie', 'sortOrder': (app.request.get('sortBy') == 'categorie' and app.request.get('sortOrder') == 'asc') ? 'desc' : 'asc'}) }}">
+   {% if app.request.get('sortBy') == 'categorie' %}
+      {% if app.request.get('sortOrder') == 'asc' %}
+        
+       <i class='bx bxs-category-alt' style='color:#004183'  ></i>
+      {% else %}
+         <i class='bx bxs-category-alt' ></i>
+      {% endif %}
+    {% else %}
+     <i class='bx bxs-category-alt' ></i>
+    {% endif %}
+</a>
 
+      
 
+  </a>TRIE categorie</th></h2>
 
 
 
@@ -128,6 +160,7 @@
 
      
       <div class="row">
+    
       {% for i in produit %}
         <div class="col-lg-4 mb-4">
           <div class="custom-media d-block">
@@ -185,19 +218,42 @@
 
              
 {% if i.Quantite > 0 %}
+<form action="{{ path('add_to_cart', {'id': i.id}) }}" method="post">
+  <input type="hidden" name="_token" value="{{ csrf_token('add_to_cart' ~ i.id) }}">
+  <label for="quantity">Quantité:</label>
+  <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ i.Quantite }}">
   <p>
-    <a href="{{ path('produit_afficheCP', {'id': i.id}) }}" class="btn btn-primary" style="display: inline-flex; align-items: center; font-size: 1rem;">
+    <button type="submit" style="display: none;"></button>
+    <a class="btn btn-primary" style="display: inline-flex; align-items: center; font-size: 1rem; color: white;" onclick="event.preventDefault(); this.closest('form').submit();">
       <i class='bx bxs-cart-add bx-tada' style="margin-right: 0.5rem;"></i> Ajouter au panier
     </a>
   </p>
+</form>
 {% else %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <p style="color: red;"> Ce produit n'est pas disponible pour le moment.</p>
 {% endif %}
-
-
-
-
-
 
 
 

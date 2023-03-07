@@ -4,8 +4,10 @@ namespace App\Controller;
 
 
 use Dompdf\Dompdf;
+use \setasign\Fpdi\Fpdi;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Dompdf\FrameReflower\Image;
 
 
 use App\Service\FileUploader;
@@ -25,7 +27,7 @@ use Knp\Component\Pager\PaginatorInterface;
 
 
 use Symfony\Component\Form\FormBuilderInterface;
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProduitController extends AbstractController
 {
@@ -75,10 +77,11 @@ public function afficheP(ManagerRegistry $doctrine, $sortBy = 'id', $sortOrder =
 
 
 
-#[Route('/produit/affichePP', name: 'produit_affichePP')]
-public function affichePP(ManagerRegistry $doctrine): Response {
+#[Route('/produit/affichePP/{sortBy}/{sortOrder<[^/]+>}', name: 'produit_affichePP')]
+public function affichePP(ManagerRegistry $doctrine, $sortBy = 'id', $sortOrder = 'asc'): Response {
     $em = $doctrine->getManager();
-    $produit = $em->getRepository(Produit::class)->findAll();
+    $sortOrder = str_replace('/', '', $sortOrder);
+    $produit = $em->getRepository(Produit::class)->findAllOrderedByProperty($sortBy, $sortOrder);
 
     return $this->render('produit/affichePP.html.twig', ['produit' => $produit]);
 }
@@ -221,5 +224,37 @@ public function searchProduit(Request $request, PaginatorInterface $paginator)
 
 
 
+
+    #[Route('/produit/statistics', name: 'produits_statistics')]
+    public function statistics(ManagerRegistry $doctrine): Response {
+        $em = $doctrine->getManager();
+        $ProduitRepository = $em->getRepository(Produit::class);
+    
+        // Get the total number of produits
+        $totalProduits = $ProduitRepository->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    
+        // Get the number of produits per category
+        $categoryProduits = $ProduitRepository->createQueryBuilder('p')
+            ->select('c.nom_categorie AS categoryName', 'COUNT(p.id) AS produitCount')
+            ->leftJoin('p.categorie', 'c')
+            ->groupBy('c.id')
+            ->getQuery()
+            ->getResult();
+    
+        return $this->render('produit/statistics.html.twig', [
+            'totalProduits' => $totalProduits,
+            'categoryProduits' => $categoryProduits,
+        ]);
+    }
+
+
+
+
+
+
+   
 
 }
