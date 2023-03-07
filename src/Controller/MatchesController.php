@@ -168,6 +168,28 @@ public function afficheCC(ManagerRegistry $doctrine): Response
         'matches' => $matches,
     ]);
 }
+#[Route('/matches/afficheCCal', name: 'matches_afficheCCal')]
+public function afficheCCal(ManagerRegistry $doctrine): Response
+{
+    $em = $doctrine->getManager();
+    $matches = $em->getRepository(Matches::class)->findAll();
+
+    $events = [];
+    foreach ($matches as $match) {
+        $events[] = [
+            'title' =>  $match->getNomEquipe(),
+            'start' => $match->getDate()->format('Y-m-d H:i:s'),
+            'stade' => $match->getStade(),
+            'url' => $this->generateUrl('matches_details', ['id' => $match->getId()]),
+            // You can add more properties as needed
+        ];
+    }
+
+    return $this->render('matches/afficheCCal.html.twig', [
+        'events' => $events,
+        'matches' => $matches,
+    ]);
+}
 
 #[Route('/matches/{id}', name: 'matches_show')]
 public function show(int $id, ManagerRegistry $doctrine): Response
@@ -242,6 +264,20 @@ public function update(ManagerRegistry $doctrine, Request $request, $id): Respon
 }
 
 
+#[Route('/stadium/{id}/map', name: 'stadium_map')]
+public function showMap(ManagerRegistry $doctrine, $id): Response
+{
+    $em = $doctrine->getManager();
+    $stade = $em->getRepository(Matches::class)->find($id);
+
+    if (!$stade) {
+        throw $this->createNotFoundException('Stadium not found');
+    }
+
+    return $this->render('matches/stadium_map.html.twig', [
+        'stade' => $stade,
+    ]);
+}
 
  
 

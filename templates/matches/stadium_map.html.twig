@@ -1,0 +1,46 @@
+{% extends 'base3.html.twig' %}
+
+{% block body %}
+
+  <div id="map" style="height: 100vh"></div>
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+  <script>
+    // Initialize the map
+    var map = L.map('map').setView([{{ stade.latitude }}, {{ stade.longitude }}], 13);
+
+    // Add the tile layer (OpenStreetMap)
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add a marker and a popup
+    L.marker([{{ stade.latitude }}, {{ stade.longitude }}]).addTo(map)
+      .bindPopup('{{ stade.nom }}')
+      .openPopup();
+  </script>
+  
+  <script>
+    // Initialize the map
+    var mapboxAccessToken = 'your.mapbox.access.token';
+    var map = L.map('map').setView([{{ stade.latitude }}, {{ stade.longitude }}], 13);
+
+    // Add the tile layer (Mapbox)
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapboxAccessToken, {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox/streets-v11',
+      tileSize: 512,
+      zoomOffset: -1,
+    }).addTo(map);
+
+    // Add a marker and a popup
+    L.marker([{{ stade.latitude }}, {{ stade.longitude }}]).addTo(map)
+      .bindPopup('<b>{{ stade.nom }}</b><br>{{ stade.stade }}')
+      .openPopup();
+  </script>
+
+{% endblock %}

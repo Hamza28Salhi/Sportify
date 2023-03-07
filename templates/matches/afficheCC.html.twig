@@ -69,6 +69,7 @@
 </a>
 
 
+
   <div class="site-wrap">
 
     <div class="site-mobile-menu site-navbar-target">
@@ -174,12 +175,18 @@
      {% for i in matches %}
     {% if i.id == 3 %}
     <div class="site-section bg-dark">
+    
+               
+
       <div class="container">
         
         <div class="row mb-5">
           <div class="col-lg-12">
             <div class="widget-next-match">
               <div class="widget-title">
+
+
+              
                 <h3>Next Match</h3>
               </div>
               <div class="widget-body mb-3">
@@ -208,7 +215,11 @@
                   <span class="d-block">{{i.date|date('Y-m-d H:i:s')}}</span>
                
                   <strong class="text-primary">{{i.stade}}</strong>
+           
+
                 </p>
+                <a href="{{ path('stadium_map', {'id': i.id}) }}" class="btn btn-primary"> Stadium Map</a>
+
 
                
               </div>
@@ -218,10 +229,11 @@
          {% endif %}
             {% endfor %}
 
+    
 
         <div class="row">
           <div class="col-12 title-section">
-            <h2 class="heading">Upcoming Match</h2>
+            <h2 class="heading">Upcoming Match <a href="{{ path('matches_afficheCCal') }}" class="btn btn-primary">Show Calendar</a></h2>
           </div>
           {% for i in matches %}
 
@@ -253,6 +265,8 @@
                     <span class="d-block">{{i.date|date('H:i:s')}}</span>
                     <strong class="text-primary">{{i.stade}}</strong>
                   </p>
+                  <a href="{{ path('stadium_map', {'id': i.id}) }}" class="btn btn-primary"> Stadium Map</a>
+
 
                 </div>
               
@@ -485,9 +499,7 @@
       </div>
     </footer>
 
- <body>
-    <div id='calendar'></div>
-  </body>
+
 
   </div>
   <!-- .site-wrap -->
