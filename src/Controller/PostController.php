@@ -6,6 +6,8 @@ namespace App\Controller;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Doctrine\Common\Collections\ArrayCollection;*/
 
+
+use App\Service\CommentModerationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,13 +23,23 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PostController extends AbstractController
 {
+
+    ////////////////////////////////////BUNDLE NOTIF: injection de  NotifierInterface////////////////////////////////////
+    /*private $commentaireRepository;
+
+    public function __construct(CommentaireRepository $commentaireRepository, NotifierInterface $notifier)
+    {
+        $this->commentaireRepository = $commentaireRepository;
+        $this->notifier = $notifier;
+    }*/
+    ////////////////////////////////////BUNDLE NOTIF: injection de  NotifierInterface////////////////////////////////////
     private $commentaireRepository;
 
     public function __construct(CommentaireRepository $commentaireRepository)
     {
         $this->commentaireRepository = $commentaireRepository;
     }
-
+    
 
     #[Route('/post', name: 'app_post')]
     public function index(): Response
@@ -61,14 +73,46 @@ class PostController extends AbstractController
                 $post->setImagePost($newFilename);
             }
 
-
             $em->persist($post);
             $em->flush();
+            //$flashy->success('Post created!', 'http://your-awesome-link.com');
+            //$this->addFlash('success', 'Notification message');
+/* /////////////////////////////////////////////NOTIF AVEC NOTIFIER/////////////////////////////////////////
+            $notification = new Notification('Nouveau post ajouté', ['browser']);
+            $this->notifier->send($notification);
+
+            // envoyer la notification
+
+                    // Notify users of the new post
+                    $this->notifyNewPost($post);
+
+
+
+            //$this->notificationService->notifyPostAdded($post);*/
             return $this->redirectToRoute('post_show');
         }
 
+
         return $this->renderForm('post/post_add.html.twig',['form'=>$form]);
     }
+
+    /*private function notifyNewPost(Post $post)
+    {
+        // Retrieve the list of users to notify (in this case, all users)
+        //$users = $this->commentaireRepository->findAllUsers();
+
+        //foreach ($users as $user) {
+            // Create a notification for each user
+
+            //$notification = new Notification('Nouveau post ajouté', ['email']);
+            $notification = new Notification('New post created', ['browser']);
+            $notification->content('A new post has been created: '.$post->getTitrePost());
+
+            // Send the notification using the notifier service
+            //$this->notifier->send($notification, $user);
+            $this->notifier->send($notification);
+        //}
+    }*/
   
     
 //afficher les posts en back
@@ -91,29 +135,35 @@ public function showF(ManagerRegistry $doctrine): Response {
 
 //afficher le post selectionné en front
 #[Route('/post/post_show_one/{id}', name: 'post_show_one')]
-public function showO(Request $request, ManagerRegistry $doctrine, int $id,CommentaireRepository $commentaireRepository): Response
+public function showO(Request $request, ManagerRegistry $doctrine, int $id,CommentaireRepository $commentaireRepository,CommentModerationService $commentModerationService): Response
 {
     $em = $doctrine->getManager();
-    //$post = $em->getRepository(Post::class)->find($id);
     $post = $this->getDoctrine()->getRepository(Post::class)->find($id);
     $commentaires = $commentaireRepository->findBy(['post' => $post]);
     $commentaire = new Commentaire();
-    //$commentaire->setDateCreationCommentaire(new \DateTime());
+    $commentNotAllowed = false;
+
     $commentaireFrontForm = $this->createForm(CommentaireFrontType::class, $commentaire);
     $commentaireFrontForm->handleRequest($request);
-    //$form->handleRequest($req);
-    if ($commentaireFrontForm->isSubmitted() && $commentaireFrontForm->isValid()) {
-        // Ajout du post correspondant au commentaire
-        $commentaire->setPost($post);
 
-        // Sauvegarde du commentaire en base de données
+
+    if ($commentaireFrontForm->isSubmitted() && $commentaireFrontForm->isValid()) {
+        $commentaireContent = $commentaireFrontForm->get('contenu_Commentaire')->getData();
+        $commentNotAllowed = !$commentModerationService->checkCommentAllowed($commentaireContent);
+
+        if ($commentNotAllowed) {
+            $this->addFlash('danger', 'Votre commentaire contient des propos inappropriés.');
+            return $this->redirectToRoute('post_show_one', ['id' => $post->getIdPost(),'commentNotAllowed' => 1]);
+        }
+
+        $commentaire->setPost($post);
         $entityManager = $this->getDoctrine()->getManager();
         $commentaire->setDateCreationCommentaire(new \DateTime());
         $entityManager->persist($commentaire);
         $entityManager->flush();
 
         // Redirection vers la page du post avec le nouveau commentaire
-        return $this->redirectToRoute('post_show_one', ['id' => $post->getIdPost()]);
+        return $this->redirectToRoute('post_show_one', ['id' => $post->getIdPost(),'commentNotAllowed' => $commentNotAllowed]);
     }
 
     // Récupération des commentaires du post
@@ -123,6 +173,7 @@ public function showO(Request $request, ManagerRegistry $doctrine, int $id,Comme
         'post' => $post,
         'commentaires' => $commentaires,
         'commentaire_front_form' => $commentaireFrontForm->createView(), // Ajout de la variable contenant le formulaire
+        'commentNotAllowed' => $commentNotAllowed,
     ]);
 }
 

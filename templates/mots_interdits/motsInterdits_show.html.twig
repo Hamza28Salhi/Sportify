@@ -357,16 +357,17 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                                  <h1 class="h3 mb-2 text-gray-800">Tables      <button class="btn btn-primary">
+                                  <h1 class="h3 mb-2 text-gray-800">Tables      <button class="btn btn-secondary">
   <a href="{{ path('post_show' ) }}" style="color: white;">Posts</a>
 </button>
 
                   <button class="btn btn-secondary">
   <a href="{{ path('commentaire_show' ) }}" style="color: white;">Commentaires</a>
 </button>  
-           <button class="btn btn-primary">
+<button class="btn btn-primary">
   <a href="{{ path('motsInterdits_show' ) }}" style="color: white;">Mots interdits</a>
-</button>    
+</button>  
+               
 </h1>
 
 
@@ -374,7 +375,7 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                     <button class="btn btn-primary">
-  <a href="{{ path('commentaire_add' ) }}" style="color: white;">Add Commentaires</a>
+  <a href="{{ path('motsInterdits_add' ) }}" style="color: white;">Ajouter des mots interdits</a>
 </button>
                        
                         </div>
@@ -386,28 +387,21 @@
                                     
                                         
    <tr>
-    <th>Id Commentaire</th>
-    <th>Contenu</th>
-    <th>Auteur</th>
-    <th>Date de creation</th>
-    <th>Nom du Post</th>
-    <th>Action<th>
+    <th> id mot interdit </th>
+    <th> mot interdit </th>
   </tr>
-  {% for i in commentaire %}
+  {% for m in motsInterdits %}
     <tr>
-      <td>{{i.getIdCommentaire()}}</td>
-      <td>{{i.getContenuCommentaire()}}</td>
-      <td>{{i.getAuteurCommentaire()}}</td>
-      <td>{{i.getDateCreationCommentaire() |date('Y-m-d')}}</td>
-      <td>{{i.getPost()}}</td>
+      <td>{{m.getId()}}</td>
+      <td>{{m.getMotInterdit()}}</td>
        <td>
-        <button class="btn btn-primary">
-        <a href="{{ path('commentaire_delete', {'id': i.getIdCommentaire}) }}"style="color: white;">Delete</a>
+        {#<button class="btn btn-primary">
+        <a href="{{ path('motsInterdits_delete', {'id': m.getId}) }}"style="color: white;">Delete</a>
         </button>
          <button class="btn btn-primary">
-         <a href="{{ path('commentaire_update', {'id': i.getIdCommentaire}) }}"style="color: white;">Update</a>
+         <a href="{{ path('motsInterdits_update', {'id': m.getId}) }}"style="color: white;">Update</a>
           </button>
-        
+        #}
       </td>
        
     </tr>
@@ -482,8 +476,6 @@
 <!-- Page level custom scripts -->
     <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
     </body>
-
-
 
 </html>
 

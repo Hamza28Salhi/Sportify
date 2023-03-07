@@ -3,10 +3,9 @@
 <html lang="en">
 
 <head>
-  <title>Soccer &mdash; Website by Colorlib</title>
+<title>Soccer &mdash; Website by Colorlib</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 
     <link href="{{ asset('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap') }}" rel="stylesheet">
 
@@ -111,11 +110,26 @@
               {% else %}
               <h3 class="mb-5 text-white">{{ post.commentaires.count }} Commentaires</h3>
               {% endif %}
+              
+          {% if app.request.query.get('commentNotAllowed') is defined and app.request.query.get('commentNotAllowed') == "1" %}
+    {% set commentNotAllowed = true %}
+{% endif %}
 
+
+{% if commentNotAllowed %}
+    <div class="alert alert-danger">
+        Votre commentaire contient des propos inappropriés et a été bloqué.
+    </div>
+{% else %}
+    <p>Votre commentaire a été publié.</p>
+{% endif %}
+    {#<script>
+  console.log({{ commentNotAllowed|json_encode|raw }});
+</script>#}
+    
               {% if post.commentaires is not empty %}
               <ul class="comment-list">
                 {% for commentaire in post.commentaires %}
-                
                 <li class="comment">
                   <div class="vcard bio">                     
                     <img src="{{ asset('images/person_2.jpg')}}" alt="Image placeholder">
@@ -284,8 +298,17 @@
   {% endblock %}
   <!-- .site-wrap -->
    {% block js %}
+   {#<div id="google_translate_element"></div>
+                                    <script type="text/javascript">
+                                        function googleTranslateElementInit() {new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');}
+                                    </script>
 
-  <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+                                    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
+  <div id="google_translate_element"></div> <script type="text/javascript"> function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');} </script>
+ <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> <img src="" />
+<script src="//code.jquery.com/jquery.js"></script>
+
+<script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ asset('js/jquery-migrate-3.0.1.min.js') }}"></script>
 <script src="{{ asset('js/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -301,7 +324,14 @@
 <script src="{{ asset('js/jquery.mb.YTPlayer.min.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script> 
 
+    {% if app.session.flashBag.has('error') %}
+    <div class="alert alert-danger">
+        {{ app.session.flashBag.get('error')[0] }}
+    </div>
+{% endif %}
+
  {% endblock %}
+ 
 </body>
 
 </html>

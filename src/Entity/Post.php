@@ -9,11 +9,21 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+/*use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Votable\Traits\VotableEntity;*/
 
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
+//#[Gedmo\Timestampable(repositoryClass: PostRepository::class)]
+//#[Gedmo\Votable(repositoryClass: PostRepository::class)]
 class Post
 {
+
+    //use TimestampableEntity;
+    //use VotableEntity;
+
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -26,7 +36,7 @@ class Post
     #[Groups("posts")]
     #[Assert\NotBlank(message:"Titre manquant")]
     #[Assert\Regex(
-        pattern: "/^[a-zA-Z]+$/",
+        pattern: "/^[a-zA-Z\s\p{P}]+$/u",
         message: "Le titre ne doit contenir que des lettres"
     )]
     private ?string $titre_Post = null;
@@ -48,8 +58,8 @@ class Post
     #[ORM\Column(length: 255)]
     #[Groups("posts")]
     #[Assert\NotBlank(message:"Auteur manquant")]
-    #[Assert\Regex(
-        pattern: "/^[a-zA-Z]+$/",
+    #[Assert\Regex( 
+        pattern: "/^[a-zA-Z\s\p{P}]+$/u",
         message: "L'auteur ne doit contenir que des lettres"
     )]
     private ?string $auteur_Post = null;

@@ -4,6 +4,22 @@
 
 
 {% block css %}
+
+{#{{ dump(app.flashes) }}
+
+
+{% for type, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}#}
+
+
+
+
+
 <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
 <link
     href="{{asset('https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i')}}"
@@ -364,8 +380,12 @@
 </button>
 
                   <button class="btn btn-primary">
-  <a href="{{ path('commentaire_show' ) }}" style="color: white;">commentaires</a>
+  <a href="{{ path('commentaire_show' ) }}" style="color: white;">Commentaires</a>
 </button>  
+<button class="btn btn-primary">
+  <a href="{{ path('motsInterdits_show' ) }}" style="color: white;">Mots interdits</a>
+</button>  
+
                
 </h1>
 
@@ -480,6 +500,9 @@
     </div>
     {% endblock %}
 {% block js %}
+
+      <script src="//code.jquery.com/jquery.js"></script>
+
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -492,6 +515,9 @@
 
 <!-- Page level custom scripts -->
     <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+
+
+
     </body>
 
 </html>

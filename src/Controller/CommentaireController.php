@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Commentaire;
+use App\Service\CommentModerationService;
 use App\Controller\PostController;
 use App\Form\CommentaireType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,16 +41,30 @@ class CommentaireController extends AbstractController
 
     //add front demo
     #[Route('/commentaire/commentaire_add_front/{id}', name: 'commentaire_add_front')]
-    public function addCommentaireF(ManagerRegistry $doctrine,Request $req, $id): Response {
+    public function addCommentaireF(ManagerRegistry $doctrine,Request $req, $id, CommentModerationService $commentModerationService): Response {
         $em = $doctrine->getManager();
         $commentaire = new Commentaire();
         $form = $this->createForm(CommentaireType::class,$commentaire);
         $form->handleRequest($req);
+
+        $content = $req->req->get('contenu_Commentaire');
+        $isCommentAllowed = $this->checkCommentAllowed($content);
+
         if($form->isSubmitted() && $form->isValid()){
+
+            $content = $commentaire->getContenuCommentaire();
+            $isCommentAllowed = $commentModerationService->checkCommentAllowed($content);
+        
+            if ($isCommentAllowed) {
             $commentaire->setDateCreationCommentaire(new \DateTime());
             $em->persist($commentaire);
             $em->flush();
-            return $this->redirectToRoute('post_show_one',['id' => $id]);
+
+            return $this->redirectToRoute('post_show_one', ['id' => $id]);
+        } else {
+            $this->addFlash('danger', 'Le contenu de votre commentaire contient des mots interdits.');
+        }
+
         }
 
         return $this->renderForm('commentaire/commentaire_add.html.twig',['form'=>$form]);
