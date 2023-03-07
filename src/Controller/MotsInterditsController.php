@@ -48,5 +48,48 @@ class MotsInterditsController extends AbstractController
     return $this->render('mots_interdits/motsInterdits_show.html.twig', ['motsInterdits' => $motsInterdits]);
 }
 
+#[Route('/motsInterdits/{id}/motsInterdits_delete', name: 'motsInterdits_delete')]
+public function delete(ManagerRegistry $doctrine, int $id): Response
+{
+    $em = $doctrine->getManager();
+    $motsInterdits = $em->getRepository(motsInterdits::class)->find($id);
+
+    if (!$motsInterdits) {
+        throw $this->createNotFoundException('The motsInterdits was not found');
+    }
+
+    $em->remove($motsInterdits);
+    $em->flush();
+
+    return $this->redirectToRoute('motsInterdits_show');
+}
     
+#[Route('/motsInterdits/motsInterdits_update/{id}', name: 'motsInterdits_update')]
+public function update(ManagerRegistry $doctrine, Request $request, $id): Response
+{
+    $em = $doctrine->getManager();
+    $motsInterdits = $em->getRepository(motsInterdits::class)->find($id); 
+
+    if (!$motsInterdits) {
+        throw new NotFoundHttpException('motsInterdits not found');
+    }
+
+    $form = $this->createForm(motsInterditsType::class, $motsInterdits);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $em->flush();
+
+        return $this->redirectToRoute('motsInterdits_show');
+    }
+
+
+    
+
+    return $this->render('mots_interdits/motsInterdits_update.html.twig', [
+        'motsInterdits' => $motsInterdits,
+        'form' => $form->createView(),
+    ]);
+}
+
 }

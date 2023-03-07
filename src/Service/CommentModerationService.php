@@ -30,12 +30,15 @@ class CommentModerationService
         // Récupérer les mots interdits depuis la base de données
         $motsInterdits = $this->entityManager->getRepository(MotsInterdits::class)->findAll();
         
-        // Vérifier si le contenu du commentaire contient des mots interdits
+     // Vérifier si le contenu du commentaire contient des mots interdits
+    $commentWords = preg_split('/\s+/', $content); // séparer les mots du commentaire par des espaces
+    foreach ($commentWords as $commentWord) {
         foreach ($motsInterdits as $motInterdit) {
-            if (strcmp($content, $motInterdit->getMotInterdit()) === 0) {
+            if ($commentWord === $motInterdit->getMotInterdit()) {
                 return false; // Le commentaire contient un mot interdit
             }
         }
+    }
         
         return true; // Le commentaire est autorisé
     }
