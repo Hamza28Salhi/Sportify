@@ -312,6 +312,7 @@ Classement</button>
 </div>
 
 
+
                 </div>
               
          
@@ -321,10 +322,32 @@ Classement</button>
            {% endfor %}
            
           
+
+
           
         </div>
       </div>
     </div> <!-- .site-section -->
+        <div class="pagination">
+  {% if currentPage > 1 %}
+    <a href="{{ path('equipe_afficheCC', { 'page': currentPage - 1 }) }}">Précédent</a>
+  {% endif %}
+
+  <div class="custom-pagination">
+    {% for page in 1..totalPages %}
+      {% if page == currentPage %}
+        <span class="active">{{ page }}</span>
+      {% else %}
+        <a href="{{ path('equipe_afficheCC', { 'page': page }) }}">{{ page }}</a>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% if currentPage < totalPages %}
+    <a href="{{ path('equipe_afficheCC', { 'page': currentPage + 1 }) }}">Suivant</a>
+  {% endif %}
+</div>
+
 
     <div class="site-section">
       <div class="container">

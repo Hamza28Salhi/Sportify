@@ -56,10 +56,29 @@ class EquipeController extends AbstractController
     }
  
 
-    #[Route('/equipe/afficheCC', name: 'equipe_afficheCC')]
-    public function afficheCC(ManagerRegistry $doctrine): Response {
+    #[Route('/equipe/afficheCC/{sortBy}/{sortOrder<[^/]+>}', name: 'equipe_afficheCC')]
+    public function afficheCC(Request $request, ManagerRegistry $doctrine, $sortBy = 'id', $sortOrder = 'asc'): Response
+    {
         $em = $doctrine->getManager();
-        $equipe = $em->getRepository(Equipe::class)->findAll();
+        $sortOrder = str_replace('/', '', $sortOrder);
+        
+        // Pagination
+        $perPage = 8; // Nombre d'équipes par page
+        $currentPage = $request->query->getInt('page', 1); // Numéro de la page courante, 1 si non défini
+        $offset = ($currentPage - 1) * $perPage; // Offset pour la requête
+        
+        $queryBuilder = $em->createQueryBuilder();
+        $queryBuilder->select('e')
+            ->from(Equipe::class, 'e')
+            ->orderBy('e.'.$sortBy, $sortOrder)
+            ->setFirstResult($offset)
+            ->setMaxResults($perPage);
+        
+        $query = $queryBuilder->getQuery();
+        $equipe = $query->getResult();
+        
+        $totalEquipe = $em->getRepository(Equipe::class)->count([]); // Nombre total d'équipes
+        $totalPages = ceil($totalEquipe / $perPage); // Nombre total de pages
     
         // Fetch the matches associated with each equipe
         $matchesByEquipe = [];
@@ -75,6 +94,8 @@ class EquipeController extends AbstractController
             'equipe' => $equipe,
             'matchesByEquipe' => $matchesByEquipe,
             'now' => $now,
+            'totalPages' => $totalPages,
+            'currentPage' => $currentPage
         ]);
     }
     
