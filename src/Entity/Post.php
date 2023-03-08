@@ -70,6 +70,12 @@ class Post
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Commentaire::class, orphanRemoval: true)]
     private Collection $commentaires;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Likes = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Dislike = null;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
@@ -177,5 +183,29 @@ class Post
     public function __toString()
     {
         return $this->getTitrePost();
+    }
+
+    public function getLikes(): ?string
+    {
+        return $this->Likes;
+    }
+
+    public function setLikes(string $Likes): self
+    {
+        $this->Likes = $Likes;
+
+        return $this;
+    }
+
+    public function getDislike(): ?string
+    {
+        return $this->Dislike;
+    }
+
+    public function setDislike(string $Dislike): self
+    {
+        $this->Dislike = $Dislike;
+
+        return $this;
     }
 }

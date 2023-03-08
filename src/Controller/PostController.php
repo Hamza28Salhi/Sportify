@@ -295,4 +295,38 @@ public function c_p_delete(ManagerRegistry $doctrine, int $id): Response
     ]);
 }*/
 
+
+    #[Route('/post/statistics', name: 'post_statistics')]
+    public function statistics(ManagerRegistry $doctrine): Response {
+        $em = $doctrine->getManager();
+
+        // Get the total number of posts
+        $totalPosts = $em->getRepository(Post::class)->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        // Get the total number of comments
+        $totalComments = $em->getRepository(Commentaire::class)->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        // Get the number of comments per post
+        $postComments = $em->getRepository(Post::class)->createQueryBuilder('p')
+            ->select('p.titre_Post AS titre_Post', 'COUNT(c.id) AS commentCount')
+            ->leftJoin('p.commentaires', 'c')
+            ->groupBy('p.id')
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('post/statistics.html.twig', [
+            'totalPosts' => $totalPosts,
+            'totalComments' => $totalComments,
+            'postComments' => $postComments,
+        ]);
+    }
+
+
+
 }

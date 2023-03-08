@@ -128,6 +128,20 @@
         {{ i.getContenuPost()|slice(0, 200) ~ '...' }}
       {% endif %} </td>
               <p><a href="{{ path('post_show_one', {'id': i.getIdPost()}) }}"> Voir plus</a></p> 
+              <p>
+                <td>
+                  <a href={{path('app_likes',{'id':i.id}) }} class="text-danger">&#128077; </a>
+                  {% if i.Likes is not empty %}
+                      {{i.Likes}}like(s)
+                  {% else %}
+                    0 like
+                   {% endif %}
+                   <p><td><a href={{path('app_dislikes',{'id':i.id}) }} class="text-danger">&#128078; </a>
+                                            {% if i.Dislike is not empty %}
+                                            {{i.Dislike}}dislike(s)
+                                            {% else %}
+                                              0 dislike
+                                            {% endif %}
             </div>
           </div>
         </div>

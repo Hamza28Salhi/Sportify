@@ -375,7 +375,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                                  <h1 class="h3 mb-2 text-gray-800">Tables      <button class="btn btn-secondary">
+                                  <h1 class="h3 mb-2 text-gray-800">Tables      <button class="btn btn-primary">
   <a href="{{ path('post_show' ) }}" style="color: white;">Posts</a>
 </button>
 
@@ -385,7 +385,7 @@
 <button class="btn btn-primary">
   <a href="{{ path('motsInterdits_show' ) }}" style="color: white;">Mots interdits</a>
 </button>  
-<button class="btn btn-primary">
+<button class="btn btn-secondary">
   <a href="{{ path('post_statistics' ) }}" style="color: white;">Statistiques</a>
   </button>
 
@@ -395,58 +395,55 @@
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                    <button class="btn btn-primary">
-  <a href="{{ path('post_add' ) }}" style="color: white;">Add post</a>
-</button>
-                       
-                        </div>
+                     
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 
                                     <tbody>
                                     
-                                        <tr>
-    <th>Id post</th>
-    <th>Titre du post</th>
-    <th>Contenu du post</th>
-    <th>Auteur du post</th>
-    <th>Image du post</th>
-    <th>Date de creation</th>
+      <tr>
+    <h1>Commentaires Statistics</h1>
+     <p>Nombre total de post: {{ totalPosts }}</p>
 
-      <th>Action</th>
-  </tr>
-  {% for i in post %}
-    <tr>
-      <td>{{i.getIdPost()}}</td>
-      <td>{{i.getTitrePost()}}</td>
-      <td>{% if i.getContenuPost()|length <= 50 %}
-        {{ i.getContenuPost() }}
-      {% else %}
-        {{ i.getContenuPost()|slice(0, 50) ~ '...' }}
-      {% endif %}
-      </td>
-      {#<td>{{ i.getContenuPost() }} </td>#}
-      <td>{{i.getAuteurPost()}}</td>
-      <td> <img src="{{ asset('images/posts/' ~ i.getImagePost()) }}" alt="Image du post" style="max-height: 250px"> </td>
-      {#<td>{{i.getCommentaires()[0].getAuteurCommentaire()}}</td>#}
-      <td>{{i.getDateCreationPost() |date('Y-m-d h:i')}}</td>
+    <h2>Les posts par rapport aux nombres de commentaires</h2>
 
-       <td>
-        <button class="btn btn-primary">
-        <a href="{{ path('post_delete', {'id': i.getIdPost()}) }}"style="color: white;">Supprimer</a>
-        </button>
-         <button class="btn btn-primary">
-         <a href="{{ path('post_update', {'id': i.getIdPost()}) }}"style="color: white;">Modifier</a>
-          </button>
-          <button class="btn btn-primary">
-        <a href="{{ path('post_commentaires', {'id': i.getIdPost()}) }}"style="color: white;">commentaires</a>
-        </button>
-      </td>
-       
-    </tr>
-  {% endfor %}
+    <canvas id="commentairesPerPostChart"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var titre_Posts = [];
+        var commentCounts = [];
+        {% for row in postComments %}
+            titre_Posts.push('{{ row["titre_Post"] }}');
+            commentCounts.push('{{ row["commentCount"] }}');
+        {% endfor %}
+        var chartData = {
+            labels: titre_Posts,
+            datasets: [{
+                label: 'Number of Commentaires',
+                data: commentCounts,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        };
+        var chartOptions = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
+        var chart = new Chart('commentairesPerPostChart', {
+            type: 'bar',
+            data: chartData,
+            options: chartOptions
+        });
+    </script>
+                                 
                                        
                                     </tbody>
                                 </table>
