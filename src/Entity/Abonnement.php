@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: AbonnementRepository::class)]
@@ -16,9 +17,11 @@ class Abonnement
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("abonnement")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("abonnement")]
     #[Assert\NotBlank(message:"nom is required")]
     #[Assert\Regex(
             pattern:"/^[A-Z]/",
@@ -29,16 +32,19 @@ class Abonnement
 
 
     #[ORM\Column(length: 255)]
+    #[Groups("abonnement")]
     #[Assert\NotBlank(message:"description is required")]
     private ?string $description = null;
     
 
     #[ORM\Column]
+    #[Groups("abonnement")]
     #[Assert\NotBlank(message:"prix is required")]
     #[Assert\Positive(message:"Prix doit etre positive")]
     private ?int $prix = null;
 
     #[ORM\OneToMany(mappedBy: 'abonnement', targetEntity: Categorie::class)]
+    #[Groups("abonnement")]
     private Collection $supporteur;
 
     public function __construct()

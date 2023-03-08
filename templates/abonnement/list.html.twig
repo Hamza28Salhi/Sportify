@@ -1,7 +1,7 @@
-{% extends 'base2.html.twig' %}
 
 
 {% block css %}
+
     <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
 
 <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -473,6 +473,10 @@
     </div>
     {% endblock %}
 {% block js %}
+ <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
   <script src="//code.jquery.com/jquery.js"></script>
     <!-- Load Flashy default JavaScript -->
     <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
@@ -490,8 +494,10 @@
 
 <!-- Page level custom scripts -->
     <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+     <script src="//code.jquery.com/jquery.js"></script>
+   
     </body>
 
-</html>
 
         {% endblock %}
+        

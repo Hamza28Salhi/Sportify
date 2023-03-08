@@ -25,7 +25,8 @@ class AbonnementController extends AbstractController
     #[Route('/front', name: 'front')]
     public function front(): Response
     {
-        return $this->render('abonnement/affichefront.html.twig');
+
+        return $this->render('abonnement/front.html.twig');
     }
 
 
@@ -37,7 +38,7 @@ class AbonnementController extends AbstractController
         ]);
     }
     #[Route('/abonnement/add', name: 'abonnement_add')]
-    public function addAbonnement(ManagerRegistry $doctrine,Request $req): Response {
+    public function addAbonnement(ManagerRegistry $doctrine,Request $req,FlashyNotifier $flashy): Response {
         $em = $doctrine->getManager();
         $abonnement = new Abonnement();
         $form = $this->createForm(AbonnementType::class,$abonnement);
@@ -46,6 +47,8 @@ class AbonnementController extends AbstractController
            
             $em->persist($abonnement);
             $em->flush();
+            $flashy->error('Event created!', 'http://your-awesome-link.com');
+
             return $this->redirectToRoute('abonnement_add');
         }
 
