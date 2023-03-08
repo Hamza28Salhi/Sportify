@@ -29,6 +29,8 @@ services:
     App\Service\SendMailService:
         arguments:
             $mailer: '@swiftmailer.mailer.default'
+    App\Service\CommentModerationService:
+        autowire: true
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -54,3 +56,5 @@ services:
          
 parameters:
     videos_directory: '%kernel.project_dir%/public/videos'
+    app.jwtsecret: '%env(JWT_SECRET)%'
+    post_images_directory: '%kernel.project_dir%/public/images/posts'

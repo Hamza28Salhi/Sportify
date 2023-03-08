@@ -19,6 +19,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+
 
 
 use App\Repository\EquipeRepository;
@@ -32,6 +34,8 @@ class MatchesType extends AbstractType
             ->add('nom')
             
             ->add('stade')
+            ->add('latitude')
+            ->add('longitude')
             ->add('date', DateTimeType::class, [
                 'constraints' => [
                     new NotBlank([
@@ -69,6 +73,7 @@ class MatchesType extends AbstractType
                 'csrf_protection' => false,
             'allow_extra_fields' => true,
             'equipe_repository' => null,
+   
         ]);
     }
 }

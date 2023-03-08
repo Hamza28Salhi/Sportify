@@ -24,6 +24,8 @@
   <link rel="stylesheet" href="{{ asset('fonts/flaticon/font/flaticon.css') }}">
 
   <link rel="stylesheet" href="{{ asset('css/aos.css') }}">
+  <link rel="stylesheet" href="{{ asset('fullcalendar/main.css') }}" />
+<script src="{{ asset('fullcalendar/main.js') }}"></script>
 
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <style>
@@ -40,15 +42,12 @@
     border-radius: 50%;
     cursor: pointer;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-
   }
-
   .button:hover {
     background-color:#808080;
       transform: scale(1.4);
     transition: transform 0.2s ease-in-out;
   } 
-
   .buttonn:hover {
   
     transform: scale(1.1);
@@ -64,7 +63,6 @@
     box-shadow: 0px 0px 10px #000000; /* black shadow */
     transition: all 0.2s ease-in-out; /* add a smooth transition */
   }
-
   .flashy-button:hover {
     transform: scale(1.1); /* scale up the button on hover */
     box-shadow: 0px 0px 20px #000000; /* increase the shadow size */
@@ -106,7 +104,6 @@
 .custom-modal-dialog {
   background-color: #343a40;
 }
-
 </style>
 
 </style>
@@ -585,11 +582,11 @@ Classement</button>
   </div>
 </div>
 
+
 <!-- JavaScript to sort the table on button click -->
 <script>
   const button = document.querySelector('[data-target="#exampleModal"]');
   const tableBody = document.getElementById('equipe-table-body');
-
   button.addEventListener('click', () => {
     const rows = Array.from(tableBody.rows);
     rows.sort((a, b) => {
@@ -597,7 +594,6 @@ Classement</button>
       const bClassement = parseInt(b.cells[5].textContent);
       return aClassement - bClassement;
     });
-
     rows.forEach(row => tableBody.removeChild(row));
     rows.forEach(row => tableBody.appendChild(row));
   });
@@ -608,6 +604,18 @@ Classement</button>
 </html>
 {% endblock %}
 {% block js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      events: [
+        // Here you can pass the matches data from your controller
+        // and format it to match the expected format of the calendar library
+      ]
+    });
+    calendar.render();
+  });
+</script>
 
 <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ asset('js/jquery-migrate-3.0.1.min.js') }}"></script>
@@ -626,4 +634,3 @@ Classement</button>
 <script src="{{ asset('js/main.js') }}"></script>
 
           {% endblock %}
-

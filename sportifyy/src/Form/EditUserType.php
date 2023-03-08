@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class EditUserType extends AbstractType
@@ -60,9 +61,28 @@ class EditUserType extends AbstractType
                     ])
                 ],
             ])
+            ->add('address')
             
             ->add('Save', SubmitType::class)
         ;
+        if ($options['is_bobo']) {
+            $builder
+            ->add('matr_fisc', TextType::class, [
+                'constraints' => [
+                    new Assert\Regex([
+                        'pattern' => '/^\d{7}\d\/\d\/\d\/\d{3}$/',
+                        'message' => 'Please enter a valid string in the format "1234567x/x/x/xxx".'
+                    ]),
+                    new Assert\Length([
+                        'min' => 16,
+                        'max' => 16,
+                        'exactMessage' => 'Length should be 13'
+                    ])
+                ]
+            ])
+            ->add('job_position')
+            ->add('prod_category');
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

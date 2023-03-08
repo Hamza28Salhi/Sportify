@@ -38,6 +38,9 @@
             "./migrations/.gitignore"
         ]
     },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.4.0"
+    },
     "symfony/console": {
         "version": "5.4",
         "recipe": {
@@ -111,6 +114,30 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/messenger": {
+        "version": "5.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.4",
+            "ref": "8bd5f27013fb1d7217191c548e340f0bdb11912c"
+        },
+        "files": [
+            "./config/packages/messenger.yaml"
+        ]
+    },
+    "symfony/notifier": {
+        "version": "5.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.0",
+            "ref": "c31585e252b32fe0e1f30b1f256af553f4a06eb9"
+        },
+        "files": [
+            "./config/packages/notifier.yaml"
+        ]
+    },
     "symfony/routing": {
         "version": "5.4",
         "recipe": {
@@ -148,6 +175,19 @@
             "./config/packages/dev/swiftmailer.yaml",
             "./config/packages/swiftmailer.yaml",
             "./config/packages/test/swiftmailer.yaml"
+        ]
+    },
+    "symfony/translation": {
+        "version": "5.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.3",
+            "ref": "da64f5a2b6d96f5dc24914517c0350a5f91dee43"
+        },
+        "files": [
+            "./config/packages/translation.yaml",
+            "./translations/.gitignore"
         ]
     },
     "symfony/twig-bundle": {

@@ -90,18 +90,39 @@
           </div>
           <div class="ml-auto">
             <nav class="site-navigation position-relative text-right" role="navigation">
-              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                {% if is_granted('ROLE_ADMIN') %}
+          <div id="google_translate_element"></div>
+                                    <script type="text/javascript">
+                                        function googleTranslateElementInit() {
+                                            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+                                        }
+                                    </script>
 
-                <a href="{{ path('matches_afficheC') }}" class="nav-link">Manage Matches</a>
-                <a href="{{ path('user_list') }}" class="nav-link">Manage Users</a>
-                <img src="{{asset('images/admin.png')}}" width="30" height="30"></img> 
-                {% endif %}
-                {% if is_granted('ROLE_BOBO') %}
+                                    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                                    <img src=""  />
+          <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+          
+          {% if is_granted('ROLE_BOBO') %}
 
-                <a href="{{ path('categorie_afficheC') }}" class="nav-link">Manage Products</a>
+                <a href="{{ path('categorie_afficheC') }}" class="nav-link">Products</a>
                 <img src="{{asset('images/shop.png')}}" width="30" height="30"></img>
                 {% endif %}
+
+                                    
+           {% if is_granted('ROLE_ADMIN') %}
+
+                <a href="{{ path('front') }}" class="nav-link">Memberships</a>
+                <img src="{{asset('images/admin.png')}}" width="30" height="30"></img> 
+                <a href="{{ path('post_show') }}" class="nav-link">Posts</a>
+                <img src="{{asset('images/admin.png')}}" width="30" height="30"></img> 
+                <a href="{{ path('evenement_list') }}" class="nav-link">Events</a>
+                <img src="{{asset('images/admin.png')}}" width="30" height="30"></img> 
+                <a href="{{ path('matches_afficheC') }}" class="nav-link">Matches</a>
+                <img src="{{asset('images/admin.png')}}" width="30" height="30"></img> 
+                <a href="{{ path('user_list') }}" class="nav-link">Users</a>
+                <img src="{{asset('images/admin.png')}}" width="30" height="30"></img> 
+                {% endif %}
+                
+                
                 <a class="nav-link"><a href="{{ path('app_logout') }}">Logout</a>
                 <img src="{{asset('images/logout.png')}}" width="25" height="25"></img></a>
                 </ul>
@@ -109,11 +130,11 @@
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li class="active"><a href="{{ path('matches_afficheCC') }}" class="nav-link">Matches</a></li>
-                <li><a href="evenements.html" class="nav-link">Evenements</a></li>
-                <li><a href="blog.html" class="nav-link">Blog</a></li>
-                <li><a href="abonnements.html" class="nav-link">Abonnements</a></li>
-                <li><a href="{{ path('produit_affichePP') }}" class="nav-link">Boutique</a></li>
-                <li ><a href="{{ path('hello2') }}" class="nav-link">Profile</a></li>
+                <li><a href="{{ path('evenement_listE') }}" class="nav-link">Events</a></li>
+                <li><a href="{{ path('post_show_front') }}" class="nav-link">Blog</a></li>
+                <li><a href="{{ path('front') }}" class="nav-link">Memberships</a></li>
+                <li><a href="{{ path('produit_affichePP') }}" class="nav-link">Products</a></li>
+                <li><a href="{{ path('hello2') }}" class="nav-link">Profile</a></li>
                 
                 
                 
@@ -193,12 +214,18 @@
      {% for i in matches %}
     {% if i.id == 3 %}
     <div class="site-section bg-dark">
+    
+               
+
       <div class="container">
         
         <div class="row mb-5">
           <div class="col-lg-12">
             <div class="widget-next-match">
               <div class="widget-title">
+
+
+              
                 <h3>Next Match</h3>
               </div>
               <div class="widget-body mb-3">
@@ -225,11 +252,15 @@
                 <h4>World Cup League</h4>
                 <p class="mb-5">
                   <span class="d-block">{{i.date|date('Y-m-d H:i:s')}}</span>
-                  <span class="d-block">9:30 AM GMT+0</span>
+               
                   <strong class="text-primary">{{i.stade}}</strong>
-                </p>
+           
 
-                <div id="date-countdown2" class="pb-1"></div>
+                </p>
+                <a href="{{ path('stadium_map', {'id': i.id}) }}" class="btn btn-primary"> Stadium Map</a>
+
+
+               
               </div>
             </div>
           </div>
@@ -237,10 +268,11 @@
          {% endif %}
             {% endfor %}
 
+    
 
         <div class="row">
           <div class="col-12 title-section">
-            <h2 class="heading">Upcoming Match</h2>
+            <h2 class="heading">Upcoming Match <a href="{{ path('matches_afficheCCal') }}" class="btn btn-primary">Show Calendar</a></h2>
           </div>
           {% for i in matches %}
 
@@ -272,6 +304,8 @@
                     <span class="d-block">{{i.date|date('H:i:s')}}</span>
                     <strong class="text-primary">{{i.stade}}</strong>
                   </p>
+                  <a href="{{ path('stadium_map', {'id': i.id}) }}" class="btn btn-primary"> Stadium Map</a>
+
 
                 </div>
               
@@ -279,11 +313,14 @@
             </div>
           </div>
            {% endfor %}
+           
           
           
         </div>
       </div>
     </div> <!-- .site-section -->
+    
+
 
     <div class="site-section">
       <div class="container">
@@ -506,6 +543,7 @@
   </div>
   <!-- .site-wrap -->
   </body>
+  
 
 </html>
 {% endblock %}
@@ -526,6 +564,34 @@
 <script src="{{ asset('js/jquery.sticky.js') }}"></script>
 <script src="{{ asset('js/jquery.mb.YTPlayer.min.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
+<script>
+    <meta charset='utf-8' />
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/main.min.js'></script>
+    <head>
+    <meta charset='utf-8' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+              var calendar = new FullCalendar.Calendar(calendarEl, {
+                  initialView: 'dayGridMonth',
+                  events: [
+                      {% for event in events %}
+                          {
+                              title: '{{ event.title }}',
+                              start: '{{ event.start }}',   
+                              stade: '{{ event.stade }}',
+                              url: '{{ event.url }}'
+                          },
+                      {% endfor %}
+                  ]
+              });
+              calendar.render();
+          });
+    </script>
+  </head>
+  
 
           {% endblock %}
 

@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
+use App\Service\SendMailService;
+use App\Form\ResetPasswordRequestFormType;
+use App\Form\ResetPasswordFormType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -21,6 +23,12 @@ class SecurityController extends AbstractController
     public function home(): Response
     {
         return $this->render('user/userProfile.html.twig');
+    }
+    #[Route(path: '/BANED', name: 'brobanned')]
+
+    public function banned(): Response
+    {
+        return $this->render('user/BAN.html.twig');
     }
 
 
@@ -108,10 +116,7 @@ class SecurityController extends AbstractController
                 // On efface le token
                 $user->setResetToken('');
                 $user->setPassword(
-                    $passwordHasher->hashPassword(
-                        $user,
-                        $form->get('password')->getData()
-                    )
+                    $passwordHasher->hashPassword($user,$form->get('password')->getData())
                 );
                 $entityManager->persist($user);
                 $entityManager->flush();

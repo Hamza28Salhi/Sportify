@@ -75,6 +75,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $resetToken;
 
+    #[ORM\Column(type: 'boolean')]
+    public $is_verified = false;
+
 
    /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -89,16 +92,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // ...
 
 
+    
+
     const ROLE_BOBO = 'ROLE_BOBO';
 
     
     
+    public function getIsVerified(): ?bool
+    {
+        return $this->is_verified;
+    }
+
+    public function setIsVerified(bool $is_verified): self
+    {
+        $this->is_verified = $is_verified;
+
+        return $this;
+    }
+
     
     /**
      * @ORM\Column(type="boolean")
      */
     public $confirmed = false;
 
+    
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isBanned = false;
+
+    public function getIsBanned(): ?bool
+    {
+        return $this->isBanned;
+    }
+
+    public function setIsBanned(bool $isBanned): self
+    {
+        $this->isBanned = $isBanned;
+
+        return $this;
+    }
     
 
     public function getResetToken(): ?string

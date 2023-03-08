@@ -117,25 +117,28 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{{ path('user_statistics' ) }}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="{{ path('user_list' ) }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tables</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('home' ) }}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Profile</span></a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -301,12 +304,7 @@
                     <button class="btn btn-primary">
 <a href="{{ path('app_register' ) }}" style="color: white;">Add user</a>
 </button>
-<button class="btn btn-primary">
-<a href="{{ path('home' ) }}" style="color: white;">Go Back To Front</a>
-</button>
-<button class="btn btn-primary">
-<a href="{{ path('user_statistics' ) }}" style="color: white;">statistics</a>
-</button>
+
                        
                         </div>
                         <div class="card-body">
@@ -402,6 +400,7 @@
                                         </span>
                                         <span class="text">Delete</span>
                                     </a>
+                                    
 <br></br>
                 <a href="{{ path('user_update', {'id': i.Id}) }}" class="btn btn-secondary btn-icon-split">
                                         <span class="icon text-white-50">
@@ -438,6 +437,7 @@
                                         </span>
                                         <span class="text">Delete</span>
                                     </a>
+                                    
 <br></br>
                 <a href="{{ path('user_update', {'id': i.Id}) }}" class="btn btn-secondary btn-icon-split">
                                         <span class="icon text-white-50">
@@ -520,9 +520,14 @@
 
 <!-- Page level custom scripts -->
     <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+    
+
+
+    
     </body>
 
 </html>
+
 
         {% endblock %}
 

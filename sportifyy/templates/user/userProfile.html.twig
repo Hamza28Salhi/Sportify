@@ -22,6 +22,10 @@
   <link rel="stylesheet" href="{{asset('css/aos.css')}}">
 
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
+  <link rel="stylesheet" href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css')}}" />
+  
+
+
 
 
 </head>
@@ -32,7 +36,12 @@
 <body>
 
 
+
+        
+		
+
   <div class="site-wrap">
+  
   
 
     <div class="site-mobile-menu site-navbar-target">
@@ -43,10 +52,19 @@
       </div>
       <div class="site-mobile-menu-body"></div>
     </div>
+    
 
 
     <header class="site-navbar py-4" role="banner">
 
+{% if app.user and app.user.isVerified == false %}
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div class="alert-message">
+      <strong>Votre compte n'est pas activé</strong>, <a href="{{ path ('resend_verif')}}">renvoyer le lien d'activation</a>
+    </div>
+  </div>
+{% endif %}
       <div class="container">
         <div class="d-flex align-items-center">
         
@@ -56,10 +74,10 @@
             </a>
           </div>
           
-          <div class="ml-auto">
-          <nav class="site-navigation position-relative text-right" role="navigation">
-          <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
           
+          <div class="ml-auto">
+          
+          <nav class="site-navigation position-relative text-right" role="navigation">
           <div id="google_translate_element"></div>
                                     <script type="text/javascript">
                                         function googleTranslateElementInit() {
@@ -69,17 +87,30 @@
 
                                     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
                                     <img src=""  />
-           {% if is_granted('ROLE_ADMIN') %}
+          <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+          
+          {% if is_granted('ROLE_BOBO') %}
 
-                <a href="{{ path('matches_afficheC') }}" class="nav-link">Manage Matches</a>
-                <a href="{{ path('user_list') }}" class="nav-link">Manage Users</a>
-                <img src="{{asset('images/admin.png')}}" width="30" height="30"></img> 
-                {% endif %}
-                {% if is_granted('ROLE_BOBO') %}
-
-                <a href="{{ path('categorie_afficheC') }}" class="nav-link">Manage Products</a>
+                <a href="{{ path('categorie_afficheC') }}" class="nav-link">Products</a>
                 <img src="{{asset('images/shop.png')}}" width="30" height="30"></img>
                 {% endif %}
+
+                                    
+           {% if is_granted('ROLE_ADMIN') %}
+
+                <a href="{{ path('front') }}" class="nav-link">Memberships</a>
+                <img src="{{asset('images/admin.png')}}" width="30" height="30"></img> 
+                <a href="{{ path('post_show') }}" class="nav-link">Posts</a>
+                <img src="{{asset('images/admin.png')}}" width="30" height="30"></img> 
+                <a href="{{ path('evenement_list') }}" class="nav-link">Events</a>
+                <img src="{{asset('images/admin.png')}}" width="30" height="30"></img> 
+                <a href="{{ path('matches_afficheC') }}" class="nav-link">Matches</a>
+                <img src="{{asset('images/admin.png')}}" width="30" height="30"></img> 
+                <a href="{{ path('user_list') }}" class="nav-link">Users</a>
+                <img src="{{asset('images/admin.png')}}" width="30" height="30"></img> 
+                {% endif %}
+                
+                
                 <a class="nav-link"><a href="{{ path('app_logout') }}">Logout</a>
                 <img src="{{asset('images/logout.png')}}" width="25" height="25"></img></a>
                 </ul>
@@ -87,11 +118,11 @@
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="{{ path('matches_afficheCC') }}" class="nav-link">Matches</a></li>
-                <li><a href="evenements.html" class="nav-link">Evenements</a></li>
-                <li><a href="blog.html" class="nav-link">Blog</a></li>
-                <li><a href="abonnements.html" class="nav-link">Abonnements</a></li>
-                <li><a href="{{ path('produit_affichePP') }}" class="nav-link">Boutique</a></li>
-                <li class="active"><a href="{{ path('hello2') }}" class="nav-link">Profile</a></li>
+                <li><a href="{{ path('evenement_listE') }}" class="nav-link">Events</a></li>
+                <li><a href="{{ path('post_show_front') }}" class="nav-link">Blog</a></li>
+                <li><a href="{{ path('front') }}" class="nav-link">Memberships</a></li>
+                <li ><a href="{{ path('produit_affichePP') }}" class="nav-link">Products</a></li>
+                <li class="active"  ><a href="{{ path('hello2') }}" class="nav-link">Profile</a></li>
                 
                 
                 
@@ -110,6 +141,8 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-9 mx-auto text-center">
+          <br></br>
+          <br></br>
             <h1 class="text-white">Welcome {{app.user.full_name}} !</h1>
           </div>
         </div>
@@ -143,6 +176,22 @@
               <div class="form-group">
                 <li>Address: </li>
                 <li class="form-control">{{app.user.address}}</li>
+              </div>
+              <div class="form-group">
+                <li>Account Status: </li>
+                {% if app.user.isVerified %}
+                <li class="form-control" >Active  <a href="#" class="btn btn-success btn-circle">
+                                        <i class="fas fa-check"></i>
+                                    </a></li>
+                
+                {% else %}
+                <li class="form-control">Not Active <a href="#" class="btn btn-warning btn-circle">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </a></li>
+                
+
+                {% endif %}
+
               </div>
               {% if is_granted('ROLE_BOBO') %}
               <br></br>
@@ -275,7 +324,10 @@
   <script src="{{asset('js/jquery.fancybox.min.js')}}"></script>
   <script src="{{asset('js/jquery.sticky.js')}}"></script>
   <script src="{{asset('js/jquery.mb.YTPlayer.min.js')}}"></script>
-
+  <script src="{{asset('https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js')}}"></script>
+  <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js')}}"></script>
+<script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js')}}"></script>
 
   <script src="{{asset('js/main.js')}}"></script>
   {% endblock %}

@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
+
 
 
 class MatchesController extends AbstractController
@@ -116,6 +118,7 @@ class MatchesController extends AbstractController
             'searchField' => $searchField,
         ]);
     }
+    
     #[Route('/matches/statistics', name: 'matches_statistics')]
 public function statistics(ManagerRegistry $doctrine): Response {
     $em = $doctrine->getManager();
@@ -144,12 +147,65 @@ public function statistics(ManagerRegistry $doctrine): Response {
     
 
 #[Route('/matches/afficheCC', name: 'matches_afficheCC')]
-public function afficheCC(ManagerRegistry $doctrine): Response {
+public function afficheCC(ManagerRegistry $doctrine): Response
+{
     $em = $doctrine->getManager();
     $matches = $em->getRepository(Matches::class)->findAll();
 
-    return $this->render('matches/afficheCC.html.twig', ['matches' => $matches]);
+    $events = [];
+    foreach ($matches as $match) {
+        $events[] = [
+            'title' =>  $match->getNomEquipe(),
+            'start' => $match->getDate()->format('Y-m-d H:i:s'),
+            'stade' => $match->getStade(),
+            'url' => $this->generateUrl('matches_details', ['id' => $match->getId()]),
+            // You can add more properties as needed
+        ];
+    }
+
+    return $this->render('matches/afficheCC.html.twig', [
+        'events' => $events,
+        'matches' => $matches,
+    ]);
 }
+#[Route('/matches/afficheCCal', name: 'matches_afficheCCal')]
+public function afficheCCal(ManagerRegistry $doctrine): Response
+{
+    $em = $doctrine->getManager();
+    $matches = $em->getRepository(Matches::class)->findAll();
+
+    $events = [];
+    foreach ($matches as $match) {
+        $events[] = [
+            'title' =>  $match->getNomEquipe(),
+            'start' => $match->getDate()->format('Y-m-d H:i:s'),
+            'stade' => $match->getStade(),
+            'url' => $this->generateUrl('matches_details', ['id' => $match->getId()]),
+            // You can add more properties as needed
+        ];
+    }
+
+    return $this->render('matches/afficheCCal.html.twig', [
+        'events' => $events,
+        'matches' => $matches,
+    ]);
+}
+
+#[Route('/matches/{id}', name: 'matches_show')]
+public function show(int $id, ManagerRegistry $doctrine): Response
+{
+    $em = $doctrine->getManager();
+    $match = $em->getRepository(Matches::class)->find($id);
+
+    if (!$match) {
+        throw $this->createNotFoundException('Match not found');
+    }
+
+    return $this->render('matches/show.html.twig', [
+        'match' => $match,
+    ]);
+}
+
 
 
 #[Route('/matches/afficheCadd', name: 'matches_afficheCadd')]
@@ -207,6 +263,21 @@ public function update(ManagerRegistry $doctrine, Request $request, $id): Respon
     ]);
 }
 
+
+#[Route('/stadium/{id}/map', name: 'stadium_map')]
+public function showMap(ManagerRegistry $doctrine, $id): Response
+{
+    $em = $doctrine->getManager();
+    $stade = $em->getRepository(Matches::class)->find($id);
+
+    if (!$stade) {
+        throw $this->createNotFoundException('Stadium not found');
+    }
+
+    return $this->render('matches/stadium_map.html.twig', [
+        'stade' => $stade,
+    ]);
+}
 
  
 

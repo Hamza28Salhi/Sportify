@@ -50,6 +50,12 @@ class Matches
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $video = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $latitude = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $longitude = null;
  
 
     public function getId(): ?int
@@ -132,6 +138,30 @@ class Matches
     public function setVideo(?string $video): self
     {
         $this->video = $video;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(?float $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(?float $longitude): self
+    {
+        $this->longitude = $longitude;
 
         return $this;
     }
