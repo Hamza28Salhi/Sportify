@@ -44,4 +44,8 @@ class FileUploader
     {
         return $this->targetDirectory;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/GestionProduit
