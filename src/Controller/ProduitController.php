@@ -78,12 +78,33 @@ public function afficheP(ManagerRegistry $doctrine, $sortBy = 'id', $sortOrder =
 
 
 #[Route('/produit/affichePP/{sortBy}/{sortOrder<[^/]+>}', name: 'produit_affichePP')]
-public function affichePP(ManagerRegistry $doctrine, $sortBy = 'id', $sortOrder = 'asc'): Response {
+public function affichePP(Request $request, ManagerRegistry $doctrine, $sortBy = 'id', $sortOrder = 'asc'): Response {
     $em = $doctrine->getManager();
     $sortOrder = str_replace('/', '', $sortOrder);
-    $produit = $em->getRepository(Produit::class)->findAllOrderedByProperty($sortBy, $sortOrder);
+    
+    // Pagination
+    $perPage = 8; // Nombre de produits par page
+    $currentPage = $request->query->getInt('page', 1); // Numéro de la page courante, 1 si non défini
+    $offset = ($currentPage - 1) * $perPage; // Offset pour la requête
+    
+    $queryBuilder = $em->createQueryBuilder();
+    $queryBuilder->select('p')
+        ->from(Produit::class, 'p')
+        ->orderBy('p.'.$sortBy, $sortOrder)
+        ->setFirstResult($offset)
+        ->setMaxResults($perPage);
+    
+    $query = $queryBuilder->getQuery();
+    $produit = $query->getResult();
+    
+    $totalProduit = $em->getRepository(Produit::class)->count([]); // Nombre total de produits
+    $totalPages = ceil($totalProduit / $perPage); // Nombre total de pages
 
-    return $this->render('produit/affichePP.html.twig', ['produit' => $produit]);
+    return $this->render('produit/affichePP.html.twig', [
+        'produit' => $produit,
+        'totalPages' => $totalPages,
+        'currentPage' => $currentPage
+    ]);
 }
 
 
@@ -184,39 +205,40 @@ public function searchProduit(Request $request, PaginatorInterface $paginator)
     
     
 
-    #[Route('/pdf', name: 'pdf', methods: ['GET'])]
-    public function pdf(ProduitRepository $ProduitRepository): Response
-    {
-        // Configure Dompdf according to your needs
-        $pdfOptions = new OptionsResolver();
-        $pdfOptions->setDefaults([
-            'defaultFont' => 'Arial',
-        ]);
-    
-        // Instantiate Dompdf with our options
-        $dompdf = new Dompdf($pdfOptions);
-    
-        // Retrieve the HTML generated in our twig file
-        $html = $this->renderView('produit/pdf.html.twig', [
-            'produits' => $ProduitRepository->findAll(),
-        ]);
-    
-        // Load HTML to Dompdf
-        $dompdf->loadHtml($html);
-    
-        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-        $dompdf->setPaper('A4', 'portrait');
-    
-        // Render the HTML as PDF
-        $dompdf->render();
-    
-        // Output the generated PDF to Browser (inline view)
-        $output = $dompdf->output();
-        $response = new Response($output);
-        $response->headers->set('Content-Type', 'application/pdf');
-        $response->headers->set('Content-Disposition', 'inline; filename="mypdf.pdf"');
-        return $response;
-    }
+#[Route('/pdf', name: 'pdf', methods: ['GET'])]
+public function pdf(ProduitRepository $ProduitRepository): Response
+{
+    // Configure Dompdf according to your needs
+    $pdfOptions = new OptionsResolver();
+    $pdfOptions->setDefaults([
+        'defaultFont' => 'Arial',
+        'tempDir' => sys_get_temp_dir(), // specify the temp directory explicitly
+    ]);
+
+    // Instantiate Dompdf with our options
+    $dompdf = new Dompdf($pdfOptions);
+
+    // Retrieve the HTML generated in our twig file
+    $html = $this->renderView('produit/pdf.html.twig', [
+        'produits' => $ProduitRepository->findAll(),
+    ]);
+
+    // Load HTML to Dompdf
+    $dompdf->loadHtml($html);
+
+    // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+    $dompdf->setPaper('A4', 'portrait');
+
+    // Render the HTML as PDF
+    $dompdf->render();
+
+    // Output the generated PDF to Browser (inline view)
+    $output = $dompdf->output();
+    $response = new Response($output);
+    $response->headers->set('Content-Type', 'application/pdf');
+    $response->headers->set('Content-Disposition', 'inline; filename="mypdf.pdf"');
+    return $response;
+}
 
 
 

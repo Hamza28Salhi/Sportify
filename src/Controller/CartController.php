@@ -58,6 +58,13 @@ public function add($id, Request $request)
     }
 
 
+
+
+
+
+
+    
+
     #[Route('/produit/remove/{id}', name: 'remove_from_cart')]
 public function remove($id)
 {

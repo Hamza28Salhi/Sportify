@@ -269,15 +269,61 @@
 
         
       </div>
+     <div class="pagination">
+  {% if currentPage > 1 %}
+    <a href="{{ path('produit_affichePP', { 'page': currentPage - 1 }) }}">Précédent</a>
+  {% endif %}
+
+  <div class="custom-pagination">
+    {% for page in 1..totalPages %}
+      {% if page == currentPage %}
+        <span class="active">{{ page }}</span>
+      {% else %}
+        <a href="{{ path('produit_affichePP', { 'page': page }) }}">{{ page }}</a>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% if currentPage < totalPages %}
+    <a href="{{ path('produit_affichePP', { 'page': currentPage + 1 }) }}">Suivant</a>
+  {% endif %}
+</div>
+
+<style>
+  .custom-pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+
+  .custom-pagination a,
+  .custom-pagination span {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 0 10px;
+    border-radius: 50%;
+    line-height: 30px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    text-decoration: none;
+  }
+
+  .custom-pagination span.active {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+  }
+</style>
 
       <div class="row justify-content-center">
         <div class="col-lg-7 text-center">
           <div class="custom-pagination">
-            <a href="#">1</a>
-            <span>2</span>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
+            
           </div>
         </div>
       </div>
