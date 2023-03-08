@@ -1,0 +1,10 @@
+<p>Hello {{ user.full_name }},</p>
+
+<p>Thank you for registering on our website! To activate your account, please click on the following link:</p>
+
+<a href="{{ url('app_activate_account', { 'id': user.id, 'token': user.activationToken }) }}">Activate my account</a>
+
+<p>If you didn't register on our website, please ignore this email.</p>
+
+<p>Best regards,</p>
+<p>The  team</p>

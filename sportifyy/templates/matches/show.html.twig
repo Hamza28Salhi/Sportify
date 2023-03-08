@@ -1,0 +1,153 @@
+{% extends 'base3.html.twig' %}
+  {% block css %}
+
+<head>
+  <title>Matches</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <link href="{{ asset('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('fullcalendar/main.css') }}" />
+<script src="{{ asset('fullcalendar/main.js') }}"></script>
+
+  <link rel="stylesheet" href="{{ asset('fonts/icomoon/style.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.min.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('fonts/flaticon/font/flaticon.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/aos.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<style>
+  .button {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background-color: #ee1e46;
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 15px 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  .button:hover {
+    background-color: #808080;
+  }
+  
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+
+
+
+</head>
+{% endblock %}
+ {% block body %}
+
+ <div class="site-section bg-dark">
+      <div class="container">
+        
+        <div class="row mb-5">
+          <div class="col-lg-12">
+            <div class="widget-next-match">
+              <div class="widget-title">
+                <h3>Next Match</h3>
+              </div>
+              <div class="widget-body mb-3">
+                <div class="widget-vs">
+                  <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                    <div class="team-1 text-center">
+                      <img src="{{ asset('images/bozo.png') }}" alt="Image">
+                      <h3>Sportify</h3>
+                    </div>
+                    <div>
+                      <span class="vs"><span>VS</span></span>
+                    </div>
+                    <div class="team-2 text-center">
+                   <img src="{{ asset('uploads/' ~ match.NomEquipe.picture ) }}" alt="Image">
+             
+
+                      <h3>{{match.NomEquipe}}</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center widget-vs-contents mb-4">
+                <h4>World Cup League</h4>
+                <p class="mb-5">
+               
+                  <strong class="text-primary">{{match.stade}}</strong>
+                  <span class="d-block">{{ match.date|date('Y-m-d H:i:s') }}</span>
+<div id="countdown"></div>
+                </p>
+
+       
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+  
+ {% block js %}
+<script>
+  // Set the date of the countdown timer to the match date
+  var countdownDate = new Date('{{ match.date|date('Y-m-d H:i:s') }}').getTime();
+  // Update the countdown every second
+  var countdownTimer = setInterval(function() {
+    // Get the current date and time
+    var now = new Date().getTime();
+    // Calculate the distance between the current time and the countdown date
+    var distance = countdownDate - now;
+    // Calculate the days, hours, minutes and seconds left
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // Display the countdown timer
+    document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+    // If the countdown is over, display a message
+    if (distance < 0) {
+      clearInterval(countdownTimer);
+      document.getElementById("countdown").innerHTML = "MATCH OVER";
+    }
+  }, 1000);
+</script>
+<script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('js/jquery-migrate-3.0.1.min.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('js/jquery.stellar.min.js') }}"></script>
+<script src="{{ asset('js/jquery.countdown.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+<script src="{{ asset('js/aos.js') }}"></script>
+<script src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
+<script src="{{ asset('js/jquery.sticky.js') }}"></script>
+<script src="{{ asset('js/jquery.mb.YTPlayer.min.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
+<script>
+    <meta charset='utf-8' />
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/main.min.js'></script>
+    <head>
+    <meta charset='utf-8' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+   
+  </head>
+
+          {% endblock %}

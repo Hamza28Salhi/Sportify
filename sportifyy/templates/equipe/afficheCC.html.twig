@@ -1,0 +1,636 @@
+{% extends 'base3.html.twig' %}
+   {% block css %}
+
+<head>
+  <title>Equipe</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <link href="{{ asset('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap') }}" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ asset('fonts/icomoon/style.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.min.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('fonts/flaticon/font/flaticon.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/aos.css') }}">
+  <link rel="stylesheet" href="{{ asset('fullcalendar/main.css') }}" />
+<script src="{{ asset('fullcalendar/main.js') }}"></script>
+
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<style>
+  .button {
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    background-color:  #ee1e46;
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 15px 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  .button:hover {
+    background-color:#808080;
+      transform: scale(1.4);
+    transition: transform 0.2s ease-in-out;
+  } 
+  .buttonn:hover {
+  
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
+  }
+   .flashy-button {
+    background-color: #ff0000; /* red background color */
+    color: #ffffff; /* white text color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #000000; /* black shadow */
+    transition: all 0.2s ease-in-out; /* add a smooth transition */
+  }
+  .flashy-button:hover {
+    transform: scale(1.1); /* scale up the button on hover */
+    box-shadow: 0px 0px 20px #000000; /* increase the shadow size */
+  }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+<style>
+  .modal-xl {
+    max-width: 90%;
+  }
+  .modal-dialog {
+     max-width: 40%;
+  height: 100vh;
+  }
+   .button:hover {
+    background-color:#808080;
+      transform: scale(1.4);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .modal-body {
+    position: relative;
+    overflow-y: auto;
+    max-height: 100vh;
+    padding: 3px;
+  }
+  .modal-backdrop.show {
+    opacity: 0.5;
+  }
+  img:hover {
+    transform: scale(1.4);
+    transition: transform 0.2s ease-in-out;
+  }
+  .custom-modal {
+  background-color: #343a40;
+}
+<style>
+.custom-modal-dialog {
+  background-color: #343a40;
+}
+</style>
+
+</style>
+
+
+
+</head>
+{% endblock %}
+ {% block body %}
+
+<body>
+<a href="{{ path('matches_afficheCC') }}" class="button">
+  <i class="fas fa-arrow-left"></i>
+</a>
+
+
+
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+
+    <header class="site-navbar py-4" role="banner">
+
+      <div class="container">
+        <div class="d-flex align-items-center">
+          <div class="site-logo">
+            <a href="index.html">
+              <img src="{{ asset('images/logo.png') }}" alt="Logo">
+            </a>
+          </div>
+          <div class="ml-auto">
+            <nav class="site-navigation position-relative text-right" role="navigation">
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="active"><a href="matches.html" class="nav-link">Matches</a></li>
+                <li><a href="players.html" class="nav-link">Players</a></li>
+                <li><a href="blog.html" class="nav-link">Blog</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+              </ul>
+            </nav>
+
+            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
+                class="icon-menu h3 text-white"></span></a>
+          </div>
+        </div>
+      </div>
+
+    </header>
+
+   <div class="hero overlay" style="background-image: url('{{ asset('images/bg_3.jpg') }}');">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-5 mx-auto text-center">
+            <h1 class="text-white">Equipe</h1>
+     
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- Button to trigger the modal -->
+<button type="button" class="btn btn-primary buttonn " data-toggle="modal" data-target="#exampleModal">
+Classement</button>
+
+    
+    <div class="container">
+      
+   
+    
+        <div class="row">
+          <div class="col-12 title-section">
+        
+          </div>
+          {% for i in equipe %}
+
+          <div class="col-lg-6 mb-4">
+            <div class="bg-light p-4 rounded">
+              <div class="widget-body">
+                  <div class="widget-vs">
+                    <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                    
+                    
+                     <div class="team-2 text-center">
+    <style>
+  img:hover {
+    transform: scale(1.4);
+    transition: transform 0.2s ease-in-out;
+  }
+</style>                 
+ <a data-toggle="modal" data-target="#myModal-{{i.nom}}">
+             <img src="{{ asset('uploads/' ~ i.picture ) }}" alt="Image">
+             </a>
+     
+
+                </div>
+                 <div id="myModal-{{i.nom}}" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      
+      <div class="modal-body ">
+        <div class="site-section bg-dark">
+          <div class="container">
+            
+            <div class="row mb-5">
+              <div class="col-lg-12">
+                <div class="widget-next-match">
+                  <div class="widget-title">
+                     <h3 style="font-size: 35px;">{{i.nom}} Informations</h3>
+                  </div>
+                  <div class="widget-body mb-3">
+                    <div class="widget-vs">
+                      <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                       
+                           <h3 style="font-size: 30px;" >Categorie: {{i.categorie}}</h3>
+                         
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-center widget-vs-contents mb-4">
+                   <h3 style="font-size: 30px;">Classement:</h3>
+                   <h4 style="font-size: 25px;">{{i.Classement}}</h4>
+
+
+
+                    <p class="mb-5">
+               
+                     <h3 style="font-size: 30px;">Entraineur: </h3>
+                      <h4 class="d-block" style="font-size: 25px;"> {{i.entraineur}}</h4>
+                       <h3 style="font-size: 30px;"> Liste Joueurs :</h3>
+<h4 class="d-block" style="font-size: 25px;" > {{ i.joueurs|replace({' ': ''})|nl2br }}</h4>
+                      <strong class="text-primary"></strong>
+                    </p>
+       
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-center widget-vs-contents mb-4">
+                 <h4 style="font-size: 24px;">{{i.nom}}</h4>
+                  <p class="mb-5">
+              <div style="display: inline-block;">
+  <h3 style="font-size: 16px; display: inline-block;">Classement:</h3>
+  <strong class="text-primary" style="display: inline-block;">{{i.classement}}</strong>
+  
+</div>
+
+
+                  </p>
+                                             <a data-toggle="modal" data-target="#newModal-{{i.nom}}">
+  <button type="button" class="btn btn-primary buttonn">Historique</button>
+</a>
+<div id="newModal-{{i.nom}}" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content custom-modal">
+      <!-- Modal body content goes here -->
+                    <h4 style="font-size: 27px;">Matches vs Sportify</h4>
+      {% for match in i.matches %}
+  {% if match.date < now %}
+    <div class="text-center widget-vs-contents mb-4">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>{{ match.nom }}</td>
+            <td>{{ match.stade }}</td>
+           <td>
+  <h4 style="font-size: 24px;">{{ match.score }}</h4>
+</td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+{% endfor %}
+
+    </div>
+  </div>
+</div>
+
+
+                </div>
+              
+         
+            </div>
+          </div>
+
+           {% endfor %}
+           
+          
+          
+        </div>
+      </div>
+    </div> <!-- .site-section -->
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-6 title-section">
+            <h2 class="heading">Videos</h2>
+          </div>
+          <div class="col-6 text-right">
+            <div class="custom-nav">
+            <a href="#" class="js-custom-prev-v2"><span class="icon-keyboard_arrow_left"></span></a>
+            <span></span>
+            <a href="#" class="js-custom-next-v2"><span class="icon-keyboard_arrow_right"></span></a>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="owl-4-slider owl-carousel">
+          <div class="item">
+            <div class="video-media">
+              <img src="{{ asset('images/img_1.jpg') }}" alt="Image" class="img-fluid">
+              <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
+                <span class="icon mr-3">
+                  <span class="icon-play"></span>
+                </span>
+                <div class="caption">
+                  <h3 class="m-0">Dogba set for Juvendu return?</h3>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="item">
+            <div class="video-media">
+              <img src="{{ asset('images/img_2.jpg') }}" alt="Image" class="img-fluid">
+              <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
+                <span class="icon mr-3">
+                  <span class="icon-play"></span>
+                </span>
+                <div class="caption">
+                  <h3 class="m-0">Kai Nets Double To Secure Comfortable Away Win</h3>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="item">
+            <div class="video-media">
+              <img src="{{ asset('images/img_3.jpg') }}" alt="Image" class="img-fluid">
+              <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
+                <span class="icon mr-3">
+                  <span class="icon-play"></span>
+                </span>
+                <div class="caption">
+                  <h3 class="m-0">Romolu to stay at Real Nadrid?</h3>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="video-media">
+              <img src="{{ asset('images/img_1.jpg') }}" alt="Image" class="img-fluid">
+              <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
+                <span class="icon mr-3">
+                  <span class="icon-play"></span>
+                </span>
+                <div class="caption">
+                  <h3 class="m-0">Dogba set for Juvendu return?</h3>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="item">
+            <div class="video-media">
+              <img src="{{ asset('images/img_2.jpg') }}" alt="Image" class="img-fluid">
+              <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
+                <span class="icon mr-3">
+                  <span class="icon-play"></span>
+                </span>
+                <div class="caption">
+                  <h3 class="m-0">Kai Nets Double To Secure Comfortable Away Win</h3>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="item">
+            <div class="video-media">
+              <img src="{{ asset('images/img_3.jpg') }}" alt="Image" class="img-fluid">
+              <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
+                <span class="icon mr-3">
+                  <span class="icon-play"></span>
+                </span>
+                <div class="caption">
+                  <h3 class="m-0">Romolu to stay at Real Nadrid?</h3>
+                </div>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    
+
+    <div class="container site-section">
+      <div class="row">
+        <div class="col-6 title-section">
+          <h2 class="heading">Our Blog</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="custom-media d-flex">
+            <div class="img mr-4">
+              <img src="{{ asset('images/img_1.jpg') }}" alt="Image" class="img-fluid">
+            </div>
+            <div class="text">
+              <span class="meta">May 20, 2020</span>
+              <h3 class="mb-4"><a href="#">Romolu to stay at Real Nadrid?</a></h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus deserunt saepe tempora dolorem.</p>
+              <p><a href="#">Read more</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="custom-media d-flex">
+            <div class="img mr-4">
+              <img src="{{ asset('images/img_3.jpg') }}" alt="Image" class="img-fluid">
+            </div>
+            <div class="text">
+              <span class="meta">May 20, 2020</span>
+              <h3 class="mb-4"><a href="#">Romolu to stay at Real Nadrid?</a></h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus deserunt saepe tempora dolorem.</p>
+              <p><a href="#">Read more</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <footer class="footer-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="widget mb-3">
+              <h3>News</h3>
+              <ul class="list-unstyled links">
+                <li><a href="#">All</a></li>
+                <li><a href="#">Club News</a></li>
+                <li><a href="#">Media Center</a></li>
+                <li><a href="#">Video</a></li>
+                <li><a href="#">RSS</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="widget mb-3">
+              <h3>Tickets</h3>
+              <ul class="list-unstyled links">
+                <li><a href="#">Online Ticket</a></li>
+                <li><a href="#">Payment and Prices</a></li>
+                <li><a href="#">Contact &amp; Booking</a></li>
+                <li><a href="#">Tickets</a></li>
+                <li><a href="#">Coupon</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="widget mb-3">
+              <h3>Equipe</h3>
+              <ul class="list-unstyled links">
+                <li><a href="#">Standings</a></li>
+                <li><a href="#">World Cup</a></li>
+                <li><a href="#">La Lega</a></li>
+                <li><a href="#">Hyper Cup</a></li>
+                <li><a href="#">World League</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="widget mb-3">
+              <h3>Social</h3>
+              <ul class="list-unstyled links">
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Youtube</a></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row text-center">
+          <div class="col-md-12">
+            <div class=" pt-5">
+              <p>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;
+                <script>
+                  document.write(new Date().getFullYear());
+                </script> All rights reserved | This template is made with <i class="icon-heart"
+                  aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </footer>
+
+
+
+  </div>
+  <!-- .site-wrap -->
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content  custom-modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Classement Equipe <i class="fa fa-trophy" aria-hidden="true"></i></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table custom-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Team</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th>Classement</th>
+            </tr>
+          </thead>
+          <tbody id="equipe-table-body">
+            {% for i in equipe %}
+              <tr>
+                <td></td>
+                <td><strong class="text-white">{{i.nom}}</strong></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{i.classement}}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- JavaScript to sort the table on button click -->
+<script>
+  const button = document.querySelector('[data-target="#exampleModal"]');
+  const tableBody = document.getElementById('equipe-table-body');
+  button.addEventListener('click', () => {
+    const rows = Array.from(tableBody.rows);
+    rows.sort((a, b) => {
+      const aClassement = parseInt(a.cells[5].textContent);
+      const bClassement = parseInt(b.cells[5].textContent);
+      return aClassement - bClassement;
+    });
+    rows.forEach(row => tableBody.removeChild(row));
+    rows.forEach(row => tableBody.appendChild(row));
+  });
+</script>
+
+  </body>
+
+</html>
+{% endblock %}
+{% block js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      events: [
+        // Here you can pass the matches data from your controller
+        // and format it to match the expected format of the calendar library
+      ]
+    });
+    calendar.render();
+  });
+</script>
+
+<script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('js/jquery-migrate-3.0.1.min.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('js/jquery.stellar.min.js') }}"></script>
+<script src="{{ asset('js/jquery.countdown.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+<script src="{{ asset('js/aos.js') }}"></script>
+<script src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
+<script src="{{ asset('js/jquery.sticky.js') }}"></script>
+<script src="{{ asset('js/jquery.mb.YTPlayer.min.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
+
+          {% endblock %}

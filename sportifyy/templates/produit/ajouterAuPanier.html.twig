@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <h1>Ajouter au panier</h1>
+
+  <form id="form-ajout-panier">
+    <input type="hidden" id="produit-id" name="produitId" value="{{ produit.id }}">
+
+    <label for="quantite">Quantité :</label>
+    <input type="number" id="quantite" name="quantite" value="1" min="1" required>
+
+    <button type="submit">Ajouter au panier</button>
+  </form>
+
+  <script>
+    const formAjoutPanier = document.getElementById('form-ajout-panier');
+    formAjoutPanier.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const formData = new FormData(formAjoutPanier);
+      fetch('{{ path('produit_ajouter_panier') }}', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message);
+      })
+      .catch(error => console.error(error));
+    });
+  </script>
+{% endblock %}
+afficherPanier.html.twig
+
+less
+Copy code
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <h1>Mon panier</h1>
+
+  {{ table|raw }}
+
+  <a href="{{ path('afficher_cp') }}">Commander</a>
+{% endblock %}
+afficheCP.html.twig
+
+javascript
+Copy code
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <h1>Commander</h1>
+
+  <form id="form-commande">
+    <div>
+      <label for="nom">Nom :</label>
+      <input type="text" id="nom" name="nom" required>
+    </div>
+
+    <div>
+      <label for="adresse">Adresse :</label>
+      <textarea id="adresse" name="adresse" required></textarea>
+    </div>
+
+    <button type="submit">Commander</button>
+  </form>
+
+  <script>
+    const formCommande = document.getElementById('form-commande');
+    formCommande.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const formData = new FormData(formCommande);
+      fetch('{{ path('commander') }}', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message);
+      })
+      .catch(error => console.error(error));
+    });
+  </script>
+{% endblock %}
+
+
+
