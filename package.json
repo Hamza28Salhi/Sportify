@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "devDependencies": {
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
@@ -22,4 +23,12 @@
     "dependencies": {
         "socket.io-client": "^4.6.1"
     }
+=======
+  "dependencies": {
+    "@fullcalendar/core": "^6.1.4",
+    "@fullcalendar/daygrid": "^6.1.4",
+    "fullcalendar": "^6.1.4",
+    "leaflet": "^1.9.3"
+  }
+>>>>>>> origin/GestionUser
 }

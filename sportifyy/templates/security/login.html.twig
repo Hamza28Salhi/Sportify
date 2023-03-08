@@ -1,6 +1,23 @@
+<<<<<<< HEAD
 {% extends 'register.html.twig' %}
 
 {% block css %}
+=======
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Register</title>
+
+   
+>>>>>>> origin/GestionUser
     <!-- Custom fonts for this template-->
     <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link
@@ -9,6 +26,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+<<<<<<< HEAD
     {% endblock %}
 
 
@@ -18,6 +36,15 @@
 
 
     <div class="container">
+=======
+    
+
+</head>
+
+
+<body class="bg-gradient-primary">
+<div class="container">
+>>>>>>> origin/GestionUser
 
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
@@ -27,9 +54,17 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
+<<<<<<< HEAD
                                 <h1 class="h4 text-gray-900 mb-4">Welcome back !</h1>
                             </div>
                             <form class="user">
+=======
+                                <h1 class="h4 text-gray-900 mb-4">Join The Sportify Army!</h1>
+                            </div>
+
+
+
+>>>>>>> origin/GestionUser
 <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -59,6 +94,7 @@
                 <input type="checkbox" name="_remember_me"> Remember me
             </label>
         </div>
+<<<<<<< HEAD
     <button  type="submit">
         Sign in
     </button>
@@ -71,6 +107,17 @@
                             <div class="text-center">
                                 <a class="small" href="login.html">Already have an account? Login!</a>
                             </div>
+=======
+    <button  type="submit" href="{{ path('home' ) }}">
+        Sign in
+    </button>
+
+    <hr>
+                            <div class="text-center">
+                                <a class="small" href="forgot-password.html">Forgot Password?</a>
+                            </div>
+                            
+>>>>>>> origin/GestionUser
                         </div>
                     </div>
                 </div>
@@ -79,8 +126,11 @@
 
     </div>
 
+<<<<<<< HEAD
     {% block js %}
 
+=======
+>>>>>>> origin/GestionUser
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -90,6 +140,15 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+<<<<<<< HEAD
     {% endblock %}
 
  {% endblock %}
+=======
+
+    </body>
+
+</html>
+
+    
+>>>>>>> origin/GestionUser

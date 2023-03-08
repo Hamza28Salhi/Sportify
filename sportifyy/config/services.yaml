@@ -6,6 +6,25 @@
 parameters:
 
 services:
+<<<<<<< HEAD
+=======
+    App\Twig\ArrayExtension:
+        tags:
+            - { name: twig.extension }
+    App\Twig\UserRolesChartExtension:
+        tags: [twig.extension]
+    App\Twig\RandomColorExtension:
+        tags: [twig.extension]
+    App\Repository\UserRepository:
+        class: App\Repository\UserRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
+        arguments:
+            - 'App\Entity\User'
+    App\Service\UserStatisticsService:
+        class: App\Service\UserStatisticsService
+        arguments:
+            - '@App\Repository\UserRepository'
+>>>>>>> origin/GestionUser
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -22,3 +41,15 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+<<<<<<< HEAD
+=======
+
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%kernel.project_dir%/public/uploads'
+            # config/services.yaml
+
+         
+parameters:
+    videos_directory: '%kernel.project_dir%/public/videos'
+>>>>>>> origin/GestionUser

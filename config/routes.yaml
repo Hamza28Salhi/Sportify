@@ -1,3 +1,23 @@
+<<<<<<< HEAD
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+=======
+controllers:
+    resource: ../src/Controller/
+    type: attribute
+matches_events:
+    path: /matches/events
+    controller: App\Controller\MatchesController::events
+
+matches_show:
+    path: /matches/{id}
+    controller: App\Controller\MatchesController::show
+
+
+matches_details:
+    path: /matches/{id}
+    controller: App\Controller\MatchesController::details
+    requirements:
+        id: '\d+'
+>>>>>>> origin/GestionUser

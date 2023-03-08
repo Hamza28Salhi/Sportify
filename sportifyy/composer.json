@@ -11,16 +11,31 @@
         "doctrine/doctrine-bundle": "^2.8",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
+<<<<<<< HEAD
+=======
+        "swiftmailer/swiftmailer": "^6.3",
+>>>>>>> origin/GestionUser
         "symfony/asset": "5.4.*",
         "symfony/console": "5.4.*",
         "symfony/dotenv": "5.4.*",
         "symfony/flex": "^1.17|^2",
         "symfony/form": "5.4.*",
         "symfony/framework-bundle": "5.4.*",
+<<<<<<< HEAD
         "symfony/runtime": "5.4.*",
         "symfony/security-bundle": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
         "symfony/validator": "5.4.*",
+=======
+        "symfony/mime": "5.4.*",
+        "symfony/runtime": "5.4.*",
+        "symfony/security-bundle": "5.4.*",
+        "symfony/serializer": "5.4.*",
+        "symfony/twig-bundle": "5.4.*",
+        "symfony/ux-chartjs": "^2.7",
+        "symfony/validator": "5.4.*",
+        "symfony/webpack-encore-bundle": "^1.16",
+>>>>>>> origin/GestionUser
         "symfony/yaml": "5.4.*"
     },
     "config": {

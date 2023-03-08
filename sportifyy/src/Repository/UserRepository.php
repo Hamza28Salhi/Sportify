@@ -56,6 +56,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
+<<<<<<< HEAD
+=======
+
+    public function findAllOrderedByProperty($property, $order = 'ASC') {
+        $validProperties = ['id', 'full_name', 'email', 'date_naiss'];
+        if (!in_array($property, $validProperties)) {
+            $property = 'id'; // Default to 'id' if an invalid property is specified
+        }
+        $qb = $this->createQueryBuilder('u')
+            ->orderBy("u.$property", $order);
+        return $qb->getQuery()->getResult();
+    }
+
+    
+
+>>>>>>> origin/GestionUser
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

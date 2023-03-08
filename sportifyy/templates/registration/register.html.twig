@@ -10,6 +10,15 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+<<<<<<< HEAD
+=======
+    <style>
+.container {
+  max-width: 1300px;
+  
+}
+</style>
+>>>>>>> origin/GestionUser
     {% endblock %}
 
 
@@ -22,6 +31,7 @@
 
     <div class="container">
 
+<<<<<<< HEAD
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
@@ -33,12 +43,26 @@
                                 <h1 class="h4 text-gray-900 mb-4">Join The Sportify Army!</h1>
                             </div>
                             <form class="user">
+=======
+        <div class="card o-hidden border-0 shadow-lg my-5" style="min-width: 1300px">
+            <div class="card-body p-0" style="min-width: 1400px" >
+                <!-- Nested Row within Card Body -->
+                <div class="row" >
+                    <img src="{{asset('img/sacha.png')}}" style="min-width: 500px" class="col-lg-5 d-none d-lg-block "> </img>
+                    <div class="col-lg-7" >
+                        <div class="p-5" >
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Join The Sportify Army!</h1>
+                            </div>
+                            
+>>>>>>> origin/GestionUser
                                 
 
 
     
           
          {{ form_start(registrationForm) }}  
+<<<<<<< HEAD
         <div class="col-sm-6">{{ form_row(registrationForm.email) }}</div>
         <div class="col-sm-6">{{ form_row(registrationForm.plainPassword, {label: 'Password'}) }}</div>
         <div class="form-inline ">{{ form_row(registrationForm.agreeTerms) }}</div>
@@ -46,16 +70,48 @@
     
 
         <button type="submit" class="btn">Register</button>
+=======
+        <div class="col-sm-6">{{ form_row(registrationForm.full_name, {label: 'Full name: '}) }}</div>
+        <div class="col-sm-6">{{ form_row(registrationForm.email, {label: 'Email: '}) }}</div>
+       
+        <div class="col-sm-4">{{ form_row(registrationForm.plainPassword, {label: 'Password: '}) }}</div>
+        
+        <div class="col-sm-6">{{ form_row(registrationForm.address, {label: 'Address: '}) }}</div>
+        
+        <div class="col-sm-6">{{ form_row(registrationForm.date_naiss, {label: 'Date Of Birth: '}) }}</div>
+        <div class="col-sm-6">{{ form_row(registrationForm.user_pic, {label: 'Insert your image: '}) }}</div>
+        <div class="col-sm-6">{{ form_row(registrationForm.show_second_form, {label: 'Apply for a shop manager: '}) }}</div>
+        
+
+    {% if secondForm is defined %}
+    {% if registrationForm.vars.value.roles is defined and registrationForm.vars.value.roles %}
+        {% if registrationForm.show_second_form.vars.value %}
+            {% include 'registration/register2.html.twig' with { secondForm: secondForm } %}
+        {% endif %}
+    {% endif %}
+    {% endif %}
+
+        <button type="submit" href="login">Register</button>
+>>>>>>> origin/GestionUser
     {{ form_end(registrationForm) }}
 
 
 
+<<<<<<< HEAD
                                 
                                 
                                 
                             <div class="text-center">
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
                             </div>
+=======
+
+
+                                
+                                
+                                
+                            
+>>>>>>> origin/GestionUser
                             <div class="text-center">
                                 <a class="small" href="login">Already have an account? Login!</a>
                             </div>
@@ -69,6 +125,11 @@
 
     {% block js %}
 
+<<<<<<< HEAD
+=======
+
+    <script src="{{ asset('my-script.js') }}"></script>
+>>>>>>> origin/GestionUser
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
