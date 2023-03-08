@@ -1,0 +1,337 @@
+{% block css %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>Soccer &mdash; Website by Colorlib</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="{{ asset('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap') }}" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ asset('fonts/icomoon/style.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.min.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('fonts/flaticon/font/flaticon.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/aos.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+
+
+</head>
+{% endblock %}
+
+  {% block body %}
+
+<body>
+
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+
+    <header class="site-navbar py-4" role="banner">
+
+      <div class="container">
+        <div class="d-flex align-items-center">
+          <div class="site-logo">
+            <a href="index.html">
+              <img src="{{ asset('images/logo.png') }}" alt="Logo">
+            </a>
+          </div>
+          <div class="ml-auto">
+            <nav class="site-navigation position-relative text-right" role="navigation">
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="matches.html" class="nav-link">Matches</a></li>
+                <li><a href="players.html" class="nav-link">Players</a></li>
+                <li class="active"><a href="{{ path('post_show_front') }}" class="nav-link">Blog</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+              </ul>
+            </nav>
+
+            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
+                class="icon-menu h3 text-white"></span></a>
+          </div>
+        </div>
+      </div>
+
+    </header>
+
+    <div class="hero overlay" style="background-image: url('{{ asset('images/bg_3.jpg') }}');">      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-9 mx-auto text-center">
+            <h1 class="text-white">{{post.getTitrePost()}}</h1>
+            <p><span>{{post.getDateCreationPost() |date('Y-m-d, h:i')}}</span> <span class="mx-3">&bullet;</span> <span>Ecrit par: {{post.getAuteurPost()}}</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="site-section first-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 blog-content">
+
+      
+            {% set parts = post.getContenuPost()|split("\n", 3) %}
+            <p class="lead">{{ parts[0] }}</p>
+            <p><img src="{{ asset('images/posts/' ~ post.getImagePost()) }}" alt="Image du post" class="img-fluid"></p>
+            <blockquote><p>{{ parts[1] }}</p></blockquote>
+            <p>{{ parts[2] }}</p>
+            {#src="{{ asset('images/posts/' ~ i.getImagePost()) }}"#}          
+            <div class="pt-5">
+              <p>Categories:  <a href="#">Actualité Football</a>, Tags: <a href="#">#Arsenal</a>, <a href="#">#Premier_League</a>,<a href="#">#La liga</a></p>
+            </div>
+
+
+            <div class="pt-5">
+              {% if post.commentaires.count ==1 %}
+              <h3 class="mb-5 text-white">1 Commentaire</h3>
+              {% else %}
+              <h3 class="mb-5 text-white">{{ post.commentaires.count }} Commentaires</h3>
+              {% endif %}
+              
+          {% if app.request.query.get('commentNotAllowed') is defined and app.request.query.get('commentNotAllowed') == "1" %}
+    {% set commentNotAllowed = true %}
+{% endif %}
+
+
+{% if commentNotAllowed %}
+    <div class="alert alert-danger">
+        Votre commentaire contient des propos inappropriés et a été bloqué.
+    </div>
+{% else %}
+    <p>Votre commentaire a été publié.</p>
+{% endif %}
+    {#<script>
+  console.log({{ commentNotAllowed|json_encode|raw }});
+</script>#}
+    
+              {% if post.commentaires is not empty %}
+              <ul class="comment-list">
+                {% for commentaire in post.commentaires %}
+                <li class="comment">
+                  <div class="vcard bio">                     
+                    <img src="{{ asset('images/person_2.jpg')}}" alt="Image placeholder">
+                  </div>
+                  <div class="comment-body">
+                    <h3>{{ commentaire.getAuteurCommentaire() }}</h3>
+                    <div class="meta">{{commentaire.getDateCreationCommentaire()|date('Y-m-d, h:i')}}</div>
+                    <p>{{ commentaire.getContenuCommentaire() }}</p>
+                    <p><a href="#" class="reply">Répondre</a></p>
+                    <a href="{{ path('commentaire_delete_front',{'id': post.getIdPost(), 'idC': commentaire.getIdCommentaire()}) }}"> supprimer commentaire</a>
+                    <p><a href="{{ path('commentaire_update_front',{'id': post.getIdPost(), 'idC': commentaire.getIdCommentaire()}) }}"> modifier commentaire</a></p>
+                  
+                  </div>
+                </li>
+                {% endfor %}
+                {% else %}
+                  <p>Aucun commentaire pour le moment.</p>
+                {% endif %}
+              </ul>
+              <!-- END comment-list -->
+              
+              <div class="comment-form-wrap pt-5">
+                                               
+                                                  {# NOUVELLES MODIFICATIONS COMMENCENT ICI #}
+                                                  <h1>Ajouter un commentaire</h1>
+
+    {# Ajouter un nouveau commentaire #}
+    {{ form_start(commentaire_front_form) }}
+
+    {{ form_label(commentaire_front_form.contenu_Commentaire) }}
+    {{ form_widget(commentaire_front_form.contenu_Commentaire, {'attr': {'class': 'form-control mb-3'}}) }}
+    {{ form_errors(commentaire_front_form.contenu_Commentaire) }}
+
+    {{ form_label(commentaire_front_form.auteur_Commentaire) }}
+    {{ form_widget(commentaire_front_form.auteur_Commentaire, {'attr': {'class': 'form-control mb-3'}}) }}
+    {{ form_errors(commentaire_front_form.auteur_Commentaire) }}
+
+    <button type="submit" class="btn btn-primary">Ajouter le commentaire</button>
+    {{ form_end(commentaire_front_form) }}
+         <a href="{{ path('post_show_one', {'id': post.getIdPost()}) }}" style="color: white; "></a> {#novalidate#}
+
+
+                                                  {#NOUVELLES MODIFICATIONS S'ARRETENT ICI#}
+              </div>
+            </div>    
+                   
+{#<p><a href="{{ path('commentaire_add_front',{'id': post.getIdPost()}) }}"> Ajouter commentaire</a></p> #}
+      <div>
+      <p><a href="{{ path('post_show_front') }}">Revenir vers l'accueil</a></p>
+      </div>
+          </div>
+          
+          <div class="col-md-4 sidebar">
+            <div class="sidebar-box">
+              <form action="#" class="search-form">
+                <div class="form-group">
+                  <span class="icon fa fa-search"></span>
+                  <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
+                </div>
+              </form>
+            </div>
+            <div class="sidebar-box">
+              <div class="categories">
+                <h3 class="text-uppercase">Categories</h3>
+                <li><a href="#">Actualités Football <span>(73)</span></a></li>
+                <li><a href="#">Transferts de joueurs <span>(20)</span></a></li>
+                <li><a href="#">Actualités Basketball <span>(22)</span></a></li>
+                <li><a href="#">Actualités Handball <span>(10)</span></a></li>
+                <li><a href="#">Événements <span>(14)</span></a></li>
+              </div>
+            </div>
+            
+            <div class="sidebar-box">
+              {#<img src="images/person_1.jpg" alt="Image placeholder" class="img-fluid mb-4">#}
+              <h3 class="text-uppercase">A propos de l'auteur</h3>
+              <p>{{post.getAuteurPost()}} est un journaliste et un des plus grands fans d'arsenal. En plus d'avoir une belle plume, il est très proche du club Londonien et connait toutes les infos exclusives autour des joueurs </p>
+              <p><a href="#" class="btn btn-primary text-white">Voir plus</a></p>
+            </div>
+
+            {#<div class="sidebar-box">
+              <h3 class="text-uppercase">Paragraph</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>
+            </div>#}
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <footer class="footer-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="widget mb-3">
+              <h3>News</h3>
+              <ul class="list-unstyled links">
+                <li><a href="#">All</a></li>
+                <li><a href="#">Club News</a></li>
+                <li><a href="#">Media Center</a></li>
+                <li><a href="#">Video</a></li>
+                <li><a href="#">RSS</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="widget mb-3">
+              <h3>Tickets</h3>
+              <ul class="list-unstyled links">
+                <li><a href="#">Online Ticket</a></li>
+                <li><a href="#">Payment and Prices</a></li>
+                <li><a href="#">Contact &amp; Booking</a></li>
+                <li><a href="#">Tickets</a></li>
+                <li><a href="#">Coupon</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="widget mb-3">
+              <h3>Matches</h3>
+              <ul class="list-unstyled links">
+                <li><a href="#">Standings</a></li>
+                <li><a href="#">World Cup</a></li>
+                <li><a href="#">La Lega</a></li>
+                <li><a href="#">Hyper Cup</a></li>
+                <li><a href="#">World League</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="widget mb-3">
+              <h3>Social</h3>
+              <ul class="list-unstyled links">
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Youtube</a></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row text-center">
+          <div class="col-md-12">
+            <div class=" pt-5">
+              <p>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;
+                <script>
+                  document.write(new Date().getFullYear());
+                </script> All rights reserved | This template is made with <i class="icon-heart"
+                  aria-hidden="true"></i> by <a href="{{ asset('https://colorlib.com') }}" target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </footer>
+
+
+
+  </div>
+  {% endblock %}
+  <!-- .site-wrap -->
+   {% block js %}
+   {#<div id="google_translate_element"></div>
+                                    <script type="text/javascript">
+                                        function googleTranslateElementInit() {new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');}
+                                    </script>
+
+                                    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
+  <div id="google_translate_element"></div> <script type="text/javascript"> function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');} </script>
+ <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> <img src="" />
+<script src="//code.jquery.com/jquery.js"></script>
+
+<script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('js/jquery-migrate-3.0.1.min.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('js/jquery.stellar.min.js') }}"></script>
+<script src="{{ asset('js/jquery.countdown.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+<script src="{{ asset('js/aos.js') }}"></script>
+<script src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
+<script src="{{ asset('js/jquery.sticky.js') }}"></script>
+<script src="{{ asset('js/jquery.mb.YTPlayer.min.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script> 
+
+    {% if app.session.flashBag.has('error') %}
+    <div class="alert alert-danger">
+        {{ app.session.flashBag.get('error')[0] }}
+    </div>
+{% endif %}
+
+ {% endblock %}
+ 
+</body>
+
+</html>
