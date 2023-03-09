@@ -70,7 +70,7 @@ class MatchesType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Matches::class,
-                'csrf_protection' => false,
+            'csrf_protection' => false,
             'allow_extra_fields' => true,
             'equipe_repository' => null,
    

@@ -30,18 +30,11 @@ class EquipemobileController extends AbstractController
     public function getEquipes(EquipeRepository $repo, SerializerInterface $serializer)
     {
         $equipes = $repo->findAll();
-        //* Nous utilisons la fonction normalize qui transforme le tableau d'objets 
-        //* students en  tableau associatif simple.
-        // $studentsNormalises = $normalizer->normalize($students, 'json', ['groups' => "students"]);
-
-
-        
-        // //* Nous utilisons la fonction json_encode pour transformer un tableau associatif en format JSON
-        // $json = json_encode($studentsNormalises);
+      
+ 
 
         $json = $serializer->serialize($equipes, 'json', ['groups' => "equipes"]);
 
-        //* Nous renvoyons une réponse Http qui prend en paramètre un tableau en format JSON
         return new Response($json);
     }
 
@@ -49,7 +42,7 @@ class EquipemobileController extends AbstractController
     public function EquipeId($id, NormalizerInterface $normalizer, EquipeRepository $repo)
     {
         $equipe = $repo->find($id);
-        $equipeNormalises = $normalizer->normalize($equipe, 'json', ['groups' => "equipes"]);
+        $equipeNormalises = $normalizer->normalize($equipe, 'json', ['groups' => "matches","equipes"]);
         return new Response(json_encode($equipeNormalises));
     }
 

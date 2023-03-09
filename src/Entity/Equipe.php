@@ -8,6 +8,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+
 
 
 
@@ -66,6 +68,8 @@ class Equipe
 
     #[ORM\OneToMany(targetEntity: Matches::class, mappedBy: 'nom_equipe')]
     #[Groups("equipes")]
+    #[MaxDepth(1)]
+    
     private Collection $matches;
 
     public function getId(): ?int
