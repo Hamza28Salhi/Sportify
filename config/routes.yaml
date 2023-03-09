@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 controllers:
     resource: ../src/Controller/
     type: attribute
@@ -15,3 +16,11 @@ matches_details:
     controller: App\Controller\MatchesController::details
     requirements:
         id: '\d+'
+=======
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+add_to_cart:
+    path: '/produit/add/{id}'
+    controller: 'App\Controller\CartController::add'
+>>>>>>> origin/GestionProduit

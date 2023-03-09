@@ -4,9 +4,13 @@ when@dev:
         intercept_redirects: false
 
     framework:
+<<<<<<< HEAD
         profiler:
             only_exceptions: false
             collect_serializer_data: true
+=======
+        profiler: { only_exceptions: false }
+>>>>>>> origin/GestionProduit
 
 when@test:
     web_profiler:

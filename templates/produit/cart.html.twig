@@ -1,0 +1,28 @@
+{% set cart = app.session.get('cart', {}) %}
+
+{% if cart|length == 0 %}
+    <p>Votre panier est vide.</p>
+{% else %}
+    <table>
+        <thead>
+            <tr>
+                <th>nom_produit</th>
+                <th>PrixProduit</th>
+                <th>MarqueProduit</th>
+                <th>Quantite</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+                <tr>
+                    <td>{{ item.nom_produit }}</td>
+                    <td>{{ item.prixProduit }}</td>
+                    <td>{{ item.marqueProduit }}</td>
+                    <td>{{ item.quantite }}</td>
+                    <td>{{ item.prixProduit * item.quantite }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

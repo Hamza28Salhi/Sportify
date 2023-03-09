@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des produits</title>
+    <style>
+        /* Styles pour l'en-tête */
+        .header {
+            position: relative;
+            background-color: #E4F4F6;
+            color: #2246AF;
+            padding: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .circle-wrapper {
+            position: relative;
+            margin-right: 5px;
+        }
+        
+        .logo-text {
+            margin: 15;
+            font-family: 'Arial';
+            font-size: 45px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 2px #ccc;
+             align-items: center;
+        }
+        
+        .circle {
+            position: absolute;
+            top: -5;
+            right: 0;
+            transform: translate(50%, -50%);
+            width: 150px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #2246AF;
+            color: #E4F4F6;
+            text-align: center;
+            line-height: 32px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        /* Styles pour le tableau */
+        .table-wrapper {
+            border: 2px solid black;
+            width: 100%;
+            margin: 20px auto;
+            overflow-x: auto;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        th {
+            background-color: #309887;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: #E8F5E9;
+        }
+        
+        tbody tr:nth-child(odd) {
+            background-color: #E1F5FE;
+        }
+    </style>
+</head>
+<body>
+ 
+    <div class="header">
+        <div class="logo-wrapper">
+            <div class="circle-wrapper">
+<img src="http://localhost/sportify/public/uploads/logo.png" style="max-height: 100px">   
+             <div class="circle">SPORTIFY</div>
+            </div>
+            <p class="logo-text">Sportify Boutique</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="link-color" style="color: #376B90;">Produits de boutique Sportify</a></li>
+            </ul>
+            <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prix</th>
+                    <th>Marque</th>
+                    <th>Catégorie</th>
+                    <th>Quantité</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in produits %}
+                    <tr>
+                        <td>{{i.NomProduit}}</td>
+                        <td>{{i.PrixProduit}}</td>
+                        <td>{{i.MarqueProduit}}</td>
+                        <td>{{i.Categorie}}</td>
+                        <td>{{i.Quantite}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        </nav>
+    </div>
+
+    
+        </nav>
+    </div>
+
+  
+    
+    <footer>
+        <p>Tous droits réservés &copy; 2023 Sportify</p>
+    </footer>
+</body>
+</html>

@@ -22,6 +22,7 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+<<<<<<< HEAD
 
     App\Service\FileUploader:
         arguments:
@@ -29,3 +30,8 @@ services:
             # config/services.yaml
 parameters:
     videos_directory: '%kernel.project_dir%/public/videos'
+=======
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%kernel.project_dir%/public/uploads'
+>>>>>>> origin/GestionProduit
